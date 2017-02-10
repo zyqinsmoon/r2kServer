@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
+    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd  
+    http://www.springframework.org/schema/context   
+    http://www.springframework.org/schema/context/spring-context-3.2.xsd  
+    http://www.springframework.org/schema/aop  
+    http://www.springframework.org/schema/aop/spring-aop-3.2.xsd  
+    http://www.springframework.org/schema/tx  
+    http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+	<!-- 数据库配置文件位置 -->
+	<context:property-placeholder location="classpath:properties/jdbc.properties" ignore-unresolvable="true"/>
+
+	<!-- 数据源定义,使用Apache DBCP 连接池 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="initialSize" value="${dbcp.initialSize}" />
+		<property name="maxActive" value="${dbcp.maxActive}" />
+		<property name="maxIdle" value="${dbcp.maxIdle}"></property>
+		<property name="maxWait" value="${dbcp.maxWait}"></property>
+		<property name="validationQuery" value="${dbcp.validationQuery}"></property>	<!-- 验证连接是否成功, SQL SELECT 指令至少要返回一行  -->
+		<property name="testOnBorrow" value="${dbcp.testOnBorrow}"></property>	<!-- 取得对象时是否进行验证，检查对象是否有效 -->
+		<property name="testOnReturn" value="${dbcp.testOnReturn}"></property>	<!-- 返回对象时是否进行验证，检查对象是否有效 -->
+		<property name="testWhileIdle" value="${dbcp.testWhileIdle}"></property>	<!-- 空闲时是否进行验证，检查对象是否有效 -->
+	</bean>
+
+	<!-- 配置sqlSessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- <property name="configLocation">
+			<value>classpath:mybatis.xml</value>
+		</property> -->
+		<property name="dataSource" ref="dataSource" />
+		<!-- 扫描sqlmap文件,最终格式 com/apabi/r2k/*/model/sqlmap/*.xml,测试格式com/apabi/*/model/sqlmap/*.xml-->
+		<property name="mapperLocations" value="classpath:com/apabi/r2k/*/model/sqlmap/*.xml"></property>	
+	</bean>
+
+	<!-- 配置SqlSessionTemplate -->
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+	<!-- 事务配置 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<!-- 对事务管理器进行事务设置 -->
+	<!-- <tx:advice id="tmAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="save*" propagation="REQUIRED"></tx:method>
+			<tx:method name="delete*" propagation="REQUIRED"></tx:method>
+			<tx:method name="get*" propagation="REQUIRED" read-only="true"></tx:method>
+			<tx:method name="update*" propagation="REQUIRED"></tx:method>
+			<tx:method name="list*" propagation="REQUIRED" read-only="true"></tx:method>
+		</tx:attributes>
+	</tx:advice> -->
+
+	<!-- 把事务应用到具体的类中 -->
+	<!-- <aop:config>
+		<aop:pointcut id="serviceMethod" expression="bean(*Service)" />
+		<aop:advisor pointcut-ref="serviceMethod" advice-ref="tmAdvice" />
+	</aop:config> -->
+
+	<!-- 引入xml配置文件,最终格式com/apabi/r2k/*/spring/*.xml,测试格式com/apabi/*/spring/*.xml -->
+	<!-- <import resource="classpath:com/apabi/*/spring/*.xml"/> -->
+	<!-- <import resource="classpath:spring/email.xml" /> -->
+	<context:component-scan base-package="com.apabi.r2k.*.base"></context:component-scan>
+	<context:component-scan base-package="com.apabi.r2k.*.base.*"></context:component-scan>
+	<context:component-scan base-package="com.apabi.r2k.*.email"></context:component-scan>
+	<context:component-scan base-package="com.apabi.r2k.*.dao"></context:component-scan>
+	<context:component-scan base-package="com.apabi.r2k.*.service"></context:component-scan>
+	<context:component-scan base-package="com.apabi.r2k.*.action"></context:component-scan>
+	
+	<!-- 加载模板 -->
+	<bean id="freeMarkerConfigurer" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer" scope="prototype">
+	   <!-- 指定模板文件目录	-->
+       <property name="templateLoaderPath" value="/pubtemplet/templet/" />
+		<property name="freemarkerSettings"><!-- 设置FreeMarker环境属性-->
+			<props>
+				<prop key="template_update_delay">0</prop><!--刷新模板的周期，单位为秒-->
+				<prop key="default_encoding">UTF-8</prop><!--模板的编码格式 -->
+				<prop key="locale">zh_CN</prop><!-- 本地化设置-->
+			</props>
+		</property>
+    </bean>
+    <!-- 
+    <bean id="freemarkerServiceImpl" class="com.apabi.r2k.admin.service.impl.FreemarkerServiceImpl">
+    	<property name="freeMarkerConfigurer" ref="freeMarkerConfigurer" />
+    </bean> -->
+    <!--系统启动加载权限信息 -->
+	<bean id="initRoleServiceImpl" class="com.apabi.r2k.security.service.impl.InitRoleServiceImpl" factory-method="getInstance" init-method="loadConfigDefine">
+	</bean>
+	<bean id="homePageService" class="com.apabi.r2k.admin.service.impl.HomePageServiceImpl" init-method="init"></bean>
+	
+	<!-- ||||||||||||||||||||||||||||||||||||||||消息生产配置区|||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+	<!-- 从r2k报纸消息处理类 -->
+
+     <bean id="paperReplyMsgProducer" class="com.apabi.r2k.msg.service.impl.client.PaperReplyMsgProducer">  
+     </bean> 
+     <!-- 从r2k报纸消息获取类 -->
+	<bean id="heartbeatMsgProducer" class="com.apabi.r2k.msg.service.impl.client.HeartbeatMsgProducer">  
+	</bean>
+      <bean id="solrMsgProducer" class="com.apabi.r2k.msg.service.impl.server.SolrMsgProducer">
+      </bean>  
+	
+	<!-- 从r2k报纸消息处理类 -->
+	<bean id="PaperMsgHandler" class="com.apabi.r2k.msg.service.impl.client.PaperMsgHandler">  
+     </bean>  
+     <!-- ||||||||||||||||||||||||||||||||||||||||消息生产配置区结束|||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+      <!-- ||||||||||||||||||||||||||||||||||||||||消息处理配置区|||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+    <bean id="paperMsgHandler" class="com.apabi.r2k.msg.service.impl.client.PaperMsgHandler"> 
+     </bean>  
+     <bean id="heartbeatMsgHandler" class="com.apabi.r2k.msg.service.impl.server.HeartbeatMsgHandler"> 
+     </bean>
+     <bean id="paperReplyMsgHandler" class="com.apabi.r2k.msg.service.impl.server.PaperReplyMsgHandler"> 
+     </bean>
+      <!-- ||||||||||||||||||||||||||||||||||||||||消息处理配置区结束|||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+     <!--消息处理分发类  -->
+	<bean id="msgHandler" class="com.apabi.r2k.msg.service.impl.MsgHandlerImpl">  
+        <property name="msgProp">
+           <map>	<!--消息类型  -->
+             <entry key="heartbeat" value-ref="heartbeatMsgHandler" />
+             <entry key="paperreplay" value-ref="paperReplyMsgHandler" />
+           </map>
+	   </property>
+     </bean> 
+     
+     <!--消息生产分发类  -->
+    <bean id="msgProducer" class="com.apabi.r2k.msg.service.impl.MsgProducerImpl">  
+        <property name="msgProp">
+           <map>	<!--消息类型 顺序 -->
+             <entry key="solrpaper" value-ref="solrMsgProducer" /><!-- 
+             <entry key="paperreplay" value-ref="paperReplyMsgProducer" />
+             <entry key="heartbeat" value-ref="heartbeatMsgProducer" /> -->
+           </map>
+	   </property>
+     </bean>  
+     
+     <!-- 客户端sessionutil -->
+     <bean id="clientSessionUtil" class="com.apabi.r2k.common.utils.ClientSessionUtil"></bean>
+     
+     <!-- 服务端sessionutil -->
+     <bean id="serverSessionUtil" class="com.apabi.r2k.security.utils.ServerSessionUtil"></bean>
+     
+  	<!-- api接口依赖注入配置 -->
+  	<bean id="apiAction" class="com.apabi.r2k.api.action.ApiAction" scope="prototype">
+  		<property name="apiService" ref="apiService"></property>
+  		<property name="msgConnector" ref="msgConnector"></property>
+  		<property name="baseSession" ref="serverSessionUtil"></property>
+  	</bean>
+  </beans>  
+  

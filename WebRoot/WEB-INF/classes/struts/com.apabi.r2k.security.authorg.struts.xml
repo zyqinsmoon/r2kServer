@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="org" namespace="/org" extends="json-default">
+    	<action name="*" class="authOrgAction" method="{1}">
+       	   <result name="list">/WEB-INF/jsp/admin/orglist.jsp</result>
+<!--       	   <result name="save" type="redirectAction">findOrgList</result>-->
+       	   <result name="delete" type="redirectAction">findOrgList</result>
+       	   <result name="update" type="redirectAction">findOrgList</result>
+       	   <result name="save" type="json">
+       	   		<param name="root">userpwd</param>
+       	   </result>
+       	   <result name="checkOrgInfo" type="json">
+    			<param name="root">status</param>
+		   </result>
+       	   <result name="toUpdateOrg" type="json">
+    			<param name="root">org</param>
+		   </result>
+		   <result name="info">/WEB-INF/jsp/admin/orginfo.jsp</result>
+       	   <result name="initSelect" type="json">
+    			<param name="includeProperties">provincelist.*, citylist.*, districtlist.*,provinceCode,cityCode,districtCode</param>
+		   </result>
+       	   <result name="selectProvince" type="json">
+    			<param name="includeProperties">citylist.*, districtlist.*</param>
+		   </result>
+       	   <result name="selectCity" type="json">
+    			<param name="includeProperties">districtlist.*</param>
+		   </result>
+       </action>
+    </package>
+</struts>

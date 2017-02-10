@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<package name="prjConfig" namespace="/config" extends="json-default">
+       <action name="*" class="prjConfigAction" method="{1}">
+       		<result name="show">/WEB-INF/jsp/admin/config/show.jsp</result>
+			<result name="saveByDevType" type="redirectAction">
+				<param name="actionName">${redirectAction}</param>  
+			</result>
+			<result name="saveByDevId" type="redirectAction">
+				<param name="actionName">${redirectAction}</param>  
+        		<param name="deviceType">${deviceType}</param> 
+        		<param name="deviceId">${deviceId}</param> 
+        		<param name="deviceName">${deviceName}</param> 
+			</result>
+       </action>
+    </package>
+</struts>

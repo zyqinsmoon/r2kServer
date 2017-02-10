@@ -1,0 +1,122 @@
+<#assign fullClassName = basepackage + ".model." + table.className>
+<#assign className = table.className>
+<#assign classNameLower = className?uncap_first> 
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="${fullClassName}">
+
+	<resultMap id="${classNameLower}Result" type="${fullClassName}">
+		<#list table.columns as column>
+		<result property="${column.columnNameLower}" column="${column.sqlName}" />
+		</#list>
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="commonColumns">
+	    <![CDATA[
+        <#list table.columns as column>
+        	${column.sqlName} <#if column_has_next>,</#if>
+        </#list>
+	    ]]>
+	</sql>
+
+	<sql id="dynamicWhere">
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<#list table.columns as column>
+				<if test="${column.columnNameLower} != null">
+				AND ${column.sqlName} = ${"#{"}${column.columnNameLower}${'}'}
+				</if>
+        	</#list> 
+		</trim>
+	</sql>
+
+	<insert id="insert" parameterType="${fullClassName}">
+    <![CDATA[
+        INSERT INTO
+        ${table.sqlName} (
+        <#list table.columns as column>
+        	${column.sqlName} <#if column_has_next>,</#if>
+        </#list>
+        ) VALUES (
+        <#list table.columns as column>
+        	${"#{"}${column.columnNameLower}${'}'} <#if column_has_next>,</#if>
+        </#list>        
+        )
+    ]]>
+	</insert>
+
+	<update id="update" parameterType="${fullClassName}">
+		UPDATE ${table.sqlName}
+		<trim prefix="SET" suffixOverrides=",">
+			<#list table.columns as column>
+	        	<#if !column.pk>
+	        		<if test="${column.columnNameLower} != null">
+	        			${column.sqlName} = ${"#{"}${column.columnNameLower}${'}'},
+	        		</if>
+	        	</#if>
+	        </#list>
+		</trim>
+		<where>
+			${table.idColumn} = ${"#{"}${table.idColumn}${"}"}
+		</where>
+	</update>
+
+
+	<delete id="delete" parameterType="map">
+    <![CDATA[
+        delete from ${table.sqlName}
+    ]]>
+		<where>
+			${table.idColumn} = ${"#{"}${table.idColumn}${"}"}
+		</where>
+	</delete>
+
+	<delete id="batchDelete" parameterType="java.util.List">
+		<![CDATA[
+        delete from ${table.sqlName}
+    	]]>
+    	<where>
+			${table.idColumn} in 
+			<foreach collection="ids" item="id" index="index" open="(" separator="," close=")">
+				${"#{"}id}${"}"}
+			</foreach>
+		</where>
+	</delete>
+	
+	<select id="getById" resultMap="${classNameLower}Result">
+		select
+		<include refid="commonColumns" />
+	    <![CDATA[
+	        from ${table.sqlName} 
+	        where 
+				<#list table.compositeIdColumns as column>
+		        ${column.sqlName} = ${"#{"}${column.columnNameLower}${'}'} <#if column_has_next>,</#if>
+		        </#list>
+	    ]]>
+	</select>
+
+	<select id="count" resultType="long">
+    <![CDATA[
+        select count(*) from ${table.sqlName}
+    ]]>
+    <include refid="dynamicWhere" />
+	</select>
+
+	<!-- 分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页 因为分页查询将传 #offset#,#pageSize#,#lastRows# 
+		三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现 -->
+	<select id="pageSelect" resultMap="${classNameLower}Result">
+		select
+		<include refid="commonColumns" />
+	    <![CDATA[
+	        from ${table.sqlName} 
+	    ]]>
+		<include refid="dynamicWhere" />
+		<if test="sortColumns != null">
+			ORDER BY ${"${"}sortColumns${'}'}
+		</if>
+	</select>
+
+</mapper>

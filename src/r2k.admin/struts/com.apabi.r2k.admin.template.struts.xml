@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<package name="template" namespace="/temp" extends="json-default">
+       <action name="*" class="templateAction" method="{1}">
+       		<result name="index">/WEB-INF/jsp/admin/temp/index.jsp</result>
+       		<result name="savePage">/WEB-INF/jsp/admin/temp/save.jsp</result>
+       		<result name="updatePage">/WEB-INF/jsp/admin/temp/update.jsp</result>
+       		<result name="delete" type="redirectAction">index</result>
+       		<result name="save" type="redirectAction">index</result>
+       		<result name="update" type="redirectAction">index</result>
+       		<result name="updateSet" type="redirectAction">index</result>
+       		<result name="deleteBySetNo" type="redirectAction">index</result>
+       		<result name="uploadReplaceZip" type="redirectAction">index</result>
+       		
+       		<result name="checkDefaultType" type="json">
+    			<param name="root">status</param>
+		    </result>
+       		<result name="checkOrgDefaultType" type="json">
+    			<param name="root">status</param>
+		    </result>
+       		<result name="uploadZip" type="json">
+    			<param name="includeProperties">filemap.*</param>
+		    </result>
+       		<result name="templistBySetNo" type="json">
+    			<param name="includeProperties">templist.*</param>
+		    </result>
+			
+			<result name="getAllTemplates" type="json">
+				<param name="root">templist</param>
+			</result>
+			
+			<result name="org" type="redirect">/pub/${actionName}.do</result>
+			<result name="device" type="redirect">/pub/device.do?deviceId=${deviceId}&amp;devType=${devType}&amp;deviceName=${deviceName}</result>
+       </action>
+    </package>
+</struts>

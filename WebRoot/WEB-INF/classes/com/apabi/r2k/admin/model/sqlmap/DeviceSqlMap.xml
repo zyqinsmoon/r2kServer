@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.apabi.r2k.admin.model.Device">
+	<resultMap type="com.apabi.r2k.admin.model.Device" id="deviceResult">
+		<result property="id" column="ID"/>
+		<result property="orgId" column="ORG_ID"/>
+		<result property="deviceId" column="DEVICE_ID"/>
+		<result property="deviceName" column="DEVICE_NAME"/>
+		<result property="groupName" column="GROUP_NAME"/>
+		<result property="lastDate" column="LAST_DATE"/>
+		<result property="makerId" column="MAKER_ID"/>
+		<result property="mac" column="MAC"/>
+		<result property="heartbeat" column="HEARTBEAT"/>
+		<result property="deviceTypeId" column="DEVICETYPE_ID"/>
+		<result property="curVersion" column="CUR_VERSION"/>
+		<result property="toVersion" column="TO_VERSION"/>
+		<result property="ipv4" column="IPV4"/>
+		<result property="deviceType" column="DEVICE_TYPE"/>
+		<result property="lastHeartTime" column="LAST_HEART_TIME"/>
+	</resultMap>
+	
+	
+	<!-- device -->
+	
+	<sql id="dynamicWhere">
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null">
+			AND d.ID = #{id}
+			</if>
+			<if test="deviceId != null">
+			AND d.DEVICE_ID  like '%${deviceId}%'
+			</if>
+			<if test="deviceName != null">
+			AND d.DEVICE_NAME like '%${deviceName}%'
+			</if>
+			<if test="groupName != null">
+			AND d.GROUP_NAME like '%${groupName}%'
+			</if>
+			<if test="lastDate != null">
+			AND d.LAST_DATE = #{lastDate}
+			</if>
+			<if test="makerId != null">
+			AND d.MAKER_ID = #{makerId}
+			</if>
+			<if test="mac != null">
+			AND d.MAC = #{mac}
+			</if>
+			<if test="deviceType != null">
+			AND d.DEVICE_TYPE = #{deviceType}
+			</if>
+			<if test="queryIdOrName != null">
+			AND (d.DEVICE_ID  like '%${queryIdOrName}%'
+			OR d.DEVICE_NAME like '%${queryIdOrName}%')
+			</if>
+			<if test="orgId != null">
+			AND d.ORG_ID = #{orgId}
+			</if>
+			<if test="ipv4 != null">
+			AND d.IPV4 = #{ipv4}
+			</if>
+			<if test="deviceTypeList != null">
+				AND d.DEVICE_TYPE in
+				<foreach collection="deviceTypeList" item="dType" index="index" open="(" separator="," close=")">
+					#{dType}
+				</foreach>
+			</if>
+			<if test="lastHeartTime != null">
+			AND d.LAST_HEART_TIME = #{lastHeartTime}
+			</if>
+		</trim>
+	</sql>
+	
+	<select id="count" resultType="int">
+    <![CDATA[
+        select count(*) from ORG_AUTH_DEVICE d 
+    ]]>
+    <include refid="dynamicWhere" />
+	</select>
+	
+	<select id="getDeviceByDeviceId" resultMap="deviceResult">
+		SELECT d.* FROM ORG_AUTH_DEVICE d WHERE d.device_id=#{deviceId} and d.org_id=#{orgId}
+	</select>
+	
+
+	<!-- 分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页 因为分页查询将传 #offset#,#pageSize#,#lastRows# 
+		三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现 -->
+	<select id="pageSelect" resultMap="deviceResult">  
+		select d.*
+	    <![CDATA[
+	        from ORG_AUTH_DEVICE d  
+	    ]]>
+		<include refid="dynamicWhere" />
+		<if test="sortColumns != null">
+			ORDER BY ${sortColumns}
+		</if>
+		<if test="sortColumns == null">
+			ORDER BY d.ID desc
+		</if>
+    </select>
+    
+    <insert id="insertDevice">
+		INSERT INTO ORG_AUTH_DEVICE(ORG_ID, 	DEVICE_ID, 		DEVICE_NAME,	DEVICETYPE_ID,GROUP_NAME,		LAST_DATE,		MAKER_ID,	MAC,HEARTBEAT,
+		CUR_VERSION,TO_VERSION,DEVICE_TYPE,IPV4, LAST_HEART_TIME)
+		VALUES(#{orgId},	#{deviceId},	#{deviceName},	#{deviceTypeId},#{groupName},	#{lastDate},	#{makerId},	#{mac},#{heartbeat},
+		#{curVersion},#{toVersion},#{deviceType},#{ipv4}, #{lastHeartTime})
+	</insert>
+    
+    <select id="getDeviceById" resultMap="deviceResult">
+		SELECT d.* FROM ORG_AUTH_DEVICE d WHERE d.Id=#{id} and d.ORG_ID=#{orgId}
+	</select>
+	
+    <select id="getDeviceByDevId" resultMap="deviceResult">
+		SELECT d.* FROM ORG_AUTH_DEVICE d WHERE d.DEVICE_ID=#{deviceId} and d.ORG_ID=#{orgId}
+	</select>
+    
+    <select id="getDeviceByDevName" resultMap="deviceResult">
+		SELECT d.* FROM ORG_AUTH_DEVICE d WHERE d.DEVICE_NAME=#{deviceName} and d.ORG_ID=#{orgId}
+	</select>
+	
+	<select id="getDeviceByToVersion" resultMap="deviceResult">
+		select * from ORG_AUTH_DEVICE where
+			DEVICE_TYPE in
+				<foreach collection="deviceTypeList" item="dType" index="index" open="(" separator="," close=")">
+					#{dType}
+				</foreach>
+		and to_version=#{toVersion}
+	</select>
+
+    <update id="updateDeviceById" >
+		update ORG_AUTH_DEVICE
+		<set>
+			<if test="deviceName != null">
+			 DEVICE_NAME = #{deviceName},
+			</if>
+			<if test="groupName != null">
+			 GROUP_NAME = #{groupName},
+			</if>
+			<if test="lastDate != null">
+			 LAST_DATE = #{lastDate},
+			</if>
+			<if test="mac != null">
+			 MAC = #{mac},
+			</if>
+			<if test="heartbeat != null">
+			 HEARTBEAT = #{heartbeat},
+			</if>
+			<if test="deviceType != null">
+			 DEVICE_TYPE = #{deviceType},
+			</if>
+			<if test="curVersion != null">
+			 CUR_VERSION = #{curVersion},
+			</if>
+			<if test="toVersion != null">
+			 TO_VERSION = #{toVersion},
+			</if>
+			<if test="ipv4 != null">
+			 IPV4 = #{ipv4},
+			</if>
+			<if test="lastHeartTime != null">
+			 LAST_HEART_TIME = #{lastHeartTime},
+			</if>
+		</set>
+		<where>
+			ID = #{id} and ORG_ID=#{orgId}
+		</where>
+	</update>
+	
+	<delete id="deleteDeviceById" >
+		delete from ORG_AUTH_DEVICE where ID=#{id} and ORG_ID=#{orgId}
+	</delete>
+    
+    <select id="getDeviceListByOrgId" resultMap="deviceResult">  
+    	select d.*
+        from ORG_AUTH_DEVICE d 
+        WHERE d.ORG_ID = #{orgId}
+		ORDER BY d.ID desc
+    </select>
+</mapper>

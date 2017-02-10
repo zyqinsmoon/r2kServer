@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="wx" namespace="/wx" extends="struts-default">
+    	<action name="*" class="EbookAction" method="{1}">
+    	<result name="catalogRow">/WEB-INF/jsp/wx/catalogRow.jsp</result>
+    	<result name="commend">/WEB-INF/jsp/wx/commend.jsp</result>
+    	<result name="bookDetail">/WEB-INF/jsp/wx/bookDetail.jsp</result>
+    	<result name="book">/WEB-INF/jsp/wx/book.jsp</result>
+    	<result name="wxfail">/WEB-INF/jsp/wx/wxfail.jsp</result>
+    	<result name="bookDetailtest">/WEB-INF/jsp/wx/bookDetail1.jsp</result>
+    	<result name="commendtest">/WEB-INF/jsp/wx/commend1.jsp</result>
+    	<result name="booktest">/WEB-INF/jsp/wx/book1.jsp</result>
+    	<result name="catapabi">/WEB-INF/jsp/wx/catapabi.jsp</result>
+    	<result name="catsearch">/WEB-INF/jsp/wx/catsearch.jsp</result>
+    	<result name="metasearch">/WEB-INF/jsp/wx/search.jsp</result>
+       </action>
+    </package>
+</struts>

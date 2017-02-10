@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="topic" namespace="/topic" extends="json-default">
+    	<action name="*" class="topicAction" method="{1}">
+       	   <result name="list">/WEB-INF/jsp/admin/topic/topics.jsp</result>
+       	   <result name="content">/WEB-INF/jsp/admin/topic/topicContents.jsp</result>
+       	   <result name="save" type="redirectAction">showTopics</result>
+       	   <result name="delete" type="redirectAction">showTopics</result>
+       	   <result name="update" type="redirectAction">showTopics</result>
+       	   <result name="put" type="json">
+		   		<param name="root">returnMsg</param>
+		   </result>
+       	   <result name="toUpdate" type="json">
+    			<param name="root">topic</param>
+		   </result>
+       	   <result name="allTopics">/WEB-INF/jsp/admin/topic/topicsAuthEdit.jsp</result>
+       	   <result name="authlist" type="json">
+    			<param name="root">flag</param>
+		   </result>
+       	   <result name="toSaveTopic">/WEB-INF/jsp/admin/topic/topicsave.jsp</result>
+       	   <result name="toUpdateTopic">/WEB-INF/jsp/admin/topic/updatetopic.jsp</result>
+       	   <result name="delContent" type="chain">showContent</result>
+       	   <result name="updateContent" type="chain">showContent</result>
+       	   <result name="topicAuthList">/WEB-INF/jsp/admin/topic/topicsAuthList.jsp</result>
+       	   <result name="topiclist">/WEB-INF/jsp/topic/topiclist.jsp</result>
+       	   <result name="topicdetail">/WEB-INF/jsp/topic/topicdetail.jsp</result>
+       	   <result name="topicindex">/WEB-INF/jsp/topic/topicindex.jsp</result>
+       	   <result name="verticalindex">/WEB-INF/jsp/topic/verticalindex.jsp</result>
+       </action>
+    </package>
+</struts>

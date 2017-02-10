@@ -1,0 +1,157 @@
+/********/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video { 
+	margin: 0; padding: 0; border: 0; font-size: 100%; vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+li{ list-style:none;}
+
+.clearboth { 
+	clear: both; 
+}
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+a { 
+	text-decoration: none; 
+	outline: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+select, 
+select:focus, 
+a:focus, input:focus, select:focus, textarea:focus, 
+a, input, select, textarea, button, 
+a::-moz-focus-inner, input::-moz-focus-inner, select::-moz-focus-inner, textarea::-moz-focus-inner, button::-moz-focus-inner { 
+	outline: none; 
+    outline-width: 0; 
+}
+p { line-height:1.5; }
+a { color:#333; font-size: 1.6em; }
+h1 { font-size: 3em; }
+h2 { font-size: 2em; }
+h3 { font-size: 1.6em; }
+h4 { font-size: 1.4em; }
+small { font-size: 0.6em;}
+html, body { 
+	height: 100%;
+}
+
+
+/* BEGIN STYLES BELOW ************************************/ 
+html {font-size: 62.5%;/*10 ¡Â 16 ¡Á 100% = 62.5%*/}
+body { background: #fff; font: normal 1.4rem/1.2 arial, helvetica, sans-serif,"Î¢ÈíÑÅºÚ"; color: #333;}
+body.listbody{background: #f9f5f0;}
+header{ height:44px; background:#21292c; text-align:center; font-size:2rem; color:#fff; line-height:44px;}
+header a{ position:absolute; top:0; left:10px; padding-left:16px; background:url(../image/icon_back.jpg) no-repeat 0 13px; background-size:11px; font-size:1.6rem; color:#fff;}
+
+.wrap .w_header{ height:40px; background:#d76336; color:#fff; text-align:center; font-size:1.8rem; line-height:40px;}
+.wrap .recommond{ margin:0 5px; padding-bottom:12px;}
+.wrap .recommond li{ clear:both; border-bottom:1px dotted #dcd0c9; overflow:auto;}
+.wrap .recommond li a{ display:block; padding:12px 0 6px 12px; overflow:auto;}
+.wrap .recommond li img{ display:block;float:left; margin-bottom:5px; width:75px; height:101px; -webkit-box-shadow:2px 3px 2px rgba(0, 0, 0, 0.2); box-shadow:3px 3px 2px rgba(0, 0, 0, 0.2);}
+.wrap .recommond li div{ position:absolute; left:115px; padding-right:20px; color:#999;font-size:1.4rem;}
+.wrap .recommond li div p{display:block; padding:6px 0; font-size:1.8rem; line-height:1.2; font-weight:bold; color:#a56a55; height:38px; overflow:hidden;}
+.wrap .recommond li div span{ line-height:1.4;}
+
+.wrap .catalog li{  clear:both; padding:0 12px 0 24px; height:44px; border-bottom:1px solid #c0a391; overflow:hidden; }
+.wrap .catalog li a{ position:relative;display:block; font-size:1.6rem; color:#7a532d; line-height:44px;}
+.wrap .catalog li a span{ position:absolute; top:0; right:10px;line-height:44px;color:#7a532d;  }
+.wrap .catalog li a:hover,.wrap .catalog li a:hover span{ color:#d76336;}
+.wrap .detail { padding:25px 0 0 16px;}
+.wrap .detail >a{ float:left;}
+.wrap .detail >a img{ width:120px; display:block;-webkit-box-shadow:2px 3px 2px rgba(0, 0, 0, 0.2); box-shadow:3px 3px 2px rgba(0, 0, 0, 0.2)}
+.wrap .detail  >div{ padding:0 20px 0 140px; color:#999;}
+.wrap .detail  >div a{display:block; margin-bottom:34px; padding:6px 0; font-size:1.8rem; font-weight:bold; color:#a56a55; height:60px; overflow:hidden;}
+.wrap .detail  >div span{ font-size:1.5rem;}
+
+.sub_area{ clear:both; padding:26px 12px 0 18px;}
+.sub_area input{ color:#fff; font-size:1.8rem;}
+.borrowbtn{ margin-right:4px; width:35.7%; height:35px; background:url(../image/blank.png) no-repeat #28b6cc; border:0;}
+.readbtn{ width:35.7%; height:35px; background:url(../image/blank.png) no-repeat #d76336; border:0;}
+.catabtn{ float:right; display:block; margin:2px 2% 0 0; width:18%; height:35px; line-height:35px; border-radius:5px; background:-webkit-gradient(linear, 0 0, 0 100%, from(#f79b77), to(#d55f31)); text-align:center; color:#fff; font-size:1.8rem;}
+
+
+
+.adstra{ clear:both; margin:20px 12px 12px 24px; padding-top:12px; border-top:1px solid #d6d6d6; font-size:1.6rem; color:#999;}
+
+.bottom{ position:fixed; bottom:0; width: 100%; height:44px; background:rgba(241,234,225,0.9); border-top:1px solid #b2a48f;z-index:3;}
+.imgtop{ position:absolute; top:0; left:0; width: 100%; z-index:2;}
+.imgtop em{ float:left; width:33.33%;}
+.imgtop span{ float:left; display:block; width:33%; }
+.imgtop a:first-child{ float:left;  }
+.bottom .mulu{ float:left; padding-left:16px; line-height:44px; color:#ff4700; font-size:1.6rem;}
+
+.blackdiv{position:absolute; top:0; width:100%; height:100%; z-index:10;background:url(../image/hand.png) no-repeat center rgba(0,0,0,0.8); background-size:100%;}
+.loadfld{ position:absolute; top:0; width:100%; height:100%;background:url(../image/loading2.png) no-repeat center #fff; background-size:100%; text-align:center; z-index:4; font-size:30px;}
+.readover{position:absolute; top:0; width:100%; height:100%;background:url(../image/readover.png) no-repeat center;background-size:100% 100%; z-index:6; }
+.readover a{ display:block; padding-top:40%; text-align:center; color:#7684c1; font-size:1.8rem;}
+.readoverios{background:url(../image/readoverios.png) no-repeat center; background-size:100% 100%;}
+.borrowdiv{position:absolute; top:0; width:100%; height:100%;background:url(../image/borrow.png) no-repeat center;background-size:100% 100%; z-index:2; }
+.bios{background:url(../image/borrowios.png) no-repeat center;background-size: 100% 100%; }
+
+.layout { float:left; width:64%; padding:10px 0 0 4%; font-family: Georgia, serif; }
+.jslider{top:0.8em;}
+.layout-slider { margin-bottom: 60px;}
+.layout-slider-settings { font-size: 12px; padding-bottom: 10px; }
+.layout-slider-settings pre { font-family: Courier; }
+.jslider .jslider-pointer { width: 24px; height: 24px; position: absolute; left: 20%; top: -11px; margin-left: -6px; background:#fff; border:1px solid #ccc; border-radius:50px}
+.jslider .jslider-bg .v{ background:#d46c2f;}
+#readFld{ height:100%; width:300000px;}
+#readFld a{ position:absolute; left:0}
+
+
+.resarea{  width:100%; overflow:hidden;}
+.textpage{ display: -webkit-box;}
+.textpage > div{ position:relative; padding:14px 0;}
+.textpage > div:nth-child(2n){}
+.textpage > div span{ font-size:1.6rem;}
+.textpage .loadfld{ position:absolute; top:0; width:100%; height:100%;background:url(../image/loading2.png) no-repeat center #fff; background-size:100%; text-align:center; z-index:4; font-size:30px;}
+.textpage em{ display:block; font-style:normal;}
+#loadFld,.loadfld2{position:absolute; top:0; left:0; width:100%; height:100%;background:url(../image/loading2.png) no-repeat center #fff; background-size:100%; text-align:center; z-index:6; font-size:30px;}
+
+.tempdata { position:absolute; top:-2000px; left:0; }
+.tempdata >div{ position:absolute; top:0; left:0; padding:14px 0; text-indent:2em; background:green;}
+.tempdata span{ font-size:1.6rem;}
+
+.error{ position:absolute; top:0; left:0; width:100%; height:100%; background:url(../image/error.png) no-repeat center #fff; background-size:100%; z-index:7;}
+
+.swiper-container{ height:100%;}
+.swiper-container .swiper-slide{  background:url(../image/loading.gif) no-repeat center #fff;}
+.swiper-container .swiper-slide > div{ margin:0 auto; width:94%; padding:14px 0; }
+.swiper-container .swiper-slide > div p{ padding-top:4px; text-indent:2em; word-wrap:break-word; white-space:normal; word-break:break-all;font-size:1.8rem; line-height:1.5;}
+.swiper-container .swiper-slide > div p br{ display:none; }
+.swiper-container .swiper-slide > div p span{font-size:2rem;  }
+
+.swiper-container .swiper-slide > div em{ display:block; font-style:normal;}
+
+

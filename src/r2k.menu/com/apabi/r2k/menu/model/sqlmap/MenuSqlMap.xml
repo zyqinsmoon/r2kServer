@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.apabi.r2k.menu.model.Menu">
+	<resultMap id="ResultMap" type="com.apabi.r2k.menu.model.Menu" >
+	    <id column="ID" property="id"/>
+	    <result column="title" property="title"/>
+	    <result column="link" property="link"/>
+	    <result column="background" property="background"/>
+	    <result column="normal" property="normal"/>
+	    <result column="ICON_BACKGROUND" property="iconBackground"/>
+	    <result column="LOGO" property="logo"/>
+	    <result column="org_id" property="orgId"/>
+	    <result column="device_id" property="deviceId"/>
+	    <result column="status" property="status"/>
+	    <result column="DEVICE_TYPE" property="deviceType"/>
+	    <result column="HIDE" property="hide"/>
+	    <result column="HOME_PAGE" property="homePage"/>
+	    <result column="menu_type" property="menuType"/>
+	    <result column="DESCRIPTION" property="description"/>
+	    <result column="SORT" property="sort"/>
+  	</resultMap>
+  	
+  	<sql id="menu_column_list">
+  		id,title,link,background,normal,selected,frozen,org_id,device_id,status,type,menu_type,sort
+  	</sql>
+  	
+  	<!-- 用于select查询公用抽取的列 -->
+	<sql id="commonColumns">
+	    <![CDATA[
+        	ID ,
+        	TITLE ,
+        	LINK ,
+        	BACKGROUND ,
+        	NORMAL ,
+        	ICON_BACKGROUND ,
+        	LOGO ,
+        	ORG_ID ,
+        	DEVICE_ID ,
+        	STATUS ,
+        	DEVICE_TYPE ,
+        	HIDE ,
+        	HOME_PAGE ,
+        	MENU_TYPE ,
+        	DESCRIPTION ,
+        	SORT
+	    ]]>
+	</sql>
+	
+  	<sql id="dynamicWhere">
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+				<if test="id != null">
+				AND ID = #{id}
+				</if>
+				<if test="title != null">
+				AND TITLE = #{title}
+				</if>
+				<if test="orgId != null">
+				AND ORG_ID = #{orgId}
+				</if>
+				<if test="deviceId != null">
+				AND DEVICE_ID = #{deviceId}
+				</if>
+				<if test="status != null">
+				AND STATUS = #{status}
+				</if>
+				<if test="deviceType != null">
+				AND DEVICE_TYPE = #{deviceType}
+				</if>
+				<if test="hide != null">
+				AND HIDE = #{hide}
+				</if>
+				<if test="homePage != null">
+				AND HOME_PAGE = #{homePage}
+				</if>
+		</trim>
+	</sql>
+	
+	<insert id="insert" parameterType="com.apabi.r2k.menu.model.Menu">
+		<selectKey resultType="int" keyProperty="id">
+    	SELECT LAST_INSERT_ID() 
+    	</selectKey>
+		insert into ORG_MENU (TITLE,LINK,BACKGROUND,NORMAL,ICON_BACKGROUND,LOGO,ORG_ID,DEVICE_ID,STATUS,DEVICE_TYPE,HIDE,HOME_PAGE,MENU_TYPE,SORT)
+		 values(#{title},#{link},#{background},#{normal},#{iconBackground},#{logo},#{orgId},#{deviceId},#{status},#{deviceType},#{hide},#{homePage},#{menuType},#{sort})
+	</insert>
+	
+	<select id="getById" resultMap="ResultMap">
+		select
+		 <include refid="commonColumns" />
+	       from ORG_MENU where id=#{id}
+	</select>
+	
+	<update id="update" parameterType="com.apabi.r2k.menu.model.Menu">
+		UPDATE ORG_MENU
+		<trim prefix="SET" suffixOverrides=",">
+	        		<if test="title != null">
+	        			TITLE = #{title},
+	        		</if>
+	        		<if test="link != null">
+	        			LINK = #{link},
+	        		</if>
+	        		<if test="background != null">
+	        			BACKGROUND = #{background},
+	        		</if>
+	        		<if test="normal != null">
+	        			NORMAL = #{normal},
+	        		</if>
+	        		<if test="iconBackground != null">
+	        			ICON_BACKGROUND = #{iconBackground},
+	        		</if>
+	        		<if test="logo != null">
+	        			LOGO = #{logo},
+	        		</if>
+	        		<if test="status != null">
+	        			STATUS = #{status},
+	        		</if>
+	        		<if test="hide != null">
+	        			HIDE = #{hide},
+	        		</if>
+	        		<if test="homePage != null">
+	        			HOME_PAGE = #{homePage},
+	        		</if>
+	        		<if test="description != null">
+	        			DESCRIPTION = #{description},
+	        		</if>
+	        		<if test="sort != null">
+	        			SORT = #{sort}
+	        		</if>
+		</trim>
+		<where>
+			ID = #{id}
+		</where>
+	</update>
+	
+	<select id="updateStatus" parameterType="map">
+		update ORG_MENU set STATUS = #{newStatus}
+		<where>
+			ORG_ID = #{orgId} AND DEVICE_TYPE = #{deviceType}
+			<if test="deviceId != null">
+			AND DEVICE_ID = #{deviceId}
+			</if>
+			<if test="deviceId == null">
+			AND DEVICE_ID is null
+			</if>
+			AND STATUS = #{status}
+			AND HIDE = #{hide}
+		</where>
+	</select>
+	
+	<select id="updateSort" parameterType="com.apabi.r2k.menu.model.Menu">
+		UPDATE ORG_MENU SET SORT = #{sort},STATUS=#{status} WHERE ID = #{id} AND ORG_ID = #{orgId} AND DEVICE_TYPE=#{deviceType}
+		<if test="deviceId != null">
+			AND DEVICE_ID = #{deviceId}
+			</if>
+			<if test="deviceId == null">
+			AND DEVICE_ID is null
+			</if>
+	</select>
+  	
+  	<select id="pageSelect" resultMap="ResultMap">
+		select
+		<include refid="commonColumns" />
+	        from ORG_MENU
+	    <where>
+	    	ORG_ID = #{orgId} AND DEVICE_TYPE=#{deviceType}
+			<if test="deviceId != null">
+				AND DEVICE_ID = #{deviceId}
+			</if>
+			<if test="deviceId == null">
+				AND DEVICE_ID is null
+			</if>
+	    </where>
+			ORDER BY sort asc
+	</select>
+	
+	<select id="pageSelectCount" resultType="int">
+		select count(*) from ORG_MENU
+		<include refid="dynamicWhere" />
+	</select>
+	
+	<delete id="delete">
+		delete from ORG_MENU where id=#{id} and ORG_ID=#{orgId} and DEVICE_TYPE=#{deviceType}
+		<if test="deviceId != null">
+			AND DEVICE_ID = #{deviceId}
+		</if>
+		<if test="deviceId == null">
+			AND DEVICE_ID is null
+		</if>
+	</delete>
+	
+	<delete id="deleteDefaultMenu">
+		delete from ORG_MENU where call_id=#{callId} and org_id=#{orgId}
+	</delete>
+	
+	<delete id="deleteDefaultMenus">
+		delete from ORG_MENU where org_id=#{orgId} and call_id in
+		<foreach collection="callIds" separator="," item="callId" open="(" close=")">
+			#{callId}
+		</foreach>
+	</delete>
+	
+	<select id="getCallMenus" resultMap="ResultMap">
+		select * from ORG_MENU
+		<where>
+			ORG_ID = #{orgId}
+			<if test="deviceId != null">
+				AND DEVICE_ID = #{deviceId}
+			</if>
+			<if test="deviceId == null">
+				AND DEVICE_ID is null
+			</if>
+		</where>
+	</select>
+	
+	<!--<select id="getMenus" resultMap="ResultMap">
+		select * from ORG_MENU 
+		<where>
+			ORG_ID = #{orgId}
+			<if test="deviceId != null">
+				AND DEVICE_ID = #{deviceId}
+			</if>
+			<if test="deviceId == null">
+				AND DEVICE_ID is null
+			</if>
+			<if test="deviceType != null">
+				AND DEVICE_TYPE = #{deviceType}
+			</if>
+			<if test="status != null">
+				AND STATUS = #{status}
+			</if> 
+		</where>
+		union 
+		select m.ID ID, p.ENUM_NAME TITLE, p.INTERFACE_URL LINK, m.BACKGROUND BACKGROUND,m.NORMAL NORMAL,m.ICON_BACKGROUND ICON_BACKGROUND,m.LOGO LOGO,m.ORG_ID ORG_ID,
+		m.DEVICE_ID DEVICE_ID,m.STATUS STATUS,m.DEVICE_TYPE DEVICE_TYPE,m.IS_HIDE IS_HIDE,m.MENU_TYPE MENU_TYPE,p.ENUM_DESC DESCRIPTION
+		from ORG_MENU m,PRJ_ENUM p
+		<where>
+			ORG_ID = #{orgId}
+			<if test="deviceId != null">
+				AND DEVICE_ID = #{deviceId}
+			</if>
+			<if test="deviceId == null">
+				AND DEVICE_ID is null
+			</if>
+			<if test="type != null">
+				AND TYPE = #{type}
+			</if>
+			<if test="status != null">
+				AND STATUS = #{status}
+			</if>
+			AND CALL_ID > 0
+			AND m.CALL_ID = p.ENUM_ID
+		</where>
+	</select>
+	--><select id="getMenus" resultMap="ResultMap">
+		select * from ORG_MENU 
+		<where>
+			ORG_ID = #{orgId}
+			<if test="deviceId != null">
+				AND DEVICE_ID = #{deviceId}
+			</if>
+			<if test="deviceId == null">
+				AND DEVICE_ID is null
+			</if>
+			<if test="deviceType != null">
+				AND DEVICE_TYPE = #{deviceType}
+			</if>
+			<if test="hide != null">
+				AND HIDE = #{hide}
+			</if> 
+			<if test="status != null">
+				AND STATUS = #{status}
+			</if> 
+		</where>
+		ORDER BY sort asc
+	</select>
+	
+	
+	<select id="findHomePage" resultMap="ResultMap">
+		select * from ORG_MENU 
+		<where>
+			ORG_ID = #{orgId} AND DEVICE_TYPE = #{deviceType}
+			<if test="deviceId != null">
+			AND DEVICE_ID = #{deviceId}
+			</if>
+			<if test="deviceId == null">
+			AND DEVICE_ID is null
+			</if>
+			AND HOME_PAGE = 1
+		</where>
+	</select>
+	
+	<!-- 查询已经添加了菜单设备类型和设备 -->
+	<select id="findAddMenuDev" resultMap="ResultMap">
+	select DEVICE_TYPE,DEVICE_ID from ORG_MENU where ORG_ID=#{orgId} group by DEVICE_TYPE,DEVICE_ID
+	</select>
+	
+	<!-- 根据机构id和菜单类型列表批量删除 -->
+	<select id="delByMenuTypes" parameterType="map">
+	delete from ORG_MENU where ORG_ID=#{orgId} and MENU_TYPE in
+	<foreach collection="menuTypes" separator="," open="(" close=")" item="menuType">
+	#{menuType}
+	</foreach>
+	</select>
+	
+	<select id="findMenuByTypes" resultMap="ResultMap">
+	select * from ORG_MENU where ORG_ID=#{orgId} and MENU_TYPE in
+	<foreach collection="menuTypes" separator="," open="(" close=")" item="menuType">
+	#{menuType}
+	</foreach>
+	</select>
+	
+	<delete id="deleteDevMenu">
+		delete from ORG_MENU where ORG_ID=#{orgId} and DEVICE_TYPE=#{deviceType}
+		<if test="deviceId != null">
+			AND DEVICE_ID = #{deviceId}
+		</if>
+		<if test="deviceId == null">
+			AND DEVICE_ID is null
+		</if>
+	</delete>
+</mapper>

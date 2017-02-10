@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="device" namespace="/dev" extends="json-default">
+		<interceptors>
+			<interceptor-stack name="paperStack">
+				<interceptor-ref name="fileUpload">
+					<param name="allowedTypes">application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</param>
+				</interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+    	<action name="*" class="deviceAction" method="{1}">
+       	   <result name="list">/WEB-INF/jsp/admin/devicelist.jsp</result>
+       	   <result name="save" type="redirectAction">show</result>
+       	   <result name="delete" type="redirectAction">show</result>
+       	   <result name="update" type="redirectAction">show</result>
+       	   <result name="toUpdate" type="json">
+    			<param name="root">device</param>
+		   </result>
+		   <result name="upload" type="json">
+				<param name="root">msg</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="down" type="stream">
+                <param name="contentType">application/octet-stream</param>
+                <param name="contentDisposition">attachment;filename="${devfileFileName}"</param>
+                <param name="bufferSize">2048</param>
+           </result>
+           <result name="checkDevInfo" type="json">
+    			<param name="root">status</param>
+		   </result>
+		   <result name="slave">/WEB-INF/jsp/admin/slave.jsp</result>
+           <result name="updateDeviceName" type="json">
+    			<param name="root">status</param>
+		   </result>
+       </action>
+    </package>
+</struts>

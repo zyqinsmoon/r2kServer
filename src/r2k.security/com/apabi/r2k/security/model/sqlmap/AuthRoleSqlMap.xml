@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="com.apabi.r2k.security.model.AuthRole">
+
+    <resultMap id="authRoleResult" type="com.apabi.r2k.security.model.AuthRole">
+        <result property="id" column="ID"/>
+        <result property="roleName" column="ROLE_NAME"/>
+        <result property="roleCode" column="ROLE_CODE"/>
+        <result property="roleDesc" column="ROLE_DESC"/>
+        <result property="roleCrtUser" column="ROLE_CRT_USER"/>
+        <result property="crtDate" column="CRT_DATE"/>
+        <result property="lastUpdate" column="LAST_UPDATE"/>
+        <result property="enabled" column="ENABLED"/>
+        <result property="orgId" column="ORG_ID"/>
+        <result property="deviceType" column="DEVICE_TYPE"/>
+        <result property="type" column="TYPE"/>
+        <result property="interfaceUrl" column="INTERFACE_URL"/>
+        <result property="menuType" column="MENU_TYPE"/>
+       
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="commonColumns">
+	    <![CDATA[
+        	ID ,
+        	ROLE_NAME ,
+        	ROLE_CODE ,
+        	ROLE_DESC ,
+        	ROLE_CRT_USER ,
+        	CRT_DATE ,
+        	LAST_UPDATE ,
+        	ENABLED ,
+        	ORG_ID ,
+        	DEVICE_TYPE ,
+        	TYPE ,
+        	MENU_TYPE
+	    ]]>
+	</sql>
+
+	<sql id="dynamicWhere">
+	    <trim prefixOverrides="AND|OR">
+	      <if test="id !=null">
+	             ID = #{id}
+	       </if>
+	      <if test="roleName !=null">
+	             ROLE_NAME = #{roleName}
+	       </if>
+	      <if test="roleCode !=null">
+	             ROLE_CODE = #{roleCode}
+	       </if>
+	      <if test="roleDesc !=null">
+	             ROLE_DESC = #{roleDesc}
+	       </if>
+	      <if test="roleCrtUser !=null">
+	             ROLE_CRT_USER = #{roleCrtUser}
+	       </if>
+	       <if test="orgId !=null">
+	             ORG_ID = #{orgId}
+	       </if>
+	      <if test="crtDate !=null">
+	             CRT_DATE = #{crtDate}
+	       </if>
+	      <if test="lastUpdate !=null">
+	             LAST_UPDATE = #{lastUpdate}
+	       </if>
+	      <if test="enabled !=null">
+	             ENABLED = #{enabled}
+	       </if>
+	      <if test="ids !=null">
+	       		ID in (#{ids})
+	       </if>
+	    </trim>
+	</sql>
+	
+    <insert id="insert" parameterType="com.apabi.r2k.security.model.AuthRole">
+    <![CDATA[
+        INSERT INTO
+        AUTH_ROLE (
+        	ID ,
+        	ROLE_NAME ,
+        	ROLE_CODE ,
+        	ROLE_DESC ,
+        	ROLE_CRT_USER ,
+        	CRT_DATE ,
+        	LAST_UPDATE ,
+        	ENABLED,
+        	ORG_ID
+        ) VALUES (
+        	#{id} ,
+        	#{roleName} ,
+        	#{roleCode} ,
+        	#{roleDesc} ,
+        	#{roleCrtUser} ,
+        	#{crtDate} ,
+        	#{lastUpdate} ,
+        	#{enabled} ,
+        	#{orgId}
+        )
+    ]]>
+   
+        
+    </insert>
+    
+	 <select id='generateKey' resultType="java.lang.Long" >
+    	SELECT  SEQ_AUTH_ROLE.nextval AS ID FROM DUAL
+    </select>
+    <update id="update" parameterType="com.apabi.r2k.security.model.AuthRole">
+    <![CDATA[
+        UPDATE AUTH_ROLE SET
+	        ROLE_NAME = #{roleName} ,
+	        ROLE_CODE = #{roleCode} ,
+	        ROLE_DESC = #{roleDesc} ,
+	        ROLE_CRT_USER = #{roleCrtUser} ,
+	        CRT_DATE = #{crtDate} ,
+	        LAST_UPDATE = #{lastUpdate} ,
+	        ENABLED = #{enabled}, 
+	        ORG_ID=#{orgId}
+        WHERE 
+	        ID = #{id} 
+    ]]>
+    </update>
+
+	
+    <delete id="delete" parameterType="map">
+    <![CDATA[
+        delete from AUTH_ROLE
+    ]]>
+		<include refid="dynamicWhere"/>
+    </delete>
+    <select id="getRolesByUserId" resultMap="authRoleResult" >
+	    <![CDATA[
+	    	SELECT *
+      		FROM AUTH_ROLE T1,AUTH_USER_ROLE T2
+       		WHERE T2.USER_ID = #{userId} AND T1.ID=T2.ROLE_ID
+	    ]]>
+    </select>
+    
+    <select id="getById" resultMap="authRoleResult">
+	    select <include refid="commonColumns"/>
+	    <![CDATA[
+	        from AUTH_ROLE 
+	        where 
+		        ID = #{id} 
+	    ]]>
+    </select>
+    
+     <select id="getRolesByMenuType" resultMap="authRoleResult">
+	    select <include refid="commonColumns"/>
+	    <![CDATA[
+	        from AUTH_ROLE 
+	        where 
+		        MENU_TYPE = #{menuType} 
+	    ]]>
+    </select>
+
+	 
+    <select id="count" resultType="long">
+    <![CDATA[
+        select count(*) from AUTH_ROLE
+    ]]>
+		<include refid="dynamicWhere"/>    
+    </select>
+    <select id="filteredCount" resultType="long">
+   
+       <![CDATA[ 
+		SELECT count(*)
+		FROM AUTH_ROLE T1,
+	              (SELECT ID FROM AUTH_ORG 
+	               START WITH ID = #{orgId} 
+				   CONNECT BY PRIOR ID=PARENT_ID) T2 WHERE T1.ORG_ID=T2.ID 
+		 ]]>		   
+  
+		
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="pageSelect" resultMap="authRoleResult">
+    	select <include refid="commonColumns"/>
+	    <![CDATA[
+	        from AUTH_ROLE 
+	    ]]>
+		<include refid="dynamicWhere"/>
+		<if test="sortColumns">
+		ORDER BY #{sortColumns}</if>
+		
+    </select>
+     <!-- 分页查询角色，以机构id过滤。意即一个机构下（包括其所有子机构下）的所有角色 -->
+	<select id='pageSelectOrgFiltered'  resultMap="authRoleResult">
+		<![CDATA[ 
+		SELECT T1.ID ,ROLE_NAME ,ROLE_CODE ,ROLE_DESC ,ROLE_CRT_USER ,CRT_DATE ,LAST_UPDATE ,ENABLED ,ORG_ID
+		FROM AUTH_ROLE T1,
+	              (SELECT ID FROM AUTH_ORG 
+	               START WITH ID = #{orgId} 
+				   CONNECT BY PRIOR ID=PARENT_ID) T2 WHERE T1.ORG_ID=T2.ID 
+		 ]]>
+	</select>
+    
+    <select id='queryAllByEnum'  resultMap="authRoleResult">
+		SELECT 
+			<include refid="commonColumns"/>
+		FROM AUTH_ROLE 
+		where MENU_TYPE in 
+		<foreach collection="enumCodes" index="index" item="enumCode" open="(" separator="," close=")">
+    		#{enumCode}
+    	</foreach>
+    	or ID in(1,13,14,28,33,35)
+	</select>	
+    
+    <select id="getRolesByOrg" resultMap="authRoleResult">
+    	select * 
+    	from AUTH_ROLE r
+    	 join AUTH_ORG_ROLE ro
+    	on r.ID = ro.ROLE_ID
+    	join ORG o
+    	on ro.ORG_ID = o.ORG_ID where o.ORG_ID = #{orgId}
+    	<if test="deviceType !=null">
+	       	and r.DEVICE_TYPE=#{deviceType}
+	    </if>
+	    <if test="type !=null">
+	       	and r.TYPE=#{type}
+	    </if>
+    </select>	
+     
+    <select id='queryByEnum'  resultMap="authRoleResult">
+		SELECT 
+			<include refid="commonColumns"/>
+		FROM AUTH_ROLE 
+		where ORG_ID = #{orgId} AND MENU_TYPE = #{enumCode}
+	</select>	
+</mapper>

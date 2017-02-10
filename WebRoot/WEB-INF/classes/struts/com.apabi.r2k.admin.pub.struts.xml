@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+    <package name="pub" namespace="/pub" extends="json-default">
+    	<interceptors>
+			<interceptor-stack name="pubStack">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="pubStack"></default-interceptor-ref>
+		<action name="*" class="columnAction" method="{1}">
+			<result name="org">/WEB-INF/jsp/admin/publish/org.jsp</result>
+			<result name="device">/WEB-INF/jsp/admin/publish/device.jsp</result>
+			
+			<result name="saveWelcome">/WEB-INF/jsp/admin/publish/savewelcome.jsp</result>
+			<result name="updateWelcome">/WEB-INF/jsp/admin/publish/updatewelcome.jsp</result>
+			<result name="saveCol">/WEB-INF/jsp/admin/publish/savecol.jsp</result>
+			<result name="updateCol">/WEB-INF/jsp/admin/publish/updatecol.jsp</result>
+			<result name="saveArt">/WEB-INF/jsp/admin/publish/saveart.jsp</result>
+			<result name="updateArt">/WEB-INF/jsp/admin/publish/updateart.jsp</result>
+			<result name="sort" type="json">
+				<param name="root">flag</param>
+			</result>
+			
+			<result name="orgrt" type="redirectAction">
+				<param name="actionName">${actionName}</param>  
+			</result>
+			<result name="devicert" type="redirectAction">
+				<param name="actionName">${actionName}</param>  
+        		<param name="deviceId">${deviceId}</param> 
+        		<param name="devType">${devType}</param> 
+        		<param name="deviceName">${deviceName}</param> 
+			</result>
+
+			<result name="index_ftl" type="freemarker">/pubtemplet/templet/test1/index.ftl</result>
+			<result name="subpage_ftl" type="freemarker">/pubtemplet/templet/test1/subpage.ftl</result>
+			<result name="publish" type="json">
+				<param name="root">errorMsgs</param>
+			</result>
+			<result name="publishByDevice" type="json">
+				<param name="root">errorMsgs</param>
+			</result>
+			<result name="publishAll" type="json">
+				<param name="root">flag</param>
+			</result>
+			<result name="show_home" type="redirect">${publishPath}</result>
+			<result name="getchilds" type="json">
+				<param name="root">columnList</param>
+			</result>
+			<result name="ispublish" type="json">
+				<param name="root">flag</param>
+			</result>
+			
+			<result name="toSavePicsCol">/WEB-INF/jsp/admin/publish/savepicscol.jsp</result>
+			<result name="toUpdatePicsCol">/WEB-INF/jsp/admin/publish/updatepicscol.jsp</result>
+			<result name="toSavePics">/WEB-INF/jsp/admin/publish/savepics.jsp</result>
+			<result name="toUpdatePics">/WEB-INF/jsp/admin/publish/updatepics.jsp</result>
+			<result name="toSavePic">/WEB-INF/jsp/admin/publish/savepic.jsp</result>
+			<result name="toUpdatePic">/WEB-INF/jsp/admin/publish/updatepic.jsp</result>
+		</action>
+    </package>
+</struts>

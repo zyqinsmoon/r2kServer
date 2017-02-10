@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--被XMLSpy vW3C Schema产生的2011 rel. 2 sp1 (http://www.altova.com)-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="UpdateTime" type="xs:dateTime"/>
+	<xs:element name="R2k">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Papers"/>
+			</xs:sequence>
+			<xs:attribute name="updateTime" use="required" type="xs:dateTime"/>
+			<xs:attribute name="total" use="required" type="xs:byte"/>
+			<xs:attribute name="to" use="required" type="xs:byte"/>
+			<xs:attribute name="from" use="required" type="xs:byte"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PublishedDate" type="xs:dateTime"/>
+	<xs:element name="Periods">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Period"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Period">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PublishedDate"/>
+				<xs:element ref="UpdateTime"/>
+				<xs:element ref="Icon"/>
+				<xs:element ref="Link"/>
+			</xs:sequence>
+			<xs:attribute name="id" use="required" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Papers">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Paper" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="count" use="required" type="xs:byte"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PaperName" type="xs:string"/>
+	<xs:element name="Paper">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MetaInfo"/>
+				<xs:element ref="Periods"/>
+			</xs:sequence>
+			<xs:attribute name="id" use="required" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MetaInfo">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PaperName"/>
+				<xs:element ref="Desc"/>
+				<xs:element ref="Icon"/>
+				<xs:element ref="Link"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Link" type="xs:anyURI"/>
+	<xs:element name="Icon" type="xs:anyURI"/>
+	<xs:element name="Desc">
+		<xs:complexType/>
+	</xs:element>
+</xs:schema>

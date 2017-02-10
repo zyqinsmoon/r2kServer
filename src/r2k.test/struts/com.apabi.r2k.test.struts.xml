@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <package name="tt" namespace="/tt" extends="myStruts-default">
+       <action name="*" class="testAction" method="{1}">
+       	   <result name="success">/WEB-INF/jsp/test.jsp</result>
+       	   <result name="toframe">/WEB-INF/jsp/commons/middle.jsp</result>
+       	   <result name="xmlResponse" type="xml">
+       	   		<param name="root">result</param>
+       	   		<param name="contentType">text/xml;charset=UTF-8</param>
+       	   </result>
+       	   <result name="tempTest" type="freemarker">/test.ftl</result>
+       	   <result name="pubTest" type="redirect"> ${publishPath}</result>
+       </action>
+    </package>
+    <package name="xmlTest" namespace="/test" extends="struts-default">
+       <action name="xml_*" class="xmlTestAction" method="{1}">
+       	   <result name="toXMLTest">/WEB-INF/jsp/test/xmltest/xmltest.jsp</result>
+       </action>
+    </package>
+</struts>

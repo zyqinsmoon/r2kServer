@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.apabi.r2k.admin.model.PrjEnum">
+
+	<resultMap id="PrjEnumResult" type="com.apabi.r2k.admin.model.PrjEnum">
+		<result property="enumId" column="ENUM_ID" />
+		<result property="enumName" column="ENUM_NAME" />
+		<result property="enumValue" column="ENUM_VALUE" />
+		<result property="enumCode" column="ENUM_CODE" />
+		<result property="crtDate" column="CRT_DATE" />
+		<result property="enumType" column="ENUM_TYPE" />
+		<result property="interfaceUrl" column="INTERFACE_URL"/>
+		<result property="devDef" column="DEV_DEF"/>
+		<result property="enumDesc" column="ENUM_DESC" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="commonColumns">
+	    <![CDATA[
+        	ENUM_ID ,
+        	ENUM_NAME ,
+        	ENUM_VALUE ,
+        	ENUM_CODE ,
+        	CRT_DATE ,
+        	ENUM_TYPE ,
+        	INTERFACE_URL,
+        	DEV_DEF
+	    ]]>
+	</sql>
+
+	<sql id="dynamicWhere">
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+				<if test="enumId != null">
+				AND ENUM_ID = #{enumId}
+				</if>
+				<if test="enumName != null">
+				AND ENUM_NAME = #{enumName}
+				</if>
+				<if test="enumValue != null">
+				AND ENUM_VALUE = #{enumValue}
+				</if>
+				<if test="enumCode != null">
+				AND ENUM_CODE = #{enumCode}
+				</if>
+				<if test="crtDate != null">
+				AND CRT_DATE = #{crtDate}
+				</if>
+				<if test="enumType != null">
+				AND ENUM_TYPE = #{enumType}
+				</if>
+				<if test="devDef != null">
+				AND DEV_DEF = #{devDef}
+				</if>
+				
+		</trim>
+	</sql>
+
+	<insert id="insert" parameterType="com.apabi.r2k.admin.model.PrjEnum">
+    <![CDATA[
+        INSERT INTO
+        PRJ_ENUM (
+        	ENUM_ID ,
+        	ENUM_NAME ,
+        	ENUM_VALUE ,
+        	ENUM_CODE ,
+        	CRT_DATE ,
+        	ENUM_TYPE ,
+        	INTERFACE_URL,
+        	AND DEV_DEF
+        ) VALUES (
+        	#{enumId} ,
+        	#{enumName} ,
+        	#{enumValue} ,
+        	#{enumCode} ,
+        	#{crtDate} ,
+        	#{enumType} ,
+        	#{interfaceUrl},
+        	#{devDef}
+        )
+    ]]>
+	</insert>
+
+	<update id="update" parameterType="com.apabi.r2k.admin.model.PrjEnum">
+		UPDATE PRJ_ENUM
+		<trim prefix="SET" suffixOverrides=",">
+	        		<if test="enumName != null">
+	        			ENUM_NAME = #{enumName},
+	        		</if>
+	        		<if test="enumValue != null">
+	        			ENUM_VALUE = #{enumValue},
+	        		</if>
+	        		<if test="enumCode != null">
+	        			ENUM_CODE = #{enumCode},
+	        		</if>
+	        		<if test="crtDate != null">
+	        			CRT_DATE = #{crtDate},
+	        		</if>
+	        		<if test="enumType != null">
+	        			ENUM_TYPE = #{enumType},
+	        		</if>
+	        		<if test="devDef != null">
+				       DEV_DEF = #{devDef}
+				</if>
+		</trim>
+		<where>
+			ENUM_ID = #{ENUM_ID}
+		</where>
+	</update>
+
+
+	<delete id="delete" parameterType="map">
+    <![CDATA[
+        delete from PRJ_ENUM
+    ]]>
+		<where>
+			ENUM_ID = #{ENUM_ID}
+		</where>
+	</delete>
+
+	<delete id="batchDelete" parameterType="java.util.List">
+		<![CDATA[
+        delete from PRJ_ENUM
+    	]]>
+    	<where>
+			ENUM_ID in 
+			<foreach collection="ids" item="id" index="index" open="(" separator="," close=")">
+				#{id}}
+			</foreach>
+		</where>
+	</delete>
+	
+	<select id="getById" resultMap="PrjEnumResult">
+		select
+		<include refid="commonColumns" />
+	    <![CDATA[
+	        from PRJ_ENUM 
+	        where 
+		        ENUM_ID = #{enumId} 
+	    ]]>
+	</select>
+	<select id="getByEnumCode" resultMap="PrjEnumResult">
+		select
+		<include refid="commonColumns"/>
+		from PRJ_ENUM where ENUM_CODE = #{enumCode} 
+	</select>
+
+	<select id="count" resultType="long">
+    <![CDATA[
+        select count(*) from PRJ_ENUM
+    ]]>
+    <include refid="dynamicWhere" />
+	</select>
+
+	<!-- 分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页 因为分页查询将传 #offset#,#pageSize#,#lastRows# 
+		三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现 -->
+	<select id="pageSelect" resultMap="PrjEnumResult">
+		select
+		<include refid="commonColumns" />
+	    <![CDATA[
+	        from PRJ_ENUM 
+	    ]]>
+		<include refid="dynamicWhere" />
+		<if test="sortColumns != null">
+			ORDER BY ${sortColumns}
+		</if>
+	</select>
+
+	<select id="queryAllByType" resultMap="PrjEnumResult" >
+		select
+		<include refid="commonColumns" />
+	    <![CDATA[
+	        from PRJ_ENUM 
+	    ]]>
+	    where ENUM_TYPE = #{enumType}
+	</select>
+	
+	<select id="getAll" resultMap="PrjEnumResult">
+		select * from PRJ_ENUM where ENUM_TYPE = 'AUTH_RES'
+	</select>
+	
+	<select id="getOrgPrjEnums" resultMap="PrjEnumResult">
+		select distinct p.* from PRJ_ENUM p where p.ENUM_ID not in (select m.CALL_ID from ORG_MENU m where m.ORG_ID = #{orgId} and m.TYPE=#{type}
+		<if test="deviceId != null">
+			and m.DEVICE_ID = #{deviceId}
+		</if>
+		<if test="deviceId == null">
+			and m.DEVICE_ID is null
+		</if>
+		)
+	</select>
+	
+	<select id="getAuthresEnumsBydef" resultMap="PrjEnumResult">
+		select * from PRJ_ENUM where 
+	        			ENUM_TYPE = 'AUTH_RES' AND DEV_DEF LIKE '%${devDef}%'
+				
+	</select>
+	<select id="getEnumByInEnumValues" resultMap="PrjEnumResult">
+		select * from PRJ_ENUM  
+	        			
+    	<where>
+			ENUM_VALUE in 
+			<foreach collection="enumValues" item="enumValue" index="index" open="(" separator="," close=")">
+				#{enumValue}
+			</foreach>
+			
+		</where>
+				and ENUM_TYPE= #{enumType}
+			AND DEV_DEF LIKE '%${devDef}%'
+			order by ENUM_SORT
+	</select>
+	<select id="getEnumByDevtype" resultMap="PrjEnumResult">
+		select * from PRJ_ENUM  where  ENUM_TYPE= #{enumType}
+			AND DEV_DEF LIKE '%${devDef}%'
+	</select>
+	
+	<select id="getEnumsByTypeAndValues" resultMap="PrjEnumResult">
+	select * from PRJ_ENUM
+	<where>
+			ENUM_TYPE = #{enumType} and ENUM_VALUE in 
+			<foreach collection="enumValues" item="enumValue" index="index" open="(" separator="," close=")">
+				#{enumValue}
+			</foreach>
+	</where>
+	</select>
+</mapper>

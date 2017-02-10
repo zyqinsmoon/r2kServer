@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.apabi.r2k.paper.model.SyncMessage">
+
+	<resultMap id="syncMessageResult" type="com.apabi.r2k.paper.model.SyncMessage">
+		<result property="id" column="ID" />
+		<result property="orgId" column="ORG_ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="deviceType" column="DEVICE_TYPE"/>
+		<result property="deviceId" column="DEVICE_ID"/>
+		<result property="isTop" column="IS_TOP" />
+		<result property="score" column="SCORE" />
+		<result property="crtDate" column="CRT_DATE" />
+		<result property="expiredDate" column="EXPIRED_DATE" />
+		<result property="lastSendDate" column="LAST_SEND_DATE" />
+		<result property="status" column="STATUS" />
+		<result property="timeouts" column="TIMEOUTS" />
+		<result property="type" column="TYPE" />
+		<result property="msgBody" column="MSG_BODY" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="commonColumns">
+	    <![CDATA[
+        	ID ,
+        	ORG_ID ,
+        	USER_ID ,
+        	DEVICE_TYPE ,
+        	DEVICE_ID ,
+        	IS_TOP ,
+        	SCORE ,
+        	CRT_DATE ,
+        	EXPIRED_DATE ,
+        	LAST_SEND_DATE ,
+        	STATUS ,
+        	TIMEOUTS ,
+        	TYPE ,
+        	MSG_BODY
+	    ]]>
+	</sql>
+
+	<sql id="dynamicWhere">
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+				<if test="id != null">
+				AND ID = #{id}
+				</if>
+				<if test="orgId != null">
+				AND ORG_ID = #{orgId}
+				</if>
+				<if test="userId != null">
+				AND USER_ID = #{userId}
+				</if>
+				<if test="deviceType != null">
+				AND DEVICE_TYPE = #{deviceType}
+				</if>
+				<if test="deviceId != null">
+				AND DEVICE_ID = #{deviceId}
+				</if>
+				<if test="isTop != null">
+				AND IS_TOP = #{isTop}
+				</if>
+				<if test="score != null">
+				AND SCORE = #{score}
+				</if>
+				<if test="crtDate != null">
+				AND CRT_DATE = #{crtDate}
+				</if>
+				<if test="expiredDate != null">
+				AND EXPIRED_DATE = #{expiredDate}
+				</if>
+				<if test="lastSendDate != null">
+				AND LAST_SEND_DATE = #{lastSendDate}
+				</if>
+				<if test="status != null">
+				AND STATUS = #{status}
+				</if>
+				<if test="timeouts != null">
+				AND TIMEOUTS = #{timeouts}
+				</if>
+				<if test="type != null">
+				AND TYPE = #{type}
+				</if>
+				<if test="msgBody != null">
+				AND MSG_BODY = #{msgBody}
+				</if>
+		</trim>
+	</sql>
+
+	<insert id="insert" parameterType="com.apabi.r2k.paper.model.SyncMessage">
+    <![CDATA[
+        INSERT INTO
+        SYNC_MESSAGE (
+        	ID ,
+        	ORG_ID ,
+        	USER_ID ,
+        	DEVICE_TYPE ,
+        	DEVICE_ID ,
+        	IS_TOP ,
+        	SCORE ,
+        	CRT_DATE ,
+        	EXPIRED_DATE ,
+        	LAST_SEND_DATE ,
+        	STATUS ,
+        	TIMEOUTS ,
+        	TYPE ,
+        	MSG_BODY
+        ) VALUES (
+        	#{id} ,
+        	#{orgId} ,
+        	#{userId} ,
+        	#{deviceType},
+        	#{deviceId},
+        	#{isTop} ,
+        	#{score} ,
+        	#{crtDate} ,
+        	#{expiredDate} ,
+        	#{lastSendDate} ,
+        	#{status} ,
+        	#{timeouts} ,
+        	#{type} ,
+        	#{msgBody}
+        )
+    ]]>
+	</insert>
+
+	<update id="update" parameterType="com.apabi.r2k.paper.model.SyncMessage">
+		UPDATE SYNC_MESSAGE
+		<trim prefix="SET" suffixOverrides=",">
+	        		<if test="isTop != null">
+	        			IS_TOP = #{isTop},
+	        		</if>
+	        		<if test="score != null">
+	        			SCORE = #{score},
+	        		</if>
+	        		<if test="crtDate != null">
+	        			CRT_DATE = #{crtDate},
+	        		</if>
+	        		<if test="expiredDate != null">
+	        			EXPIRED_DATE = #{expiredDate},
+	        		</if>
+	        		<if test="lastSendDate != null">
+	        			LAST_SEND_DATE = #{lastSendDate},
+	        		</if>
+	        		<if test="status != null">
+	        			STATUS = #{status},
+	        		</if>
+	        		<if test="timeouts != null">
+	        			TIMEOUTS = #{timeouts},
+	        		</if>
+		</trim>
+		<where>
+			ID = #{id} and (STATUS = 0 or STATUS = 1 or STATUS = 3)
+		</where>
+	</update>
+	
+	<update id="batchUpdate" parameterType="com.apabi.r2k.paper.model.SyncMessage">
+		UPDATE SYNC_MESSAGE
+		<trim prefix="SET" suffixOverrides=",">
+	        		<if test="isTop != null">
+	        			IS_TOP = #{isTop},
+	        		</if>
+	        		<if test="score != null">
+	        			SCORE = #{score},
+	        		</if>
+	        		<if test="crtDate != null">
+	        			CRT_DATE = #{crtDate},
+	        		</if>
+	        		<if test="expiredDate != null">
+	        			EXPIRED_DATE = #{expiredDate},
+	        		</if>
+	        		<if test="lastSendDate != null">
+	        			LAST_SEND_DATE = #{lastSendDate},
+	        		</if>
+	        		<if test="status != null">
+	        			STATUS = #{status},
+	        		</if>
+	        		<if test="timeouts != null">
+	        			TIMEOUTS = #{timeouts},
+	        		</if>
+		</trim>
+		<where>
+			ID in 
+			<foreach collection="ids" item="id" index="index" open="(" separator="," close=")">
+				#{id}}
+			</foreach>
+		</where>
+	</update>
+	
+	<update id="updateByMsgType">
+		UPDATE SYNC_MESSAGE m
+		<trim prefix="SET" suffixOverrides=",">
+	        		<if test="isTop != null">
+	        			m.IS_TOP = #{isTop},
+	        		</if>
+	        		<if test="score != null">
+	        			m.SCORE = #{score},
+	        		</if>
+	        		<if test="crtDate != null">
+	        			m.CRT_DATE = #{crtDate},
+	        		</if>
+	        		<if test="expiredDate != null">
+	        			m.EXPIRED_DATE = #{expiredDate},
+	        		</if>
+	        		<if test="lastSendDate != null">
+	        			m.LAST_SEND_DATE = #{lastSendDate},
+	        		</if>
+	        		<if test="status != null">
+	        			m.STATUS = #{status},
+	        		</if>
+	        		<if test="timeouts != null">
+	        			m.TIMEOUTS = #{timeouts},
+	        		</if>
+		</trim>
+		<where>
+			m.ORG_ID = #{orgId} and m.TYPE = #{type}
+			<if test="userId != null">
+			and USER_ID = #{userId}
+			</if>
+			<if test="userId == null">
+			and USER_ID is null
+			</if>
+			<if test="deviceId != null">
+			and DEVICE_ID = #{deviceId}
+			</if>
+			<if test="deviceType == null">
+			and DEVICE_ID is null
+			</if>
+			<if test="deviceType != null">
+			and DEVICE_TYPE = #{deviceType}
+			</if>
+			<if test="deviceType == null">
+			and DEVICE_TYPE is null
+			</if>
+		</where>
+	</update>
+	
+	<delete id="delete" parameterType="map">
+    <![CDATA[
+        delete from SYNC_MESSAGE
+    ]]>
+		<where>
+			ID = #{ID}
+		</where>
+	</delete>
+
+	<delete id="batchDelete" parameterType="java.util.List">
+		<![CDATA[
+        delete from SYNC_MESSAGE
+    	]]>
+    	<where>
+			ID in 
+			<foreach collection="ids" item="id" index="index" open="(" separator="," close=")">
+				#{id}}
+			</foreach>
+		</where>
+	</delete>
+	
+	<select id="getById" resultMap="syncMessageResult">
+		select m.*
+	    <![CDATA[
+	        from SYNC_MESSAGE m
+	        where m.ID = #{id}
+	    ]]>
+	</select>
+
+	<select id="count" resultType="long">
+    <![CDATA[
+        select count(*) from SYNC_MESSAGE
+    ]]>
+    <include refid="dynamicWhere" />
+	</select>
+
+	<!-- 分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页 因为分页查询将传 #offset#,#pageSize#,#lastRows# 
+		三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现 -->
+	<select id="pageSelect" resultMap="syncMessageResult">
+		select
+		<include refid="commonColumns" />
+	    <![CDATA[
+	        from SYNC_MESSAGE 
+	    ]]>
+		<include refid="dynamicWhere" />
+		<if test="sortColumns != null">
+			ORDER BY ${sortColumns}
+		</if>
+	</select>
+
+	<select id="getCacheMsgs" resultMap="syncMessageResult">
+		select m.*
+	    <![CDATA[
+	        from SYNC_MESSAGE m
+	        where m.ORG_ID = #{orgId}
+	    ]]>
+	    <if test="userId != null">
+	    	and m.USER_ID = #{userId}
+	    </if>
+	    <if test="userId == null">
+	    	and m.USER_ID is null
+	    </if>
+	    <if test="deviceId != null">
+	    	and m.DEVICE_ID = #{deviceId}
+	    </if>
+	    <if test="deviceId == null">
+	    	and m.DEVICE_ID is null
+	    </if>
+	    <![CDATA[   
+	         and (m.STATUS = 0 or m.STATUS = 3)
+	         and m.CRT_DATE <= #{crtDate}
+	        order by m.TYPE asc, m.IS_TOP desc,m.SCORE desc,m.CRT_DATE desc,m.ID asc
+	    ]]>
+	</select>
+	
+	<delete id="deleteMsg" parameterType="map">
+	delete from SYNC_MESSAGE where ORG_ID=#{orgId}
+	<if test="devType != null">
+	and DEVICE_TYPE = #{devType}
+	</if>
+	<if test="devType == null">
+	and DEVICE_TYPE is null
+	</if>
+	<if test="deviceId != null">
+	and DEVICE_ID = #{deviceId}
+	</if>
+	<if test="deviceId == null">
+	and DEVICE_ID is null
+	</if>
+	<if test="userId != null">
+	and USER_ID = #{userId}
+	</if>
+	<if test="userId == null">
+	and USER_ID is null
+	</if>
+	</delete>
+	
+	<select id="getDeviceMsgs" resultMap="syncMessageResult">
+	select * from SYNC_MESSAGE where ORG_ID = #{orgId} and DEVICE_TYPE = #{deviceType} and DEVICE_ID=#{deviceId}
+	<if test="status != null">
+	and STATUS = #{status}
+	</if>
+	<if test="type != null">
+	and TYPE = #{type}
+	</if>
+	</select>
+</mapper>

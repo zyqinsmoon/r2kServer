@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Return code="0" Message="成功">
+    <Result ReturnCode="0" DataType="category">
+        <Categories>
+            <Dlib Name="中国美术馆" ID="1" MetaType="Apabi_ArtPic">
+                <Category Sort="1">
+                    <Name>分馆</Name>
+                    <Identity>CAT_ARTMUSEUM$$</Identity>
+                    <Content>
+                        <CatItem Name="人物画馆" Code="001" Level="0" ParentCode="0" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sa.00000000000010001166&amp;sid=&amp;cover="/>
+                        <CatItem Name="山水画馆" Code="002" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sa.00000000000020003422&amp;sid=&amp;cover="/>
+                        <CatItem Name="花鸟画馆" Code="003" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sa.00000000000030000525&amp;sid=&amp;cover="/>
+                        <CatItem Name="扇面画馆" Code="004" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sa.00000000000040000452&amp;sid=&amp;cover="/>
+                        <CatItem Name="宗教画馆" Code="005" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sa.00000000000050000141&amp;sid=&amp;cover="/>
+                        <CatItem Name="版画馆" Code="006" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sa.00000000000060000088&amp;sid=&amp;cover="/>
+                        <CatItem Name="油画馆" Code="007" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sa.00000000000070000225&amp;sid=&amp;cover="/>
+                        <CatItem Name="青铜器馆" Code="008" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sa.00000000000080000742&amp;sid=&amp;cover="/>
+                        <CatItem Name="玉器馆" Code="009" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sa.00000000000090000799&amp;sid=&amp;cover="/>
+                        <CatItem Name="陶瓷器馆" Code="010" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sa.00000000000100004850&amp;sid=&amp;cover="/>
+                        <CatItem Name="纺织品馆" Code="011" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sa.00000000000110000658&amp;sid=&amp;cover="/>
+                        <CatItem Name="漆器馆" Code="012" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sa.00000000000120000358&amp;sid=&amp;cover="/>
+                        <CatItem Name="家具馆" Code="013" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sa.00000000000130000291&amp;sid=&amp;cover="/>
+                        <CatItem Name="金银器馆" Code="014" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sa.00000000000140000631&amp;sid=&amp;cover="/>
+                        <CatItem Name="玻璃器馆" Code="015" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sa.00000000000150000029&amp;sid=&amp;cover="/>
+                        <CatItem Name="竹木骨牙角器馆" Code="016" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sa.00000000000160000272&amp;sid=&amp;cover="/>
+                        <CatItem Name="珐琅器馆" Code="017" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sa.00000000000170000067&amp;sid=&amp;cover="/>
+                        <CatItem Name="墓葬雕塑馆" Code="018" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sa.00000000000180000173&amp;sid=&amp;cover="/>
+                        <CatItem Name="石窟寺雕塑馆" Code="019" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sa.00000000000190002075&amp;sid=&amp;cover="/>
+                        <CatItem Name="宗教雕塑馆" Code="020" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sa.00000000000200000623&amp;sid=&amp;cover="/>
+                        <CatItem Name="岩画馆" Code="021" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sa.00000000000210000055&amp;sid=&amp;cover="/>
+                        <CatItem Name="画像石砖馆" Code="022" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sa.00000000000220000296&amp;sid=&amp;cover="/>
+                        <CatItem Name="殿堂壁画馆" Code="023" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sa.00000000000230000482&amp;sid=&amp;cover="/>
+                        <CatItem Name="石窟寺壁画馆" Code="024" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sa.00000000000240000528&amp;sid=&amp;cover="/>
+                        <CatItem Name="墓室壁画馆" Code="025" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sa.00000000000250000680&amp;sid=&amp;cover="/>
+                        <CatItem Name="建筑馆" Code="026" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sa.00000000000260000969&amp;sid=&amp;cover="/>
+                    </Content>
+                </Category>
+            </Dlib>
+            <Dlib Name="中国书法馆" ID="2" MetaType="Apabi_ShufaPic">
+                <Category Sort="1">
+                    <Name>分馆</Name>
+                    <Identity>CAT_LSFG$$</Identity>
+                    <Content>
+                        <CatItem Name="行书馆" Code="001" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sc.00000000000010012743&amp;sid=&amp;cover="/>
+                        <CatItem Name="草书馆" Code="002" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sc.00000000000010021276&amp;sid=&amp;cover="/>
+                        <CatItem Name="楷书馆" Code="003" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sc.00000000000010033899&amp;sid=&amp;cover="/>
+                        <CatItem Name="隶书馆" Code="004" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sc.00000000000010040298&amp;sid=&amp;cover="/>
+                        <CatItem Name="篆书馆" Code="005" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sc.00000000000010050596&amp;sid=&amp;cover="/>
+                        <CatItem Name="手札馆" Code="006" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sc.00000000000010061292&amp;sid=&amp;cover="/>
+                        <CatItem Name="篆刻馆" Code="007" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sc.00000000000010074533&amp;sid=&amp;cover="/>
+                        <CatItem Name="楹联馆" Code="008" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sc.00000000000010080727&amp;sid=&amp;cover="/>
+                    </Content>
+                </Category>
+            </Dlib>
+            <Dlib Name="中国民间美术馆" ID="3" MetaType="Apabi_MinsuPic">
+                <Category Sort="1">
+                    <Name>分馆</Name>
+                    <Identity>CAT_LMJMSG$$</Identity>
+                    <Content>
+                        <CatItem Name="年画馆" Code="001" Level="0" ParentCode="" IsLast="0" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sf.00000000000010001171&amp;sid=&amp;cover="/>
+                        <CatItem Name="剪纸馆" Code="002" Level="0" ParentCode="" IsLast="0" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sf.00000000000020001196&amp;sid=&amp;cover="/>
+                        <CatItem Name="皮影馆" Code="003" Level="0" ParentCode="" IsLast="0" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sf.00000000000030001000&amp;sid=&amp;cover="/>
+                        <CatItem Name="服饰馆" Code="004" Level="0" ParentCode="" IsLast="0" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sf.00000000000050000814&amp;sid=&amp;cover="/>
+                        <CatItem Name="吉祥馆" Code="005" Level="0" ParentCode="" IsLast="0" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sf.00000000000060000097&amp;sid=&amp;cover="/>
+                        <CatItem Name="脸谱馆" Code="006" Level="0" ParentCode="" IsLast="0" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sf.00000000000070001238&amp;sid=&amp;cover="/>
+                    </Content>
+                </Category>
+            </Dlib>
+            <Dlib Name="中国红色艺术馆" ID="4" MetaType="Apabi_RedArt">
+                <Category Sort="1">
+                    <Name>分馆</Name>
+                    <Identity>CAT_REDART$$</Identity>
+                    <Content>
+                        <CatItem Name="宣传画馆" Code="001" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sr.00000000000010001048&amp;sid=&amp;cover="/>
+                        <CatItem Name="版画馆" Code="002" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sr.00000000000020001183&amp;sid=&amp;cover="/>
+                        <CatItem Name="油画馆" Code="003" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sr.00000000000030000041&amp;sid=&amp;cover="/>
+                        <CatItem Name="国画馆" Code="004" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sr.00000000000040000773&amp;sid=&amp;cover="/>
+                        <CatItem Name="水彩馆" Code="005" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sr.00000000000050000017&amp;sid=&amp;cover="/>
+                        <CatItem Name="电影海报馆" Code="006" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sr.00000000000060000393&amp;sid=&amp;cover="/>
+                        <CatItem Name="年画馆" Code="007" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sr.00000000000070000194&amp;sid=&amp;cover="/>
+                        <CatItem Name="农民画馆" Code="008" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sr.00000000000080000017&amp;sid=&amp;cover="/>
+                        <CatItem Name="剪纸馆" Code="009" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sr.00000000000090000327&amp;sid=&amp;cover="/>
+                        <CatItem Name="素材馆" Code="010" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sr.00000000000100001458&amp;sid=&amp;cover="/>
+                        <CatItem Name="封面馆" Code="011" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sr.00000000000110000107&amp;sid=&amp;cover="/>
+                        <CatItem Name="插图馆" Code="012" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sr.00000000000120000552&amp;sid=&amp;cover="/>
+                        <CatItem Name="速写馆" Code="013" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sr.00000000000130001774&amp;sid=&amp;cover="/>
+                    </Content>
+                </Category>
+            </Dlib>
+            <Dlib Name="世界美术馆" ID="5" MetaType="Apabi_WorldArt">
+                <Category Sort="1">
+                    <Name>分馆</Name>
+                    <Identity>CAT_WORLDART$$</Identity>
+                    <Content>
+                        <CatItem Name="欧洲史前美术馆" Code="001" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sw.00000000000010000139&amp;sid=&amp;cover="/>
+                        <CatItem Name="古希腊/罗马美术馆" Code="002" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sw.00000000000020000069&amp;sid=&amp;cover="/>
+                        <CatItem Name="中世纪美术馆" Code="003" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sw.00000000000030000301&amp;sid=&amp;cover="/>
+                        <CatItem Name="文艺复兴美术馆" Code="004" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sw.00000000000040000099&amp;sid=&amp;cover="/>
+                        <CatItem Name="巴洛克美术馆" Code="005" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sw.00000000000050000056&amp;sid=&amp;cover="/>
+                        <CatItem Name="洛可可美术馆" Code="006" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sw.00000000000060000084&amp;sid=&amp;cover="/>
+                        <CatItem Name="新古典主义美术馆" Code="007" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sw.00000000000070000203&amp;sid=&amp;cover="/>
+                        <CatItem Name="浪漫主义美术馆" Code="008" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sw.00000000000080000210&amp;sid=&amp;cover="/>
+                        <CatItem Name="现实主义美术馆" Code="009" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sw.00000000000090001299&amp;sid=&amp;cover="/>
+                        <CatItem Name="印象派美术馆" Code="010" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sw.00000000000100000621&amp;sid=&amp;cover="/>
+                        <CatItem Name="20世纪现代美术馆" Code="011" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sw.00000000000110004777&amp;sid=&amp;cover="/>
+                        <CatItem Name="古埃及美术馆" Code="012" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sw.00000000000120000287&amp;sid=&amp;cover="/>
+                        <CatItem Name="古印度美术馆" Code="013" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sw.00000000000130000061&amp;sid=&amp;cover="/>
+                        <CatItem Name="古代美洲美术馆" Code="014" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sw.00000000000140000131&amp;sid=&amp;cover="/>
+                        <CatItem Name="非洲美术馆" Code="015" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=sw.00000000000150000426&amp;sid=&amp;cover="/>
+                    </Content>
+                </Category>
+            </Dlib>
+            <Dlib Name="中国出土器精品馆" ID="17" MetaType="Apabi_UnearthedObject">
+                <Category Sort="1">
+                    <Name>分馆</Name>
+                    <Identity>CAT_CHUTUCAIZHI$$</Identity>
+                    <Content>
+                        <CatItem Name="玉器馆" Code="001" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000010004090&amp;sid=&amp;cover="/>
+                        <CatItem Name="瓷器馆" Code="002" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000010010931&amp;sid=&amp;cover="/>
+                    </Content>
+                </Category>
+            </Dlib>
+            <Dlib Name="中国老照片馆" ID="98" MetaType="Apabi_OldPhoto">
+                <Category Sort="1">
+                    <Name>主题</Name>
+                    <Identity>CAT_OLDPHOTTOPIC$$</Identity>
+                    <Content>
+                        <CatItem Name="历史事件" Code="001" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000020001305&amp;sid=&amp;cover="/>
+                        <CatItem Name="景观建筑" Code="002" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000020107280&amp;sid=&amp;cover="/>
+                        <CatItem Name="重要人物" Code="003" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000020203389&amp;sid=&amp;cover="/>
+                        <CatItem Name="社会风俗" Code="004" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000020202300&amp;sid=&amp;cover="/>
+                        <CatItem Name="文化教育" Code="005" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000020403193&amp;sid=&amp;cover="/>
+                        <CatItem Name="医药卫生" Code="006" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000020101223&amp;sid=&amp;cover="/>
+                        <CatItem Name="交通运输" Code="007" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000020430322&amp;sid=&amp;cover="/>
+                        <CatItem Name="宗教艺术" Code="008" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000020432478&amp;sid=&amp;cover="/>
+                    </Content>
+                </Category>
+            </Dlib>
+            <Dlib Name="中国古代设计馆" ID="219" MetaType="Apabi_AncientDesign">
+                <Category Sort="1">
+                    <Name>分馆</Name>
+                    <Identity>CAT_ADCOLLECTION$$</Identity>
+                    <Content>
+                        <CatItem Name="造型设计" Code="001" Level="0" ParentCode="" IsLast="0" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000030000935&amp;sid=&amp;cover="/>
+                        <CatItem Name="服装设计" Code="002" Level="0" ParentCode="" IsLast="0" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000030007578&amp;sid=&amp;cover="/>
+                        <CatItem Name="环境艺术设计" Code="003" Level="0" ParentCode="" IsLast="0" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000030009504&amp;sid=&amp;cover="/>
+                        <CatItem Name="图案设计" Code="004" Level="0" ParentCode="" IsLast="0" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000030013928&amp;sid=&amp;cover="/>
+                    </Content>
+                </Category>
+            </Dlib>
+            <Dlib Name="世界经典摄影艺术馆" ID="1004" MetaType="Apabi_SJJDSYYSBWG">
+                <Category Sort="1">
+                    <Name>分馆</Name>
+                    <Identity>CAT_SJJDSYYSBWG$$</Identity>
+                    <Content>
+                        <CatItem Name="新闻摄影" Code="001" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20110120010000100412&amp;sid=&amp;cover="/>
+                        <CatItem Name="纪实摄影" Code="002" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20110120010000201354&amp;sid=&amp;cover="/>
+                        <CatItem Name="战地摄影" Code="003" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20110120010000301574&amp;sid=&amp;cover="/>
+                        <CatItem Name="广告摄影" Code="004" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20110120010000401147&amp;sid=&amp;cover="/>
+                        <CatItem Name="人物摄影" Code="005" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20110120010000500990&amp;sid=&amp;cover="/>
+                        <CatItem Name="肖像摄影" Code="006" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20110120010000601065&amp;sid=&amp;cover="/>
+                        <CatItem Name="人体摄影" Code="007" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20110120010000700739&amp;sid=&amp;cover="/>
+                        <CatItem Name="风景摄影" Code="008" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20110120010000800793&amp;sid=&amp;cover="/>
+                        <CatItem Name="体育摄影" Code="009" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20110120010000900125&amp;sid=&amp;cover="/>
+                        <CatItem Name="静物摄影" Code="010" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20110120010001000033&amp;sid=&amp;cover="/>
+                        <CatItem Name="抽象摄影" Code="011" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20110120010001100017&amp;sid=&amp;cover="/>
+                        <CatItem Name="后现代摄影" Code="012" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20110120010001200783&amp;sid=&amp;cover="/>
+                    </Content>
+                </Category>
+            </Dlib>
+            <Dlib Name="中国经典画谱馆" ID="722" MetaType="APABI_ZGJDHPZK">
+                <Category Sort="1">
+                    <Name>分馆</Name>
+                    <Identity>CAT_ZGJDHPZK$$</Identity>
+                    <Content>
+                        <CatItem Name="山水" Code="001" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100925010000702011&amp;sid=&amp;cover="/>
+                        <CatItem Name="花鸟" Code="002" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100925010000203530&amp;sid=&amp;cover="/>
+                        <CatItem Name="人物" Code="003" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100925010000301461&amp;sid=&amp;cover="/>
+                        <CatItem Name="草虫" Code="004" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100925010000100348&amp;sid=&amp;cover="/>
+                        <CatItem Name="蔬果" Code="005" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100925010000400068&amp;sid=&amp;cover="/>
+                        <CatItem Name="走兽" Code="006" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100925010000800168&amp;sid=&amp;cover="/>
+                        <CatItem Name="仙佛" Code="007" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100925010000600151&amp;sid=&amp;cover="/>
+                        <CatItem Name="仕女" Code="008" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100925010000500495&amp;sid=&amp;cover="/>
+                    </Content>
+                </Category>
+            </Dlib>
+            <Dlib Name="中国珍贵古籍插图馆" ID="664" MetaType="Apabi_ChinaAncient">
+                <Category Sort="1">
+                    <Name>分馆</Name>
+                    <Identity>CAT_CHINAAIC$$</Identity>
+                    <Content>
+                        <CatItem Name="人物形象" Code="001" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100729010000501206&amp;sid=&amp;cover="/>
+                        <CatItem Name="故事情节" Code="002" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100729010000802754&amp;sid=&amp;cover="/>
+                        <CatItem Name="民风民俗" Code="003" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100729010000500594&amp;sid=&amp;cover="/>
+                        <CatItem Name="风物景观" Code="004" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100729010000501966&amp;sid=&amp;cover="/>
+                        <CatItem Name="生活军事" Code="005" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000052102163&amp;sid=&amp;cover="/>
+                        <CatItem Name="自然器物" Code="006" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000050300139&amp;sid=&amp;cover="/>
+                        <CatItem Name="图案纹样" Code="007" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100729010000502286&amp;sid=&amp;cover="/>
+                    </Content>
+                </Category>
+            </Dlib>
+            <Dlib Name="中国历代服饰馆" ID="537" MetaType="Apabi_LDFSG">
+                <Category Sort="1">
+                    <Name>分馆</Name>
+                    <Identity>CAT_LDFSG$$</Identity>
+                    <Content>
+                        <CatItem Name="平民服饰" Code="001" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100716010000100510&amp;sid=&amp;cover="/>
+                        <CatItem Name="皇家服饰" Code="002" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100716010000200012&amp;sid=&amp;cover="/>
+                        <CatItem Name="官服" Code="003" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100716010000300038&amp;sid=&amp;cover="/>
+                        <CatItem Name="军服" Code="004" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100716010000400005&amp;sid=&amp;cover="/>
+                        <CatItem Name="近代旗袍" Code="005" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100716010000500044&amp;sid=&amp;cover="/>
+                        <CatItem Name="少数民族服饰" Code="006" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100716010000600190&amp;sid=&amp;cover="/>
+                        <CatItem Name="戏服" Code="007" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100716010000700293&amp;sid=&amp;cover="/>
+                        <CatItem Name="内衣" Code="008" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100716010000800064&amp;sid=&amp;cover="/>
+                        <CatItem Name="鞋帽" Code="009" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100716010000900410&amp;sid=&amp;cover="/>
+                        <CatItem Name="配饰" Code="010" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100716010001000682&amp;sid=&amp;cover="/>
+                        <CatItem Name="绣染品" Code="011" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100716010001100310&amp;sid=&amp;cover="/>
+                        <CatItem Name="经典纹样图案" Code="012" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100716010001201639&amp;sid=&amp;cover="/>
+                        <CatItem Name="近代服饰商标" Code="013" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100716010001300601&amp;sid=&amp;cover="/>
+                    </Content>
+                </Category>
+            </Dlib>
+            <Dlib Name="世界经典商标设计馆" ID="386" MetaType="Apabi_TradeMarkPic">
+                <Category Sort="1">
+                    <Name>分馆</Name>
+                    <Identity>CAT_TMCOLLECTION$$</Identity>
+                    <Content>
+                        <CatItem Name="农林牧渔" Code="001" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000060100093&amp;sid=&amp;cover="/>
+                        <CatItem Name="生产制造" Code="002" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000060200239&amp;sid=&amp;cover="/>
+                        <CatItem Name="水电燃气" Code="003" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000060300126&amp;sid=&amp;cover="/>
+                        <CatItem Name="建筑房产" Code="004" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000060400165&amp;sid=&amp;cover="/>
+                        <CatItem Name="通讯电子" Code="005" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000060502969&amp;sid=&amp;cover="/>
+                        <CatItem Name="住宿餐饮" Code="006" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000060602486&amp;sid=&amp;cover="/>
+                        <CatItem Name="轻纺化工" Code="007" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000060700829&amp;sid=&amp;cover="/>
+                        <CatItem Name="交通运输" Code="008" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000060800860&amp;sid=&amp;cover="/>
+                        <CatItem Name="教育科研" Code="009" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000060901143&amp;sid=&amp;cover="/>
+                        <CatItem Name="金融信息" Code="010" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000061002007&amp;sid=&amp;cover="/>
+                        <CatItem Name="医疗卫生" Code="011" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000061100626&amp;sid=&amp;cover="/>
+                        <CatItem Name="文体娱乐" Code="012" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000061203635&amp;sid=&amp;cover="/>
+                        <CatItem Name="商业服务" Code="013" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000061303937&amp;sid=&amp;cover="/>
+                    </Content>
+                </Category>
+            </Dlib>
+            <Dlib Name="世界经典标识设计馆" ID="384" MetaType="Apabi_LogoPic">
+                <Category Sort="1">
+                    <Name>分馆</Name>
+                    <Identity>CAT_LPCOLLECTION$$</Identity>
+                    <Content>
+                        <CatItem Name="组织机构" Code="001" Level="0" ParentCode="" IsLast="0" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000050306387&amp;sid=&amp;cover="/>
+                        <CatItem Name="指令导向" Code="002" Level="0" ParentCode="" IsLast="0" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000050200655&amp;sid=&amp;cover="/>
+                        <CatItem Name="节日活动" Code="003" Level="0" ParentCode="" IsLast="0" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000050100467&amp;sid=&amp;cover="/>
+                    </Content>
+                </Category>
+            </Dlib>
+            <Dlib Name="中国近现代平面设计馆" ID="282" MetaType="Apabi_ModernGraphicDesign">
+                <Category Sort="1">
+                    <Name>分馆</Name>
+                    <Identity>CAT_MGDCOLLECTION$$</Identity>
+                    <Content>
+                        <CatItem Name="广告" Code="001" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000040100019&amp;sid=&amp;cover="/>
+                        <CatItem Name="商标" Code="002" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000040200370&amp;sid=&amp;cover="/>
+                        <CatItem Name="海报" Code="003" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000040300172&amp;sid=&amp;cover="/>
+                        <CatItem Name="红色宣传品" Code="004" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000040400299&amp;sid=&amp;cover="/>
+                        <CatItem Name="封面" Code="005" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000040501200&amp;sid=&amp;cover="/>
+                        <CatItem Name="烟标" Code="006" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000040600282&amp;sid=&amp;cover="/>
+                        <CatItem Name="火花" Code="007" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000040700116&amp;sid=&amp;cover="/>
+                        <CatItem Name="时代标语" Code="008" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.00000000000040800444&amp;sid=&amp;cover="/>
+                    </Content>
+                </Category>
+            </Dlib>
+            <Dlib Name="世界经典平面设计馆" ID="932" MetaType="APABI_SJPMSJ">
+                <Category Sort="1">
+                    <Name>分馆</Name>
+                    <Identity>CAT_SJPMSJ$$</Identity>
+                    <Content>
+                        <CatItem Name="海报" Code="001" Level="0" ParentCode="" IsLast="0" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000102295&amp;sid=&amp;cover="/>
+                        <CatItem Name="节庆纪念" Code="001001" Level="1" ParentCode="001" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000101353&amp;sid=&amp;cover="/>
+                        <CatItem Name="商业广告" Code="001002" Level="1" ParentCode="001" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000102071&amp;sid=&amp;cover="/>
+                        <CatItem Name="社会公益" Code="001003" Level="1" ParentCode="001" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000100186&amp;sid=&amp;cover="/>
+                        <CatItem Name="文艺会展" Code="001004" Level="1" ParentCode="001" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000102316&amp;sid=&amp;cover="/>
+                        <CatItem Name="封面" Code="002" Level="0" ParentCode="" IsLast="0" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000200718&amp;sid=&amp;cover="/>
+                        <CatItem Name="图案造型" Code="002001" Level="1" ParentCode="002" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000200879&amp;sid=&amp;cover="/>
+                        <CatItem Name="卡通形象" Code="002002" Level="1" ParentCode="002" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000200196&amp;sid=&amp;cover="/>
+                        <CatItem Name="插图" Code="003" Level="0" ParentCode="" IsLast="0" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000605060&amp;sid=&amp;cover="/>
+                        <CatItem Name="商业插画" Code="003001" Level="1" ParentCode="003" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000603858&amp;sid=&amp;cover="/>
+                        <CatItem Name="书刊插图" Code="003002" Level="1" ParentCode="003" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000600855&amp;sid=&amp;cover="/>
+                        <CatItem Name="艺术插图" Code="003003" Level="1" ParentCode="003" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000603088&amp;sid=&amp;cover="/>
+                        <CatItem Name="唱片封面" Code="004" Level="0" ParentCode="" IsLast="0" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000700720&amp;sid=&amp;cover="/>
+                        <CatItem Name="人物百态" Code="004001" Level="1" ParentCode="004" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000700433&amp;sid=&amp;cover="/>
+                        <CatItem Name="自然生态" Code="004002" Level="1" ParentCode="004" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000700212&amp;sid=&amp;cover="/>
+                        <CatItem Name="图案造型" Code="004003" Level="1" ParentCode="004" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000700171&amp;sid=&amp;cover="/>
+                        <CatItem Name="手提袋" Code="005" Level="0" ParentCode="" IsLast="0" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010001000090&amp;sid=&amp;cover="/>
+                        <CatItem Name="人物百态" Code="005001" Level="1" ParentCode="005" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010001000024&amp;sid=&amp;cover="/>
+                        <CatItem Name="图案造型" Code="005002" Level="1" ParentCode="005" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010001000377&amp;sid=&amp;cover="/>
+                        <CatItem Name="自然生态" Code="005003" Level="1" ParentCode="005" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010001000122&amp;sid=&amp;cover="/>
+                        <CatItem Name="贺卡" Code="006" Level="0" ParentCode="" IsLast="0" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000800115&amp;sid=&amp;cover="/>
+                        <CatItem Name="风物景观" Code="006001" Level="1" ParentCode="006" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000800245&amp;sid=&amp;cover="/>
+                        <CatItem Name="卡通形象" Code="006002" Level="1" ParentCode="006" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000800234&amp;sid=&amp;cover="/>
+                        <CatItem Name="人物百态" Code="006003" Level="1" ParentCode="006" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000800043&amp;sid=&amp;cover="/>
+                        <CatItem Name="图案造型" Code="006004" Level="1" ParentCode="006" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000800319&amp;sid=&amp;cover="/>
+                        <CatItem Name="名片" Code="007" Level="0" ParentCode="" IsLast="0" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000901621&amp;sid=&amp;cover="/>
+                        <CatItem Name="卡通形象" Code="007001" Level="1" ParentCode="007" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000900130&amp;sid=&amp;cover="/>
+                        <CatItem Name="人物百态" Code="007002" Level="1" ParentCode="007" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000901260&amp;sid=&amp;cover="/>
+                        <CatItem Name="图案造型" Code="007003" Level="1" ParentCode="007" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000901288&amp;sid=&amp;cover="/>
+                        <CatItem Name="自然生态" Code="007004" Level="1" ParentCode="007" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000900751&amp;sid=&amp;cover="/>
+                        <CatItem Name="网站页面" Code="008" Level="0" ParentCode="" IsLast="0" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010001100968&amp;sid=&amp;cover="/>
+                        <CatItem Name="公共管理" Code="008001" Level="1" ParentCode="008" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010001101418&amp;sid=&amp;cover="/>
+                        <CatItem Name="个人网站" Code="008002" Level="1" ParentCode="008" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010001101398&amp;sid=&amp;cover="/>
+                        <CatItem Name="科教卫生" Code="008003" Level="1" ParentCode="008" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010001101024&amp;sid=&amp;cover="/>
+                        <CatItem Name="商业网站" Code="008004" Level="1" ParentCode="008" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010001100907&amp;sid=&amp;cover="/>
+                        <CatItem Name="艺术网站" Code="008005" Level="1" ParentCode="008" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010001101179&amp;sid=&amp;cover="/>
+                        <CatItem Name="综合门户" Code="008006" Level="1" ParentCode="008" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010001101612&amp;sid=&amp;cover="/>
+                        <CatItem Name="版式" Code="009" Level="0" ParentCode="" IsLast="0" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000504339&amp;sid=&amp;cover="/>
+                        <CatItem Name="图书杂志" Code="009001" Level="1" ParentCode="009" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000500466&amp;sid=&amp;cover="/>
+                        <CatItem Name="宣传册页" Code="009002" Level="1" ParentCode="009" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000501851&amp;sid=&amp;cover="/>
+                        <CatItem Name="T-SHIRT" Code="010" Level="0" ParentCode="" IsLast="0" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000400276&amp;sid=&amp;cover="/>
+                        <CatItem Name="卡通形象" Code="010001" Level="1" ParentCode="010" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000400699&amp;sid=&amp;cover="/>
+                        <CatItem Name="图案造型" Code="010002" Level="1" ParentCode="010" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000400227&amp;sid=&amp;cover="/>
+                        <CatItem Name="自然生态" Code="010003" Level="1" ParentCode="010" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000400106&amp;sid=&amp;cover="/>
+                        <CatItem Name="人物百态" Code="010004" Level="1" ParentCode="010" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000400583&amp;sid=&amp;cover="/>
+                        <CatItem Name="POP" Code="011" Level="0" ParentCode="" IsLast="0" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000300171&amp;sid=&amp;cover="/>
+                        <CatItem Name="家居用品" Code="011001" Level="1" ParentCode="011" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000300096&amp;sid=&amp;cover="/>
+                        <CatItem Name="美容服饰" Code="011002" Level="1" ParentCode="011" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000300164&amp;sid=&amp;cover="/>
+                        <CatItem Name="食品饮料" Code="011003" Level="1" ParentCode="011" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000300197&amp;sid=&amp;cover="/>
+                        <CatItem Name="数码电器" Code="011004" Level="1" ParentCode="011" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000300226&amp;sid=&amp;cover="/>
+                        <CatItem Name="图书杂志" Code="011005" Level="1" ParentCode="011" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000300275&amp;sid=&amp;cover="/>
+                        <CatItem Name="医疗保健" Code="011006" Level="1" ParentCode="011" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20100929010000300282&amp;sid=&amp;cover="/>
+                    </Content>
+                </Category>
+            </Dlib>
+            <Dlib Name="美术字设计馆" ID="2404" MetaType="Apabi_CalligraphedDesign">
+                <Category Sort="0">
+                    <Name>美术字设计馆分馆分类</Name>
+                    <Identity>CAT_CALLIGRAPHEDDESIGN$$</Identity>
+                    <Content>
+                        <CatItem Name="图案象形字" Code="001" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20130123010000501210&amp;sid=&amp;cover="/>
+                        <CatItem Name="平面印刷字" Code="002" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20130123010000400107&amp;sid=&amp;cover="/>
+                        <CatItem Name="变形手绘字" Code="003" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20130123010000100679&amp;sid=&amp;cover="/>
+                        <CatItem Name="立体造型字" Code="006" Level="0" ParentCode="" IsLast="1" Icon="http://www.apabi.com/tiyan/Detail.mvc/Geturl?sys=picture&amp;type=4&amp;restype=4&amp;resid=so.20130123010000300292&amp;sid=&amp;cover="/>
+                    </Content>
+                </Category>
+            </Dlib>
+        </Categories>
+    </Result>
+</Return>

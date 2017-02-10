@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+    <package name="quote" namespace="/quote" extends="json-default">
+    	<interceptors>
+			<interceptor-stack name="quoteStack">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="quoteStack"></default-interceptor-ref>
+		<action name="*" class="quoteAction" method="{1}">
+			<result name="index">/WEB-INF/jsp/admin/publish/quote.jsp</result>
+			<result name="device" type="redirect">/pub/device.do?deviceId=${deviceId}&amp;deviceName=${deviceName}&amp;devType=${devType}</result>
+			<result name="org" type="redirect">/pub/${actionName}.do</result>
+		</action>
+    </package>
+</struts>

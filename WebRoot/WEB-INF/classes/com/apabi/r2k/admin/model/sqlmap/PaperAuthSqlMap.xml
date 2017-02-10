@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.apabi.r2k.admin.model.PaperAuth">
+	<resultMap id="ResultMap" type="com.apabi.r2k.admin.model.PaperAuth" >
+	    <id column="id" property="id" jdbcType="INTEGER" />
+	    <result column="org_id" property="orgId" jdbcType="VARCHAR" />
+	    <result column="crt_date" property="crtDate" jdbcType="DATE" />
+	    <result column="last_date" property="lastDate" jdbcType="DATE" />
+	    <result column="paper_id" property="paperId" jdbcType="VARCHAR" />
+	    <result column="order_id" property="orderId" />
+	    <result column="paper_name" property="paperName" jdbcType="VARCHAR" />
+	    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+	    <result column="READ_START_DATE" property="readStartDate" jdbcType="DATE"/>
+		<result column="READ_END_DATE" property="readEndDate" jdbcType="DATE"/>
+	    
+	    <association property="order" javaType="com.apabi.r2k.admin.model.OrgPaperOrder">  
+			<result property="orderId" column="ORDER_ID"/>
+			<result property="crtDate" column="CRT_DATE"/>
+			<result property="operator" column="OPERATOR"/>
+			<result property="startDate" column="START_DATE"/>
+			<result property="endDate" column="END_DATE"/>
+			<result property="orgId" column="ORG_ID"/>
+			<result property="status" column="STATUS" />
+        </association>
+        <association property="recommend" javaType="com.apabi.r2k.admin.model.Recommend">  
+           <result property="id" column="ID"/>
+			<result property="orgId" column="ORG_ID"/>
+			<result property="type" column="TYPE"/>
+			<result property="sort" column="SORT"/>
+			<result property="resId" column="RES_ID"/>
+        </association>
+  	</resultMap>
+  	
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="commonColumns">
+	    <![CDATA[
+        	oap.ID , oap.ORG_ID , oap.CRT_DATE , oap.LAST_DATE , oap.PAPER_ID , oap.TYPE , oap.ORDER_ID, oap.PAPER_NAME, oap.STATUS, oap.READ_START_DATE, oap.READ_END_DATE, 
+        	opo.CRT_DATE, opo.OPERATOR, opo.START_DATE, opo.END_DATE, opo.STATUS,
+        	rec.SORT
+	    ]]>
+	</sql>
+
+	<sql id="dynamicWhere">
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+				<if test="id != null">
+				AND oap.ID = #{id}
+				</if>
+				<if test="orgId != null">
+				AND oap.ORG_ID = #{orgId}
+				</if>
+				<if test="crtDate != null">
+				AND oap.CRT_DATE = #{crtDate}
+				</if>
+				<if test="lastDate != null">
+				AND oap.LAST_DATE = #{lastDate}
+				</if>
+				<if test="paperId != null">
+				AND oap.PAPER_ID = #{paperId}
+				</if>
+				<if test="type != null">
+				AND oap.TYPE = #{type}
+				</if>
+				<if test="orderId != null">
+				AND oap.ORDER_ID = #{orderId}
+				</if>
+		</trim>
+	</sql>
+	
+    <insert id="insert" parameterType="com.apabi.r2k.admin.model.PaperAuth" useGeneratedKeys="true" keyProperty="id">
+		insert into ORG_AUTH_PAPER (org_id,   order_id,    crt_date,  last_date,  paper_id, read_start_date, read_end_date,  status,   paper_name,   type  ) 
+		values(                     #{orgId}, #{orderId}, #{crtDate},#{lastDate},#{paperId},#{readStartDate},#{readEndDate}, #{status},#{paperName}, #{type})
+	</insert>
+	<select id="selectList" parameterType="HashMap" resultMap="ResultMap">
+		SELECT *
+		    FROM ORG_AUTH_PAPER
+		   <where>
+            <if test="orgId!=null">
+            	and org_id = #{orgId}
+            </if>
+        </where>
+	</select>
+	
+	<select id="selectOne" parameterType="HashMap" resultMap="ResultMap">
+		SELECT *
+		    FROM ORG_AUTH_PAPER
+		   <where>
+            <if test="orgId!=null">
+            	and org_id = #{orgId}
+            </if>
+             <if test="paperId != null">
+            	and paper_id = #{paperId}
+            </if>
+            
+           </where>
+	</select>
+	
+	<delete id="deleteById">
+		DELETE FROM ORG_AUTH_PAPER WHERE org_id = #{orgId} and paper_id=#{paperId}
+	</delete>
+	
+	<update id="updateorderId">
+		update ORG_AUTH_PAPER set STATUS=#{status} where ORDER_ID=#{orderId}
+		<if test="paperId != null">
+			and paper_id=#{paperId}
+		</if>
+	</update>
+	<select id="count" resultType="long">
+    	select count(*) 
+	    <![CDATA[
+	    	FROM ORG_AUTH_PAPER oap 
+			WHERE oap.STATUS = '2' and oap.ORG_ID = #{orgId} 
+	    ]]>
+	    <if test="paperName != null">
+	    	AND (oap.PAPER_NAME like '%${paperName}%' OR oap.PAPER_ID like '%${paperName}%')
+	    </if>
+	    <if test="orderId != null">
+			AND oap.ORDER_ID = #{orderId}
+		</if>
+	</select>
+
+	<!-- 分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页 因为分页查询将传 #offset#,#pageSize#,#lastRows# 
+		三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现		 -->
+	<select id="pageSelect" resultMap="ResultMap">
+		select
+		<include refid="commonColumns" />
+	    <![CDATA[
+	    	FROM ORG_AUTH_PAPER oap 
+			LEFT JOIN ORG_PAPER_ORDER opo ON oap.ORDER_ID = opo.ORDER_ID 
+			LEFT JOIN ORG_RECOMMEND rec ON oap.ORG_ID = rec.ORG_ID AND oap.PAPER_ID = rec.RES_ID
+			WHERE oap.STATUS = '2' and oap.ORG_ID = #{orgId} 
+	    ]]>
+	    <if test="paperName != null">
+	    	AND (oap.PAPER_NAME like '%${paperName}%' OR oap.PAPER_ID like '%${paperName}%')
+	    </if>
+	    <if test="orgId != null">
+			AND oap.ORG_ID = #{orgId}
+		</if>
+		<if test="sortColumns != null and sortColumns != ''">
+			ORDER BY ${sortColumns}
+		</if>
+		<if test="sortColumns == null or sortColumns == ''">
+			ORDER BY CASE WHEN rec.SORT IS NULL THEN 99999 END,CASE WHEN rec.SORT = 0 THEN 99999 END,rec.SORT ASC, oap.LAST_DATE DESC, oap.ID ASC
+		</if>
+	</select>
+	
+	<select id="orderDetailSelect" resultMap="ResultMap">
+		select 
+		oap.*,opo.*
+	    <![CDATA[
+	    	FROM ORG_AUTH_PAPER oap 
+			LEFT JOIN ORG_PAPER_ORDER opo ON oap.ORDER_ID = opo.ORDER_ID
+			WHERE oap.ORDER_ID = #{orderId}
+	    ]]>		
+	</select>
+	
+	
+	<select id="orderDetailSelectCount" resultType="long">
+		select
+		count(*)
+	    <![CDATA[
+	    	FROM ORG_AUTH_PAPER oap 
+			WHERE oap.ORDER_ID = #{orderId}
+
+	    ]]>
+	</select>
+	
+	<update id="updateByPaperAuthId" parameterType="com.apabi.r2k.admin.model.PaperAuth">
+		update ORG_AUTH_PAPER 
+		<set>
+			<if test="orgId != null">
+				org_id=#{orgId},
+			</if>
+			<if test="paperId != null">
+				paper_id=#{paperId},
+			</if>
+			<if test="orderId != null and orderId > 0">
+				order_id=#{orderId},
+			</if>
+			<if test="paperName != null">
+				paper_name=#{paperName},
+			</if>
+			<if test="status != null">
+				STATUS=#{status},
+			</if>
+			<if test="type != null">
+				TYPE=#{type},
+			</if>
+			<if test="lastDate != null">
+				LAST_DATE=#{lastDate},
+			</if>
+			<if test="readStartDate != null">
+				READ_START_DATE=#{readStartDate},
+			</if>
+			<if test="readEndDate != null">
+				READ_END_DATE=#{readEndDate}
+			</if>
+		</set>
+		where PAPER_ID=#{paperId} and ORG_ID=#{orgId}
+	</update>
+	
+	<select id="getPaperAuthObject" resultMap="ResultMap">
+		SELECT oap.*, rec.sort FROM ORG_AUTH_PAPER oap LEFT JOIN ORG_RECOMMEND rec ON oap.ORG_ID = rec.ORG_ID AND oap.PAPER_ID = rec.RES_ID 
+		where oap.PAPER_ID=#{paperId} and oap.ORG_ID=#{orgId} AND oap.STATUS = '2' 
+	</select>
+	
+	<select id="getByStatus" resultMap="ResultMap">
+	  SELECT * FROM ORG_AUTH_PAPER 
+	  	<where>
+          <if test="orgId!=null">
+          	and org_id = #{orgId}
+          </if>
+          <if test="orderId != null">
+          	and order_id = #{orderId}
+          </if>
+          <if test="status != null">
+          	and STATUS = #{status}
+          </if>
+         </where>
+    </select>
+    
+    <select id="getPaperAuthByorderId" resultMap="ResultMap">
+	  SELECT * FROM ORG_AUTH_PAPER 
+         where ORG_ID=#{orgId} and  ORDER_ID=#{orderId}
+    </select>
+    
+    <update id="updateByOrgId">
+		update ORG_AUTH_PAPER set STATUS=#{status} where ORG_ID=#{orgId}
+	</update>
+	<select id="getByPaperAndDate" resultMap="ResultMap">
+		<![CDATA[
+		select * from ORG_AUTH_PAPER where PAPER_ID = #{paperId} and STATUS = #{status} and READ_START_DATE <= #{publishDate} and READ_END_DATE >= #{publishDate}
+		]]>
+	</select>
+</mapper>

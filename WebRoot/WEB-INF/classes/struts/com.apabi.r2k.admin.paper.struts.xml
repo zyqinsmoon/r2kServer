@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+    <package name="paper" namespace="/paper" extends="json-default">
+    	<interceptors>
+			<interceptor-stack name="paperStack">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="paperStack"></default-interceptor-ref>
+    	<action name="*" class="paperAuthAction" method="{1}">
+    		<result name="show">/WEB-INF/jsp/admin/papershow.jsp</result>
+    		<result name="showOrder">/WEB-INF/jsp/admin/paperOrder.jsp</result>
+    		<result name="delete">/WEB-INF/jsp/admin/paperOrder.jsp</result>
+    		<result name="showDetail">/WEB-INF/jsp/admin/paperOrderDetail.jsp</result>
+    		<result name="upload" type="json">
+				<param name="root">msg</param>
+				<param name="contentType">text/html</param>
+			</result>
+			<result name="down" type="stream">
+                <param name="contentType">application/octet-stream</param>
+                <param name="contentDisposition">attachment;filename="${resourceFileName}"</param>
+                <param name="bufferSize">2048</param>
+           </result>
+    	</action>
+    </package>
+</struts>

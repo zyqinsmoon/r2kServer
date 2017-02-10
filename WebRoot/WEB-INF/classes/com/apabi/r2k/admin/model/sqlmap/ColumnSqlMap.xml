@@ -1,0 +1,702 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.apabi.r2k.admin.model.Column">
+	<resultMap id="ResultMap" type="com.apabi.r2k.admin.model.Column" >
+	    <id column="id" property="id" />
+		<result column="parent_id" property="parentId" />
+		<result column="title" property="title" />
+		<result column="summary" property="summary" />
+		<result column="image" property="image" />
+		<result column="sort" property="sort" />
+		<result column="link" property="link" />
+		<result column="crt_date" property="crtDate" />
+		<result column="status" property="status" />
+		<result column="org_id" property="orgId" />
+		<result column="thumbnail" property="thumbnail" />
+		<result column="type" property="type" />
+		<result column="parentTitle" property="parentTitle" />
+		<result column="content" property="content" jdbcType="BLOB" typeHandler="com.apabi.r2k.common.base.MyBlobTypeHandler" javaType="String"/>
+		<result column="childs" property="childs" />
+		<result column="quote_id" property="quoteId"/>
+		<result column="device_id" property="deviceId"/>
+		<result column="device_type" property="deviceType"/>
+		<association property="infoTemplate" column="TEMPLATE_ID" javaType="com.apabi.r2k.admin.model.InfoTemplate">
+			<result property="id" column="TEMPLATE_ID" />
+			<result property="type" column="T_TYPE" />
+			<result property="path" column="PATH" />
+			<result property="setNo" column="SET_NO" />
+			<result property="orgId" column="T_ORG_ID" />
+			<result property="crtDate" column="T_CRT_DATE" />
+			<result property="lastDate" column="T_LAST_DATE" />
+			<result property="description" column="DESCRIPTION" />
+			<result property="name" column="NAME" />
+		</association>
+  	</resultMap>
+  	
+  	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="commonColumns">
+	    <![CDATA[
+        	ID ,
+        	PARENT_ID ,
+        	TITLE ,
+        	SUMMARY ,
+        	IMAGE ,
+        	SORT ,
+        	LINK ,
+        	CRT_DATE ,
+        	STATUS ,
+        	ORG_ID ,
+        	THUMBNAIL ,
+        	TYPE ,
+        	CONTENT ,
+        	QUOTE_ID ,
+        	DEVICE_ID,
+        	DEVICE_TYPE
+	    ]]>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+				<if test="id != null">
+				AND ID = #{id}
+				</if>
+				<if test="parentId != null">
+				AND PARENT_ID = #{parentId}
+				</if>
+				<if test="title != null">
+				AND TITLE = #{title}
+				</if>
+				<if test="summary != null">
+				AND SUMMARY = #{summary}
+				</if>
+				<if test="image != null">
+				AND IMAGE = #{image}
+				</if>
+				<if test="sort != null">
+				AND SORT = #{sort}
+				</if>
+				<if test="link != null">
+				AND LINK = #{link}
+				</if>
+				<if test="crtDate != null">
+				AND CRT_DATE = #{crtDate}
+				</if>
+				<if test="status != null">
+				AND STATUS = #{status}
+				</if>
+				<if test="orgId != null">
+				AND ORG_ID = #{orgId}
+				</if>
+				<if test="thumbnail != null">
+				AND THUMBNAIL = #{thumbnail}
+				</if>
+				<if test="type != null">
+				AND TYPE = #{type}
+				</if>
+				<if test="content != null">
+				AND CONTENT = #{content}
+				</if>
+				<if test="deviceId != null">
+				AND DEVICE_ID = #{deviceId}
+				</if>
+				<if test="quoteId != null">
+				AND QUOTE_ID = #{quoteId}
+				</if>
+				<if test="deviceType != null">
+				AND DEVICE_TYPE = #{deviceType}
+				</if>
+		</trim>
+	</sql>
+	
+	<select id="getColumn" resultMap="ResultMap">
+		select
+		 <include refid="commonColumns" />
+		  from ORG_PUB_COLUMN
+		  <include refid="dynamicWhere" />
+	</select>
+	
+    <insert id="insert" parameterType="com.apabi.r2k.admin.model.Column" >
+    	<selectKey resultType="int" keyProperty="id">
+    	SELECT LAST_INSERT_ID() 
+    	</selectKey>
+		insert into ORG_PUB_COLUMN (parent_id,title,summary,image,sort,link,crt_date,status,org_id,thumbnail,type,content,quote_id,device_id,device_type)
+		 values (#{parentId},#{title},#{summary},#{image},#{sort},#{link},#{crtDate},#{status},#{orgId},#{thumbnail},#{type},#{content},#{quoteId},#{deviceId},#{deviceType})
+	</insert>
+	
+	<select id="getByPid" parameterType="int" resultMap="ResultMap">
+		select t1.*,t2.TITLE as PARENTTITLE ,
+		(select count(c.id) from ORG_PUB_COLUMN c where c.parent_id = t1.id or (c.parent_id!=0 and c.parent_id =t1.quote_id)) childs,
+		(select q.title from ORG_PUB_COLUMN q where q.id = t1.quote_id) quoteTitle
+		 from ORG_PUB_COLUMN t1 left join ORG_PUB_COLUMN t2 on t1.PARENT_ID = t2.ID 
+		 where t1.PARENT_ID=#{parentId} order by t1.SORT
+	</select>
+	
+	<select id="getChildsByPid" parameterType="int" resultMap="ResultMap">
+		select t1.ID,t1.PARENT_ID,t1.TITLE,t1.SUMMARY,t1.IMAGE,t1.SORT,t1.LINK,
+		t1.CRT_DATE,r.STATUS STATUS,t1.ORG_ID,t1.THUMBNAIL,t1.TYPE,t1.CONTENT,t1.QUOTE_ID,t1.DEVICE_ID,t1.DEVICE_TYPE,t2.TITLE as PARENTTITLE ,
+		(select count(c.id) from ORG_PUB_COLUMN c where c.parent_id = t1.id or (c.parent_id!=0 and c.parent_id =t1.quote_id)) childs,
+		(select q.title from ORG_PUB_COLUMN q where q.id = t1.quote_id) quoteTitle,
+		i.ID TEMPLATE_ID, i.TYPE T_TYPE, i.PATH PATH,i.SET_NO SET_NO,
+		i.ORG_ID T_ORG_ID,i.CRT_DATE T_CRT_DATE,i.LAST_DATE T_LAST_DATE,i.DESCRIPTION,i.NAME
+		 from ORG_PUB_COLUMN t1 
+		 left join ORG_PUB_COLUMN t2 on t1.PARENT_ID = t2.ID 
+		 left join RELEASE_RECORD r on r.COLUMN_ID = t1.ID and r.ORG_ID = #{orgId} 
+		 <if test="deviceId != null">
+		  and r.DEVICE_ID = #{devicId} and r.DEVICE_TYPE is null
+		 </if>
+		 <if test="deviceType != null">
+		  and r.DEVICE_TYPE = #{deviceType}
+		 </if>
+		 left join INFO_TEMPLATE i on i.ID=r.TEMPLATE_ID
+		 where t1.PARENT_ID=#{parentId} order by t1.SORT
+	</select>
+	
+	<update id="update" parameterType="com.apabi.r2k.admin.model.Column">
+		update ORG_PUB_COLUMN 
+		<trim prefix="SET" suffixOverrides=",">
+		<if test="title != null">
+		title=#{title},
+		</if>
+		<if test="summary != null">
+		summary=#{summary},
+		</if>
+		<if test="image != null">
+		image=#{image},
+		</if>
+		<if test="sort != null">
+		sort=#{sort},
+		</if>
+		<if test="link != null">
+		link=#{link},
+		</if>
+		<if test="status != null">
+		status=#{status},
+		</if>
+		<if test="thumbnail != null">
+		thumbnail=#{thumbnail},
+		</if>
+		<if test="content != null">
+		content=#{content},
+		</if>
+		</trim>
+		where id=#{id} and ORG_ID = #{orgId}
+	</update>
+	
+	<delete id="deleteById" parameterType="int">
+		delete from ORG_PUB_COLUMN where id=#{id}
+	</delete>
+	
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from ORG_PUB_COLUMN where ORG_ID=#{orgId} and ID in 
+		<foreach collection="ids" open="(" close=")" item="id" separator=",">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<delete id="delColAndQuote" parameterType="java.util.List">
+		delete from ORG_PUB_COLUMN where ID in 
+		<foreach collection="ids" open="(" close=")" item="id" separator=",">
+			#{id}
+		</foreach>
+		or QUOTE_ID in
+		<foreach collection="ids" open="(" close=")" item="id" separator=",">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<select id="objectById" resultMap="ResultMap" parameterType="int">
+		select t1.ID,t1.PARENT_ID,t1.TITLE,t1.SUMMARY,t1.IMAGE,t1.SORT,t1.LINK,
+		t1.CRT_DATE,t1.STATUS,t1.ORG_ID,t1.THUMBNAIL,t1.TYPE,t1.CONTENT,t1.QUOTE_ID,t1.DEVICE_ID,t1.DEVICE_TYPE,
+		i1.ID TEMPLATE_ID, i1.TYPE T_TYPE, ts.DEVICE_TYPE T_DEVICE_TYPE, i1.PATH PATH,i1.SET_NO SET_NO, ts.SET_NAME SET_NAME, ts.SCOPE SCOPE,
+		ts.ORG_ID T_ORG_ID,i1.CRT_DATE T_CRT_DATE,i1.LAST_DATE T_LAST_DATE,i1.DESCRIPTION DESCRIPTION,i1.NAME NAME
+		from ORG_PUB_COLUMN t1 
+		left join RELEASE_RECORD r on r.ORG_ID = t1.ORG_ID and r.COLUMN_ID = t1.ID and (r.DEVICE_TYPE = t1.DEVICE_TYPE or r.DEVICE_ID = t1.DEVICE_ID)
+		left join INFO_TEMPLATE i1 on r.TEMPLATE_ID = i1.ID
+		left join INFO_TEMPLATESET ts  on i1.SET_NO = ts.SET_NO
+		where t1.id=#{id}
+	</select>
+	
+	<select id="getByPidInUsed" resultMap="ResultMap">
+		select * from ORG_PUB_COLUMN where PARENT_ID=#{parentId} AND ORG_ID=#{orgId} AND device_id is null order by SORT
+	</select>
+	
+	<select id="getByPidDevice" resultMap="ResultMap">
+		select * from (select t1.ID,t1.PARENT_ID,t2.TITLE,t2.SUMMARY,t2.IMAGE,t1.SORT,t1.LINK,
+		t1.CRT_DATE,t1.STATUS,t1.ORG_ID,t2.THUMBNAIL,t1.TYPE,t2.CONTENT,t1.QUOTE_ID,t1.DEVICE_ID
+		 from ORG_PUB_COLUMN t1 left join ORG_PUB_COLUMN t2 on t1.quote_id=t2.id
+		where t1.parent_id=#{parentId} and t1.org_id=#{orgId} and t1.device_id=#{deviceId} and (t1.type='11' or t1.type='10' or t1.type='12')
+		 union select t3.* from ORG_PUB_COLUMN t3
+		where t3.parent_id=#{parentId} and t3.org_id=#{orgId} and t3.device_id=#{deviceId} and (t3.type='0' or t3.type='1' or t3.type='2')) t4
+		 order by sort
+	</select>
+	
+	<select id="getCountByPidInUsed" resultType="int">
+		select count(*) from ORG_PUB_COLUMN where PARENT_ID=#{parentId} AND ORG_ID=#{orgId} AND device_id is null order by SORT
+	</select>
+	
+	<select id="count" resultType="long">
+    <![CDATA[
+        select count(*) from ORG_PUB_COLUMN
+    ]]>
+    <include refid="dynamicWhere" />
+	</select>
+
+	<!-- 分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页 因为分页查询将传 #offset#,#pageSize#,#lastRows# 
+		三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+		设备分页查询 -->
+	<select id="devicePageSelect" resultMap="ResultMap">
+		select
+		opc.ID,opc.PARENT_ID,opc.TITLE,opc.SUMMARY,opc.IMAGE,opc.SORT,opc.LINK,
+		opc.CRT_DATE,r.STATUS STATUS,opc.ORG_ID,opc.THUMBNAIL,opc.TYPE,opc.CONTENT,opc.QUOTE_ID,opc.DEVICE_ID,opc.DEVICE_TYPE,
+		t.ID TEMPLATE_ID, t.TYPE T_TYPE, ts.DEVICE_TYPE T_DEVICE_TYPE, t.PATH PATH,t.SET_NO SET_NO,ts.SET_NAME SET_NAME,ts.SCOPE SCOPE,
+		ts.ORG_ID T_ORG_ID,t.CRT_DATE T_CRT_DATE,t.LAST_DATE T_LAST_DATE,t.DESCRIPTION,t.NAME
+	    <![CDATA[
+	        ,(select count(c.id) from ORG_PUB_COLUMN c where c.parent_id = opc.id or (c.parent_id!=0 and c.parent_id =opc.quote_id)) childs
+	        ,(select q.title from ORG_PUB_COLUMN q where q.id = opc.quote_id) parentTitle 
+	        from ORG_PUB_COLUMN opc
+	        left join RELEASE_RECORD r
+	    on opc.ID = r.COLUMN_ID and r.ORG_ID = #{orgId} and r.DEVICE_ID = #{deviceId} 
+	    left join INFO_TEMPLATE t 
+	    on r.TEMPLATE_ID = t.ID
+	    left join INFO_TEMPLATESET ts 
+	    on t.SET_NO = ts.SET_NO
+	    ]]>
+		where opc.parent_id=0 and opc.org_id=#{orgId} and opc.device_id = #{deviceId}
+		<if test="sortColumns != null">
+			ORDER BY ${sortColumns}
+		</if>
+		<if test="sortColumns == null">
+			ORDER BY SORT asc, opc.CRT_DATE asc
+		</if>
+	</select>
+	
+	<select id="orgPageSelect" resultMap="ResultMap">
+		select
+		opc.ID,opc.PARENT_ID,opc.TITLE,opc.SUMMARY,opc.IMAGE,opc.SORT,opc.LINK,
+		opc.CRT_DATE,r.STATUS STATUS,opc.ORG_ID,opc.THUMBNAIL,opc.TYPE,opc.CONTENT,opc.QUOTE_ID,opc.DEVICE_ID,opc.DEVICE_TYPE,
+		t.ID TEMPLATE_ID, t.TYPE T_TYPE, ts.DEVICE_TYPE T_DEVICE_TYPE, t.PATH PATH,t.SET_NO SET_NO,ts.SET_NAME SET_NAME,ts.SCOPE SCOPE,
+		ts.ORG_ID T_ORG_ID,t.CRT_DATE T_CRT_DATE,t.LAST_DATE T_LAST_DATE,t.DESCRIPTION,t.NAME
+	    <![CDATA[
+	        ,(select count(c.id) from ORG_PUB_COLUMN c where c.parent_id = opc.id or (c.parent_id!=0 and c.parent_id =opc.quote_id)) childs 
+	        ,(select q.title from ORG_PUB_COLUMN q where q.id = opc.quote_id) parentTitle
+	    ]]> from ORG_PUB_COLUMN opc 
+	    left join RELEASE_RECORD r
+	    on opc.ID = r.COLUMN_ID and r.ORG_ID = #{orgId} and r.DEVICE_TYPE = #{deviceType} 
+	    left join INFO_TEMPLATE t 
+	    on r.TEMPLATE_ID = t.ID
+	    left join INFO_TEMPLATESET ts 
+	    on t.SET_NO = ts.SET_NO
+	    where opc.device_id is null and opc.parent_id=0 and opc.org_id=#{orgId} and opc.device_type = #{deviceType}
+	    <if test="hideWelcome != null">
+	    	and opc.type != 0
+	    </if>
+	    <if test="sortColumns != null">
+			ORDER BY opc.${sortColumns}
+		</if>
+		<if test="sortColumns == null">
+			ORDER BY opc.SORT asc, opc.CRT_DATE asc
+		</if>
+	</select>
+	<select id="orgPageSelectCount" resultType="long">
+		select count(*) from ORG_PUB_COLUMN where device_id is null and parent_id=0 and org_id=#{orgId} and device_type = #{deviceType}
+		<if test="hideWelcome != null">
+	    	and type != 2
+	    </if>
+	</select>
+	
+	<!-- 查询某一设备的顶级栏目 -->
+	<select id="getColumnByDevice" resultMap="ResultMap">
+		select
+			<include refid="commonColumns" />
+		    ,(select count(c.id) from ORG_PUB_COLUMN c where c.parent_id = opc.id) childs from ORG_PUB_COLUMN opc
+		    where device_id=#{quoteDeviceId} and parent_id=0 and type='1'
+	</select>
+	<!-- 查询某一设备的欢迎页 -->
+	<select id="getDeviceWelcome" resultMap="ResultMap">
+		select
+		 <include refid="commonColumns" />
+		 from ORG_PUB_COLUMN where org_id=#{orgId} and device_id=#{deviceId} and DEVICE_TYPE is null and TYPE = #{type}
+	</select>
+	<!-- 查询某一机构的欢迎页 -->
+	<select id="getOrgWelcome" resultMap="ResultMap">
+		select
+		 <include refid="commonColumns" />
+		 from ORG_PUB_COLUMN where org_id=#{orgId} and device_id is null and DEVICE_TYPE = #{deviceType} and TYPE = #{type}
+	</select>
+	
+	<select id="findHomeCols" resultMap="ResultMap">
+		<!-- 查父内容 -->
+		select * from (
+		select * 
+		from ORG_PUB_COLUMN  
+		where PARENT_ID = #{parentId}
+		AND ORG_ID = #{orgid}
+		<if test="deviceid != null">
+			AND DEVICE_ID = #{deviceid}
+		</if>
+		<if test="devType != null">
+			AND DEVICE_TYPE = #{devType}
+		</if>
+		ORDER BY SORT asc) te1
+		<!-- 查子内容 -->
+		union
+		select * from (
+		select * from
+		ORG_COLUMN_PUB 
+		where PARENT_ID in (
+		select c.ID 
+		from ORG_PUB_COLUMN c 
+		where c.PARENT_ID = #{parentId}
+		AND c.ORG_ID = #{orgid}
+		<if test="deviceid != null">
+			AND c.DEVICE_ID = #{deviceid}
+		</if>
+		<if test="devType != null">
+			AND c.DEVICE_TYPE = #{devType}
+		</if>
+		)
+		AND ORG_ID = #{orgid}
+		<if test="deviceid != null">
+			AND DEVICE_ID = #{deviceid}
+		</if>
+		<if test="devType != null">
+			AND DEVICE_TYPE = #{devType}
+		</if>
+		ORDER BY SORT asc
+		) te2
+		<!-- 查被引用的内容 -->
+		union 
+		select * from ORG_PUB_COLUMN where ID in(
+		select ID from (
+		select * 
+		from ORG_PUB_COLUMN  
+		where PARENT_ID = #{parentId}
+		AND ORG_ID = #{orgid}
+		<if test="deviceid != null">
+			AND DEVICE_ID = #{deviceid}
+		</if>
+		<if test="devType != null">
+			AND DEVICE_TYPE = #{devType}
+		</if>
+		ORDER BY SORT asc) te3
+		union
+		select * from (
+		select * from
+		ORG_COLUMN_PUB 
+		where PARENT_ID in (
+		select c.ID 
+		from ORG_PUB_COLUMN c 
+		where c.PARENT_ID = #{parentId}
+		AND c.ORG_ID = #{orgid}
+		<if test="deviceid != null">
+			AND c.DEVICE_ID = #{deviceid}
+		</if>
+		<if test="devType != null">
+			AND c.DEVICE_TYPE = #{devType}
+		</if>
+		)
+		AND ORG_ID = #{orgid}
+		<if test="deviceid != null">
+			AND DEVICE_ID = #{deviceid}
+		</if>
+		<if test="devType != null">
+			AND DEVICE_TYPE = #{devType}
+		</if>
+		ORDER BY SORT asc
+		) te4
+		) te5
+	</select>
+	
+	<select id="findByParentId" resultMap="ResultMap">
+		select c0.* from (
+		select c1.*
+		from ORG_PUB_COLUMN c1
+		where c1.PARENT_ID = #{parentId}
+		<if test="deviceid != null">
+			AND c1.DEVICE_ID = #{deviceid}
+		</if>
+		<if test="devType != null">
+			AND c1.DEVICE_TYPE = #{devType}
+		</if>
+		ORDER BY c.SORT asc) t1
+		union
+		select c2.*
+		from ORG_PUB_COLUMN c2
+		where c2.ID in (
+		select c3.QUOTE_ID
+		from ORG_PUB_COLUMN c1
+		where c3.PARENT_ID = #{parentId}
+		<if test="deviceid != null">
+			AND c3.DEVICE_ID = #{deviceid}
+		</if>
+		<if test="devType != null">
+			AND c3.DEVICE_TYPE = #{devType}
+		</if>
+		)
+	</select>
+	
+	<insert id="insertPic" parameterType="com.apabi.r2k.admin.model.Column" >
+    	<selectKey resultType="int" keyProperty="id" >
+    		SELECT LAST_INSERT_ID() 
+   		 </selectKey>
+		insert into ORG_PUB_COLUMN (parent_id,title,summary,image,sort,link,crt_date,status,org_id,thumbnail,type,content,quote_id,device_id,device_type)
+		 values (#{parentId},#{title},#{summary},#{image},#{sort},#{link},#{crtDate},#{status},#{orgId},#{thumbnail},#{type},#{content},#{quoteId},#{deviceId},#{deviceType})
+	</insert>
+	
+	<select id="findColumnAndChilds" resultMap="ResultMap">
+		select t1.ID,t1.PARENT_ID,t1.TITLE,t1.SUMMARY,t1.IMAGE,t1.SORT,t1.LINK,
+		t1.CRT_DATE,t1.STATUS,t1.ORG_ID,t1.THUMBNAIL,t1.TYPE,t1.CONTENT,t1.QUOTE_ID,t1.DEVICE_ID,t1.DEVICE_TYPE,
+		i1.ID TEMPLATE_ID, i1.TYPE T_TYPE, ts.DEVICE_TYPE T_DEVICE_TYPE, i1.PATH PATH,i1.SET_NO SET_NO, ts.SET_NAME SET_NAME, ts.SCOPE SCOPE,
+		ts.ORG_ID T_ORG_ID,i1.CRT_DATE T_CRT_DATE,i1.LAST_DATE T_LAST_DATE,i1.DESCRIPTION DESCRIPTION,i1.NAME NAME
+		from ORG_PUB_COLUMN t1
+		left join RELEASE_RECORD r on r.ORG_ID = t1.ORG_ID and r.COLUMN_ID = t1.ID and (r.DEVICE_TYPE = t1.DEVICE_TYPE or r.DEVICE_ID = t1.DEVICE_ID)
+		left join INFO_TEMPLATE i1 on r.TEMPLATE_ID = i1.ID
+		left join INFO_TEMPLATESET ts on i1.SET_NO = ts.SET_NO
+		where t1.ID=#{id} or t1.PARENT_ID = #{id}
+	</select>
+	
+	<select id="previewCols" resultMap="ResultMap">
+		select t1.ID,t1.PARENT_ID,t1.TITLE,t1.SUMMARY,t1.IMAGE,t1.SORT,t1.LINK,
+		t1.CRT_DATE,t1.STATUS,t1.ORG_ID,t1.THUMBNAIL,t1.TYPE,t1.CONTENT,t1.QUOTE_ID,t1.DEVICE_ID,t1.DEVICE_TYPE,
+		(select count(c.id) from ORG_PUB_COLUMN c where c.parent_id = t1.id or (c.parent_id!=0 and c.parent_id =t1.quote_id)) childs, 
+	    (select q.title from ORG_PUB_COLUMN q where q.id = t1.quote_id) parentTitle,
+		i1.ID TEMPLATE_ID, i1.TYPE T_TYPE, ts.DEVICE_TYPE T_DEVICE_TYPE, i1.PATH PATH,i1.SET_NO SET_NO, ts.SET_NAME SET_NAME, ts.SCOPE SCOPE,
+		ts.ORG_ID T_ORG_ID,i1.CRT_DATE T_CRT_DATE,i1.LAST_DATE T_LAST_DATE,i1.DESCRIPTION DESCRIPTION,i1.NAME NAME
+		from ORG_PUB_COLUMN t1
+		left join RELEASE_RECORD r on r.ORG_ID = t1.ORG_ID and r.COLUMN_ID = t1.ID and 
+		<if test="devType != null">
+		r.DEVICE_TYPE = #{devType}
+		</if>
+		<if test="deviceId != null">
+		r.DEVICE_ID = #{deviceId}
+		</if>
+		left join INFO_TEMPLATE i1 on r.TEMPLATE_ID = i1.ID
+		left join INFO_TEMPLATESET ts on i1.SET_NO = ts.SET_NO
+		where t1.ID=#{id} or t1.PARENT_ID = #{id}
+	</select>
+	
+	<select id="getOrgQuoted" resultMap="ResultMap">
+		select * from ORG_PUB_COLUMN where PARENT_ID=#{parentId} and ORG_ID = #{orgId} and DEVICE_TYPE = #{devType} and QUOTE_ID is not null and QUOTE_ID > 0
+	</select>
+	
+	<select id="getDevQuoted" resultMap="ResultMap">
+		select * from ORG_PUB_COLUMN where PARENT_ID=#{parentId} and ORG_ID = #{orgId} and DEVICE_ID = #{deviceId} and QUOTE_ID is not null and QUOTE_ID > 0
+	</select>
+	
+	<select id="findByIds" resultMap="ResultMap">
+	 select * from ORG_PUB_COLUMN
+	 where id in 
+	 <foreach collection="ids" item="id" open="(" close=")" separator=",">
+	 	#{id}
+	 </foreach>
+	</select>
+	
+	<select id="findPubCols" resultMap="ResultMap">
+	select t1.ID,t1.PARENT_ID,t2.TITLE,t2.SUMMARY,t2.IMAGE,t1.SORT,t1.LINK,
+		t1.CRT_DATE,t1.STATUS,t1.ORG_ID,t2.THUMBNAIL,t1.TYPE,t2.CONTENT,t1.QUOTE_ID,t1.DEVICE_ID,t1.DEVICE_TYPE,
+		(select count(c.id) from ORG_PUB_COLUMN c where c.parent_id = t1.id or (c.parent_id!=0 and c.parent_id =t1.QUOTE_ID)) childs,
+		i1.ID TEMPLATE_ID, i1.TYPE T_TYPE, i1.PATH PATH,i1.SET_NO SET_NO, i1.NAME NAME,
+		i1.ORG_ID T_ORG_ID,i1.CRT_DATE T_CRT_DATE,i1.LAST_DATE T_LAST_DATE,i1.DESCRIPTION DESCRIPTION
+		from ORG_PUB_COLUMN t1 
+		left join RELEASE_RECORD r1 on r1.ORG_ID=#{orgid}
+		<if test="deviceId != null">
+		and r1.DEVICE_ID = #{deviceId} and r1.DEVICE_TYPE is null
+		</if>
+		<if test="deviceType != null">
+		and r1.DEVICE_TYPE = #{deviceType} and r1.DEVICE_ID is null
+		</if>
+		and t1.ID = r1.COLUMN_ID
+		left join INFO_TEMPLATE i1 on i1.ID = r1.TEMPLATE_ID
+		left join ORG_PUB_COLUMN t2 on (t1.QUOTE_ID=t2.ID and t1.QUOTE_ID > 0) or (t1.id=t2.ID and t1.QUOTE_ID = 0)
+		where t1.ID = r1.COLUMN_ID
+		or ((t1.PARENT_ID in (
+		select t3.ID
+		from ORG_PUB_COLUMN t3, RELEASE_RECORD r2
+		where (r2.ORG_ID=#{orgid}
+		<if test="deviceId != null">
+		and r2.DEVICE_ID = #{deviceId} and r2.DEVICE_TYPE is null
+		</if>
+		<if test="deviceType != null">
+		and r2.DEVICE_TYPE = #{deviceType} and r2.DEVICE_ID is null
+		</if>
+		and t3.ID = r2.COLUMN_ID and t3.QUOTE_ID = 0
+		)) or t1.PARENT_ID in (
+		SELECT t5.QUOTE_ID
+		FROM ORG_PUB_COLUMN t5, RELEASE_RECORD r4
+		WHERE r4.ORG_ID=#{orgid}
+		<if test="deviceId != null">
+		and r4.DEVICE_ID = #{deviceId} and r4.DEVICE_TYPE is null
+		</if>
+		<if test="deviceType != null">
+		and r4.DEVICE_TYPE = #{deviceType} and r4.DEVICE_ID is null
+		</if>
+		AND t5.ID = r4.COLUMN_ID AND t5.QUOTE_ID > 0
+		)) and t1.ID not in (
+		select t4.ID
+		from ORG_PUB_COLUMN t4, RELEASE_RECORD r3
+		where (r3.ORG_ID=#{orgid}
+		<if test="deviceId != null">
+		and r3.DEVICE_ID = #{deviceId} and r3.DEVICE_TYPE is null
+		</if>
+		<if test="deviceType != null">
+		and r3.DEVICE_TYPE = #{deviceType} and r3.DEVICE_ID is null
+		</if>
+		and t4.ID = r3.COLUMN_ID
+		)
+		))
+	</select>
+	<select id="findPublishCols" resultMap="ResultMap">
+		select * from (select t1.ID,t1.PARENT_ID,t2.TITLE,t2.SUMMARY,t2.IMAGE,t1.SORT,t1.LINK,
+		t1.CRT_DATE,t1.STATUS,t1.ORG_ID,t2.THUMBNAIL,t1.TYPE,t2.CONTENT,t1.QUOTE_ID,t1.DEVICE_ID,t1.DEVICE_TYPE,
+		(select count(c.id) from ORG_PUB_COLUMN c where c.parent_id = t1.id or (c.parent_id!=0 and c.parent_id =t1.quote_id)) childs,
+		i1.ID TEMPLATE_ID, i1.TYPE T_TYPE, i1.PATH PATH,i1.SET_NO SET_NO, i1.NAME NAME,
+		i1.ORG_ID T_ORG_ID,i1.CRT_DATE T_CRT_DATE,i1.LAST_DATE T_LAST_DATE,i1.DESCRIPTION DESCRIPTION
+		 from ORG_PUB_COLUMN t1 
+		 left join ORG_PUB_COLUMN t2 on t1.quote_id=t2.id
+		 left join RELEASE_RECORD r1 on r1.COLUMN_ID = t1.ID and r1.ORG_ID=#{orgid} 
+		 <if test="deviceId != null">
+			and r1.device_id = #{deviceId}
+		 </if>
+		 <if test="deviceType != null">
+			and r1.device_type = #{deviceType} and r1.device_id is null
+		 </if>
+		 left join INFO_TEMPLATE i1 on i1.ID = r1.TEMPLATE_ID
+		where t1.org_id=#{orgid} 
+		<if test="deviceType != null">
+		and t1.device_type = #{deviceType} and t1.device_id is null
+		</if>
+		<if test="deviceId != null">
+		and t1.device_id = #{deviceId}
+		</if>
+		AND t1.QUOTE_ID > 0) u1
+		 union 
+		 select * from ( select t3.ID,t3.PARENT_ID,t3.TITLE,t3.SUMMARY,t3.IMAGE,t3.SORT,t3.LINK,t3.CRT_DATE,t3.STATUS,t3.ORG_ID,t3.THUMBNAIL,t3.TYPE,t3.CONTENT,t3.QUOTE_ID,t3.DEVICE_ID,t3.DEVICE_TYPE, 
+		 (select count(c.id) from ORG_PUB_COLUMN c where c.parent_id = t3.id or (c.parent_id!=0 and c.parent_id =t3.quote_id)) childs,
+		 i2.ID TEMPLATE_ID, i2.TYPE T_TYPE, i2.PATH PATH,i2.SET_NO SET_NO, i2.NAME NAME,
+		i2.ORG_ID T_ORG_ID,i2.CRT_DATE T_CRT_DATE,i2.LAST_DATE T_LAST_DATE,i2.DESCRIPTION DESCRIPTION
+		 from ORG_PUB_COLUMN t3
+		 left join ORG_PUB_COLUMN t6 t6.ORG_ID=#{orgid} and t6.DEVICE_TYPE="ORG"
+		  left join RELEASE_RECORD r2 on r2.COLUMN_ID = t3.ID and r2.ORG_ID=#{orgid} 
+		 <if test="deviceId != null">
+			and r2.device_id = #{deviceId}
+		 </if>
+		 <if test="deviceType != null">
+			and r2.device_type = #{deviceType} and r2.device_id is null
+		 </if>
+		 left join INFO_TEMPLATE i2 on i2.ID = r2.TEMPLATE_ID
+		where (t3.org_id=#{orgid} 
+		<if test="deviceType != null">
+		and t3.device_type = #{deviceType} and t3.device_id is null
+		</if>
+		<if test="deviceId != null">
+		and t3.device_id = #{deviceId}
+		</if>
+		AND t3.QUOTE_ID = 0)
+		 order by sort asc) u2
+		 union
+		 select * from (
+		 select t4.ID,t4.PARENT_ID,t4.TITLE,t4.SUMMARY,t4.IMAGE,t4.SORT,t4.LINK,t4.CRT_DATE,t4.STATUS,t4.ORG_ID,t4.THUMBNAIL,t4.TYPE,t4.CONTENT,t4.QUOTE_ID,t4.DEVICE_ID,t4.DEVICE_TYPE, 
+		 (select count(c.id) from ORG_PUB_COLUMN c where c.parent_id = t4.id or (c.parent_id!=0 and c.parent_id =t4.quote_id)) childs,
+		 i12.ID TEMPLATE_ID, i12.TYPE T_TYPE, i12.PATH PATH,i12.SET_NO SET_NO, i12.NAME NAME,
+		i12.ORG_ID T_ORG_ID,i12.CRT_DATE T_CRT_DATE,i12.LAST_DATE T_LAST_DATE,i12.DESCRIPTION DESCRIPTION
+		 from ORG_PUB_COLUMN t4 
+		 left join RELEASE_RECORD r12 on r12.COLUMN_ID = t4.ID and r12.ORG_ID=#{orgid} 
+		 <if test="deviceId != null">
+			and r12.device_id = #{deviceId}
+		 </if>
+		 <if test="deviceType != null">
+			and r12.device_type = #{deviceType} and r12.device_id is null
+		 </if>
+		 left join INFO_TEMPLATE i12 on i12.ID = r12.TEMPLATE_ID
+		 where t4.org_id=#{orgid} and t4.parent_id in (
+		 select t5.QUOTE_ID
+		 from ORG_PUB_COLUMN t5,RELEASE_RECORD r11
+		where t5.org_id=#{orgid} 
+		 <if test="deviceId != null">
+			and r11.device_id = #{deviceId}
+		 </if>
+		 <if test="deviceType != null">
+			and r11.device_type = #{deviceType} and r11.device_id is null
+		 </if>
+		AND t5.QUOTE_ID > 0
+		and r11.COLUMN_ID = t5.ID and r11.ORG_ID=#{orgid}
+		 )
+
+		 ) u3
+	</select>
+	
+	<select id="quotePageSelect" resultMap="ResultMap">
+		select
+		opc.ID,opc.PARENT_ID,opc.TITLE,opc.SUMMARY,opc.IMAGE,opc.SORT,opc.LINK,
+		opc.CRT_DATE,opc.STATUS,opc.ORG_ID,opc.THUMBNAIL,opc.TYPE,opc.CONTENT,opc.QUOTE_ID,opc.DEVICE_ID,opc.DEVICE_TYPE
+	    <![CDATA[
+	        ,(select count(c.id) from ORG_PUB_COLUMN c where c.parent_id = opc.id or (c.parent_id!=0 and c.parent_id =opc.quote_id)) childs 
+	        ,(select q.title from ORG_PUB_COLUMN q where q.id = opc.quote_id) parentTitle
+	    ]]> from ORG_PUB_COLUMN opc 
+	    where opc.parent_id=0 and opc.org_id=#{orgId} and opc.device_type = #{deviceType}
+	    and opc.id not in (
+	    select c.quote_id from ORG_PUB_COLUMN c where c.quote_id != 0 and c.org_id=#{orgId}
+	    <if test="quoteDevType != null">
+	    	and c.device_type = #{quoteDevType} and c.device_id is null
+	    </if>
+	    <if test="quoteDevId != null">
+	    	and c.device_id = #{quoteDevId} and c.device_type is null
+	    </if>
+	    )
+	    <if test="hideWelcome != null">
+	    	and opc.type != 0
+	    </if>
+	    <if test="sortColumns != null">
+			ORDER BY opc.${sortColumns}
+		</if>
+		<if test="sortColumns == null">
+			ORDER BY opc.SORT asc
+		</if>
+	</select>
+	
+	<select id="quotePageSelectCount" resultType="long">
+	select count(*) from ORG_PUB_COLUMN opc 
+	    where opc.parent_id=0 and opc.org_id=#{orgId} and opc.device_type = #{deviceType}
+	    and opc.id not in (
+	    select c.quote_id from ORG_PUB_COLUMN c where c.quote_id != 0 and c.org_id=#{orgId}
+	    <if test="quoteDevType != null">
+	    	and c.device_type = #{quoteDevType} and c.device_id is null
+	    </if>
+	    <if test="quoteDevId != null">
+	    	and c.device_id = #{quoteDevId} and c.device_type is null
+	    </if>
+	    )
+	    <if test="hideWelcome != null">
+	    	and opc.type != 0
+	    </if>
+	    <if test="sortColumns != null">
+			ORDER BY opc.${sortColumns}
+		</if>
+		<if test="sortColumns == null">
+			ORDER BY opc.SORT asc
+		</if>
+	</select>
+	
+	<delete id="deleteDevColumn" parameterType="map">
+	delete from ORG_PUB_COLUMN where ORG_ID = #{orgId}
+	<if test="deviceId != null">
+	and DEVICE_ID = #{deviceId} and DEVICE_TYPE is null
+	</if>
+	<if test="devType != null">
+	and DEVICE_TYPE = #{devType} and DEVICE_ID is null
+	</if>
+	</delete>
+	
+	<select id="getAllColumns" resultMap="ResultMap">
+	select * from ORG_PUB_COLUMN where ORG_ID=#{orgId}
+	<if test="deviceId != null">
+	and DEVICE_ID = #{deviceId} and DEVICE_TYPE is null
+	</if>
+	<if test="deviceType != null">
+	and DEVICE_TYPE = #{deviceType} and DEVICE_ID is null
+	</if>
+	</select>
+</mapper>

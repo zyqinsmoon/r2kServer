@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.apabi.r2k.admin.model.InfoTemplate">
+
+	<resultMap id="templateResult" type="com.apabi.r2k.admin.model.InfoTemplate">
+		<result property="id" column="ID" />
+		<result property="name" column="NAME" />
+		<result property="type" column="TYPE" />
+		<result property="path" column="PATH" />
+		<result property="setNo" column="SET_NO" />
+		<result property="orgId" column="ORG_ID" />
+		<result property="crtDate" column="CRT_DATE" />
+		<result property="lastDate" column="LAST_DATE" />
+		<result property="description" column="DESCRIPTION" />
+		<association property="templateSet" javaType="com.apabi.r2k.admin.model.InfoTemplateSet">  
+            <result property="id" column="ID" />
+			<result property="setNo" column="SET_NO" />
+			<result property="setName" column="SET_NAME" />
+			<result property="deviceType" column="DEVICE_TYPE" />
+			<result property="defaultType" column="DEFAULT_TYPE" />
+			<result property="scope" column="SCOPE" />
+			<result property="orgId" column="ORG_ID" />
+			<result property="crtDate" column="CRT_DATE" />
+			<result property="lastDate" column="LAST_DATE" />
+			<result property="description" column="DESCRIPTION" />
+        </association> 
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="commonColumns">
+	    <![CDATA[
+        	ID ,
+        	NAME,
+        	TYPE,
+        	PATH,
+        	SET_NO,
+        	ORG_ID,
+        	CRT_DATE,
+        	LAST_DATE,
+        	DESCRIPTION
+	    ]]>
+	</sql>
+
+	<sql id="dynamicWhereAnd">
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null">
+			AND ID = #{id}
+			</if>
+			<if test="name != null">
+			AND NAME = #{name}
+			</if>
+			<if test="type != null">
+			AND TYPE = #{type}
+			</if>
+			<if test="path != null">
+			AND PATH = #{path}
+			</if>
+			<if test="orgId != null">
+			AND ORG_ID = #{orgId}
+			</if>
+			<if test="setNo != null">
+			AND SET_NO = #{setNo}
+			</if>
+			<if test="crtDate != null">
+			AND CRT_DATE = #{crtDate}
+			</if>
+			<if test="lastDate != null">
+			AND LAST_DATE = #{lastDate}
+			</if>
+			<if test="description != null">
+			AND DESCRIPTION = #{description}
+			</if>
+		</trim>
+	</sql>
+	
+	<!-- 插入 -->
+	<insert id="insert" parameterType="com.apabi.r2k.admin.model.InfoTemplate">
+    <![CDATA[
+        INSERT INTO
+        INFO_TEMPLATE (
+        	ID ,
+        	NAME,
+        	TYPE,
+        	PATH,
+        	SET_NO,
+        	ORG_ID,
+        	CRT_DATE,
+        	LAST_DATE,
+        	DESCRIPTION
+        ) VALUES (
+        	#{id} ,
+        	#{name} ,
+        	#{type} ,
+        	#{path} ,
+        	#{orgId},
+        	#{setNo} ,
+        	#{crtDate} ,
+        	#{lastDate} ,
+        	#{description}
+        )
+    ]]>
+	</insert>
+	<insert id="insertSelective" parameterType="com.apabi.r2k.admin.model.InfoTemplate" keyProperty="id" useGeneratedKeys="true">
+	  insert into INFO_TEMPLATE
+	  <trim prefix="(" suffix=")" suffixOverrides="," >
+	  	<if test="id != null">
+		 ID ,
+		</if>
+		<if test="name != null">
+		 NAME ,
+		</if>
+		<if test="type != null">
+		 TYPE ,
+		</if>
+		<if test="path != null">
+		 PATH ,
+		</if>
+		<if test="orgId != null">
+		 ORG_ID ,
+		</if>
+		<if test="setNo != null">
+		 SET_NO ,
+		</if>
+		<if test="crtDate != null">
+		 CRT_DATE,
+		</if>
+		<if test="lastDate != null">
+		 LAST_DATE ,
+		</if>
+		<if test="description != null">
+		 DESCRIPTION
+		</if>
+	  </trim>
+	  <trim prefix="values (" suffix=")" suffixOverrides="," >
+	  	<if test="id != null">
+		#{id,jdbcType=INTEGER},
+		</if>
+		<if test="name != null">
+		#{name,jdbcType=VARCHAR},
+		</if>
+		<if test="type != null">
+		#{type,jdbcType=VARCHAR},
+		</if>
+		<if test="path != null">
+		#{path,jdbcType=VARCHAR},
+		</if>
+		<if test="orgId != null">
+		#{orgId,jdbcType=VARCHAR},
+		</if>
+		<if test="setNo != null">
+		#{setNo,jdbcType=VARCHAR},
+		</if>
+		<if test="crtDate != null">
+		#{crtDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="lastDate != null">
+		#{lastDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="description != null">
+		#{description,jdbcType=VARCHAR},
+		</if>
+	  </trim>
+	</insert>
+
+	<!-- 更新 -->
+	<update id="update" parameterType="com.apabi.r2k.admin.model.InfoTemplate">
+		UPDATE INFO_TEMPLATE
+		<set >
+			<if test="name != null">
+			 NAME = #{name},
+			</if>
+			<if test="type != null">
+			 TYPE = #{type},
+			</if>
+			<if test="path != null">
+			 PATH = #{path},
+			</if>
+			<if test="setNo != null">
+			 SET_NO = #{setNo},
+			</if>
+			<if test="crtDate != null">
+			 CRT_DATE = #{crtDate},
+			</if>
+			<if test="lastDate != null">
+			 LAST_DATE = #{lastDate},
+			</if>
+			<if test="description != null">
+			 DESCRIPTION = #{description}
+			</if>
+		</set>
+		<where>
+			ID = #{id}
+		</where>
+	</update>
+
+	<!-- 删除 -->
+	<delete id="delete" parameterType="map">
+    <![CDATA[
+        delete from INFO_TEMPLATE
+    ]]>
+		<where>
+			ID = #{id}
+		</where>
+	</delete>
+	<delete id="deleteBySetNo" parameterType="map">
+    <![CDATA[
+        delete from INFO_TEMPLATE
+    ]]>
+		<where>
+			SET_NO = #{setNo} 
+		</where>
+	</delete>
+	<delete id="batchDelete" parameterType="java.util.List">
+		<![CDATA[
+        delete from INFO_TEMPLATE
+    	]]>
+    	<where>
+			ID in 
+			<foreach collection="ids" item="id" index="index" open="(" separator="," close=")">
+				#{id}
+			</foreach>
+		</where>
+	</delete>
+	
+	<!-- 查询 -->
+	<select id="getById" resultMap="templateResult">
+		select
+		<include refid="commonColumns" />
+	    <![CDATA[
+	        from INFO_TEMPLATE 
+	        where 
+		        ID = #{id} 
+	    ]]>
+	</select>
+	<select id="getBySetNo" resultMap="templateResult">
+		select
+		<include refid="commonColumns" />
+	    <![CDATA[
+	        from INFO_TEMPLATE 
+	        where SET_NO = #{setNo} 
+	    ]]>
+	</select>
+	<select id="count" resultType="long">
+	<!-- select count(*) from INFO_TEMPLATE -->
+    <![CDATA[
+         select count(*) from(select SET_NO from INFO_TEMPLATE WHERE ORG_ID=#{orgId} or SCOPE = '0' GROUP BY SET_NO) t
+    ]]>
+<!--    <include refid="dynamicWhereAnd" />-->
+	</select>
+	<!-- 分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页 因为分页查询将传 #offset#,#pageSize#,#lastRows# 
+		三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现 -->
+<!--	<select id="pageSelect" resultMap="templateResult">-->
+<!--		<![CDATA[-->
+<!--	         select t.ORG_ID, t.SET_NO, t.SET_NAME, t.DEVICE_TYPE, t.SCOPE, t.DEFAULT_TYPE from INFO_TEMPLATE t -->
+<!--	    ]]>-->
+<!--	     <where> -->
+<!--        <if test="orgId != null">-->
+<!--  			t.ORG_ID in (#{orgId},'apabi')-->
+<!--  		</if>-->
+<!--        <if test="orgId == null">-->
+<!--  			t.SCOPE = '0'-->
+<!--  		</if>-->
+<!--  		</where>-->
+<!--        GROUP BY t.SET_NO,t.SCOPE ORDER BY t.SCOPE ASC,t.LAST_DATE DESC-->
+<!--	</select>-->
+	<select id="queryAll" resultMap="templateResult">
+		select
+		<include refid="commonColumns" />
+	    <![CDATA[
+	        from INFO_TEMPLATE 
+	    ]]>
+		<include refid="dynamicWhereAnd" />
+	</select>
+	
+	<select id="findHomeTemplate" resultMap="templateResult">
+		select t.*
+	    <![CDATA[
+	        from INFO_TEMPLATE t, RELEASE_RECORD r
+	    ]]>
+	    <where>
+	    	AND r.ORG_ID = #{orgid}
+	    	<if test="deviceType !=null">
+	  			AND r.DEVICE_TYPE = #{deviceType} AND r.DEVICE_ID is null
+	  		</if>
+	  		<if test="deviceId != null">
+	  			AND r.DEVICE_ID = #{deviceId} AND r.DEVICE_TYPE is null
+	  		</if>
+	  			AND r.STATUS != 2
+	  			AND r.TEMPLATE_ID = t.ID
+	  			AND r.COLUMN_ID is null
+	    </where>
+	</select>
+	<!-- 根据设备类型查询机构下模板 -->
+	<select id="findOrgTemplateByDevType" resultMap="templateResult">
+		<![CDATA[
+	         select t.ID,t.ORG_ID, t.SET_NO, t.SET_NAME, t.DEVICE_TYPE, t.SCOPE, t.DEFAULT_TYPE from INFO_TEMPLATE t 
+	         WHERE t.ORG_ID=#{orgId} and t.DEVICE_TYPE like '%${deviceType}%' GROUP BY t.SET_NO
+	    ]]>
+	</select>
+	<!-- 根据设备类型查询机构下模板 -->
+	<select id="findOrgAllTemplateByDevType" resultMap="templateResult">
+		<![CDATA[
+	         select t.ID,ts.ORG_ID, t.SET_NO, ts.SET_NAME, ts.DEVICE_TYPE, ts.SCOPE, ts.DEFAULT_TYPE,t.NAME 
+	         from INFO_TEMPLATE t LEFT JOIN INFO_TEMPLATESET ts ON t.SET_NO = ts.set_no
+	         WHERE ts.ORG_ID in (#{orgId},'apabi') and ts.DEVICE_TYPE like '%${deviceType}%' and t.NAME="home" GROUP BY t.SET_NO
+	    ]]>
+	</select>
+	
+	<select id="findUsedTemplate" resultMap="templateResult">
+		select t.ID,t.SET_NO,ts.SET_NAME,t.NAME from INFO_TEMPLATE t, RELEASE_RECORD r, INFO_TEMPLATESET ts
+		where r.ORG_ID=#{orgId}
+		<if test="deviceType != null">
+		AND	r.DEVICE_TYPE = #{deviceType} and r.DEVICE_ID is null
+		</if>
+		<if test="deviceId != null">
+		AND	r.DEVICE_ID = #{deviceId} and r.DEVICE_TYPE is null
+		</if>
+		AND r.TEMPLATE_ID = t.ID
+		AND t.TYPE = "home"
+	</select>
+	
+	<select id="findColTemplates" resultMap="templateResult">
+		select * from INFO_TEMPLATE where SET_NO=#{setNo} and TYPE=#{type}
+	</select>
+	
+	<select id="findDefaultTemplate" resultMap="templateResult">
+	 select t.ID, ts.ORG_ID, ts.SET_NO, ts.SET_NAME, ts.DEVICE_TYPE, ts.SCOPE, ts.DEFAULT_TYPE, t.NAME 
+	 from INFO_TEMPLATE t LEFT JOIN INFO_TEMPLATESET ts ON t.SET_NO = ts.set_no
+	 where ts.ORG_ID in ("apabi",#{orgId}) and ts.DEVICE_TYPE like "%${deviceType}%" and t.TYPE="home" order by t.crt_date desc
+	</select>
+</mapper>

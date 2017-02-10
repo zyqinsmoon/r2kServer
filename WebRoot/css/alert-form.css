@@ -1,0 +1,24 @@
+@charset "utf-8";
+/* 弹框样式  border:1px solid #dfd2c5; background:#fdfcfa; */
+ul,li{list-style-type:none}
+.dialog-form{margin-top: 5%;}
+.regbox{ position:relative; margin:10px auto; padding:10px; width:600px;  border-radius:5px; }
+.regbox ul{ clear:both; zoom:1;}
+.regbox li{ float:left; line-height:28px;}
+.regbox li.name{padding-right:12px; width:150px;font-size:14px;text-align:right;  }
+.regbox li .suggest{ display:block; height:24px; line-height:24px; color:#a87a2c; }
+.regbox li .text{ width:280px; height:26px; line-height:26px;}
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset{width: 120px; margin: 0 auto;}
+.field{margin-bottom: 20px;}
+.form-button{margin: 0px auto;width: 150px;}
+
+/* 日期控件 */
+.ui-datepicker select.ui-datepicker-month{width: 41%;}
+.ui-datepicker select.ui-datepicker-year{width: 45%;}
+
+.form-search-div{float: right; margin-right:20px;}
+
+.menu-input-radio{margin-left:23%;}
+
+.menu-hr{margin-left:10%;width:70%;}

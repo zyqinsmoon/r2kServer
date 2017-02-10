@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:s="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd"
+	default-autowire="byName" default-lazy-init="true">
+
+	<description>SpringSecurity安全配置</description>
+	<!-- http安全配置 -->
+	<s:http entry-point-ref="authenticationProcessingFilterEntryPoint">
+		<!--不需要验证权限的链接 -->
+		<s:intercept-url pattern="/scripts/**" filters="none" />
+		<s:intercept-url pattern="/images/**" filters="none" />
+		<s:intercept-url pattern="/css/**" filters="none" />
+		<s:intercept-url pattern="/styles/**" filters="none" />
+		<!-- 登录过滤器 -->
+		<s:custom-filter position="FORM_LOGIN_FILTER" ref="appLoginFilter" />
+		<s:custom-filter after="FORM_LOGIN_FILTER" ref="authenticationProcessingFilter" />
+		<!-- 注销过滤器 -->
+		<s:custom-filter position="LOGOUT_FILTER" ref="appLogoutFilter" />
+		<s:custom-filter after="LOGOUT_FILTER" ref="adminLogoutFilter" />
+		<s:custom-filter ref="myFilter" before="FILTER_SECURITY_INTERCEPTOR" />
+		<s:access-denied-handler ref="myAccessDeniedHandler" />
+	</s:http>
+	
+	<!-- ##################################################公用配置################################################## -->
+	<!-- 登录切入点 -->
+	<bean id="authenticationProcessingFilterEntryPoint" class="com.apabi.r2k.security.service.security.LoginUrlEntryPoint" />
+	
+	<!-- 访问拒绝处理器 -->
+	<bean id="myAccessDeniedHandler" class="com.apabi.r2k.security.handler.MyAccessDeniedHandler">
+		<property name="errorPage" value="/admin/login.jsp"></property>
+	</bean>
+	
+	<!-- url权限拦截器 -->
+	<bean id="myFilter" class="com.apabi.r2k.security.interceptor.MyFilterSecurityInterceptor">
+		<property name="authenticationManager" ref="myAuthenticationManager" />
+		<property name="accessDecisionManager" ref="myAccessDecisionManager" />
+		<property name="securityMetadataSource" ref="mySecurityMetadataSource" />
+	</bean>
+	
+	<!-- 访问决策管理器 -->
+	<bean id="myAccessDecisionManager" class="com.apabi.r2k.security.service.security.MyAccessDecisionManager" />
+	
+	<!-- 元数据管理 -->
+	<bean id="mySecurityMetadataSource" class="com.apabi.r2k.security.service.security.MyInvocationSecurityMetadataSource" />
+
+	<bean id="authenticationDetailsSource" class="com.apabi.r2k.common.security.springsecurity.CustomWebAuthenticationDetailsSource" />
+	
+	<!-- 认证配置, 使用userDetailsService提供的用户信息 -->
+	<s:authentication-manager />
+
+	<!-- 密码采用MD5加密 -->
+	<bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" />
+	
+	<!-- 用户认证 -->
+	<bean id="myUserDetailsService" class="com.apabi.r2k.security.userdetails.MyUserDetailServiceImpl" />
+	
+	<bean id="myAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<property name="hideUserNotFoundExceptions" value="false" />
+		<property name="userDetailsService" ref="myUserDetailsService" />
+		<property name="passwordEncoder" ref="passwordEncoder" />
+	</bean>
+
+	<bean id="screenProvider" class="com.apabi.r2k.security.provider.ScreenProvider">
+		<property name="hideUserNotFoundExceptions" value="false" />
+	</bean>
+	
+	<bean id="anonymousAuthenticationProvider" class="org.springframework.security.authentication.AnonymousAuthenticationProvider">
+		<property name="key">
+			<value>work</value>
+		</property>
+	</bean>
+	
+	<!-- <bean id="weixinProvider" class="com.apabi.r2k.security.service.security.WeiXinProvider"> 
+		<property name="hideUserNotFoundExceptions" value="false"/> </bean> -->
+	
+	<bean id="myAuthenticationManager" class="org.springframework.security.authentication.ProviderManager">
+		<property name="authenticationEventPublisher" ref="defaultAuthenticationEventPublisher"></property>
+		<property name="providers">
+			<list>
+				<!-- <ref local="weixinProvider"/> -->
+				<ref local="screenProvider" />
+				<ref local="myAuthenticationProvider" />
+				<ref local="anonymousAuthenticationProvider" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="defaultAuthenticationEventPublisher" class="org.springframework.security.authentication.DefaultAuthenticationEventPublisher"></bean>
+
+	<!-- ##################################################后台配置################################################## -->
+	<!-- 后台用户登录 -->
+	<bean id="authenticationProcessingFilter"
+		class="com.apabi.r2k.security.filter.MyLoginAuthenticationFilter">
+		<property name="authenticationDetailsSource" ref="authenticationDetailsSource" />
+		<property name="authenticationManager" ref="myAuthenticationManager" />
+		<property name="filterProcessesUrl" value="/admin/j_spring_security_check" />
+		<property name="authenticationSuccessHandler" ref="adminSuccessHandler" />
+		<property name="authenticationFailureHandler" ref="adminFailureHandler" />
+	</bean>
+
+	<!-- 后台登录成功处理器 -->
+	<bean id="adminSuccessHandler" class="com.apabi.r2k.security.handler.AdminSuccessHandler">
+		<property name="defaultTargetUrl" value="/org/getOrgInfo.do" />
+		<property name="alwaysUseDefaultTargetUrl" value="true" />
+		<property name="callbacks">
+			<list>
+				<bean class="com.apabi.r2k.security.service.security.UserLoginLogCallback" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- 后台登录失败处理器 -->
+	<bean id="adminFailureHandler"
+		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+		<property name="defaultFailureUrl" value="/admin/login.jsp" />
+	</bean>
+	
+	<!-- 后台注销登录处理器 -->
+	<bean id="adminLogoutHandler" class="org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler">
+		<property name="defaultTargetUrl" value="/admin/login.jsp"></property>
+	</bean>
+	
+	<!-- 后台注销过滤器，完成用户注销时的定向功能 -->
+	<bean id="adminLogoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
+		<!-- <constructor-arg value="/admin/login.jsp" /> -->
+		<constructor-arg ref="adminLogoutHandler" />
+		<constructor-arg>
+			<list>
+				<bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />
+			</list>
+		</constructor-arg>
+		<property name="filterProcessesUrl" value="/admin/j_spring_security_logout" />
+	</bean>
+	
+	<!-- ##################################################客户端配置################################################## -->
+	<bean id="appLogin" class="com.apabi.r2k.security.app.AppLogin">
+		<property name="userDetailFactory" ref="myUserDetailsService"></property>
+	</bean>
+	
+	<!-- 客户端用户登录 -->
+	<bean id="appLoginFilter" class="com.apabi.r2k.security.filter.AppLoginAuthenticationFilter">
+		<property name="authenticationDetailsSource" ref="authenticationDetailsSource" />
+		<property name="authenticationManager" ref="myAuthenticationManager" />
+		<property name="filterProcessesUrl" value="/app/j_spring_security_check" />
+		<property name="authenticationSuccessHandler" ref="appSuccessHandler" />
+		<property name="authenticationFailureHandler" ref="appFailureHandler" />
+		<property name="appLogin" ref="appLogin"></property>
+	</bean>
+
+	<!-- 客户端登录成功处理器 -->
+	<bean id="appSuccessHandler" class="com.apabi.r2k.security.handler.AppSuccessHandler">
+		<property name="callbacks">
+			<list>
+				<bean class="com.apabi.r2k.security.service.security.UserLoginLogCallback" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- 客户端失败处理器 -->
+	<bean id="appFailureHandler" class="com.apabi.r2k.security.handler.AppFailureHandler"></bean>
+	
+	<bean id="appLogout" class="com.apabi.r2k.security.app.AppLogout"></bean>
+	
+	<!-- 客户端注销登录处理器 -->
+	<bean id="appLogoutHandler" class="com.apabi.r2k.security.handler.AppLogoutHandler">
+		<property name="appLogout" ref="appLogout"></property>
+	</bean>
+	
+	<!-- 后台注销过滤器，完成用户注销时的定向功能 -->
+	<bean id="appLogoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
+		<!-- <constructor-arg value="/admin/login.jsp" /> -->
+		<constructor-arg ref="appLogoutHandler" />
+		<constructor-arg>
+			<list>
+				<bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />
+			</list>
+		</constructor-arg>
+		<property name="filterProcessesUrl" value="/app/j_spring_security_logout" />
+	</bean>
+</beans>

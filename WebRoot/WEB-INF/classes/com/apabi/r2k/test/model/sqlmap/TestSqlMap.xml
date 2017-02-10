@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.apabi.r2k.test.model.Test">
+	<resultMap type="com.apabi.r2k.test.model.Test" id="resultMap">
+		<result property="name" column="name"/>
+		<result property="content" column="content"/>
+	</resultMap>
+	
+	<insert id="insert">
+		<![CDATA[INSERT INTO TEST(name,content) VALUES(#{name},#{content})]]>
+	</insert>
+	
+	<select id="list" resultMap="resultMap">
+		SELECT NAME FROM TEST GROUP BY NAME
+	</select>
+	
+	<select id="namelist" resultMap="resultMap" parameterType="HashMap">
+		SELECT * FROM TEST WHERE  NAME = #{name}
+	</select>
+	
+</mapper>

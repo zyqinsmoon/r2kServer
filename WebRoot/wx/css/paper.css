@@ -1,0 +1,143 @@
+﻿/********/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video { 
+	margin: 0; padding: 0; border: 0; font-size: 100%; vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+li{ list-style:none;}
+
+.clearboth { 
+	clear: both; 
+}
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+a { 
+	text-decoration: none; 
+	outline: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+select, 
+select:focus, 
+a:focus, input:focus, select:focus, textarea:focus, 
+a, input, select, textarea, button, 
+a::-moz-focus-inner, input::-moz-focus-inner, select::-moz-focus-inner, textarea::-moz-focus-inner, button::-moz-focus-inner { 
+	outline: none; 
+    outline-width: 0; 
+}
+p { line-height:1.5; }
+a { color:#333; font-size: 1.6em; }
+h1 { font-size: 3em; }
+h2 { font-size: 2em; }
+h3 { font-size: 1.6em; }
+h4 { font-size: 1.4em; }
+small { font-size: 0.6em;}
+html, body { 
+	height: 100%;
+}
+
+
+/* BEGIN STYLES BELOW ************************************/ 
+html {font-size: 62.5%;/*10 ÷ 16 × 100% = 62.5%*/}
+body { background: #fff; font: normal 1.4rem/1.2 arial, helvetica, sans-serif,"微软雅黑"; color: #000;}
+
+header{position:fixed; top:0; width:100%; height:40px; background:#d76336; text-align:center; line-height:40px; color:#fff; font-size:1.8rem; z-index:2;}
+header>div{position:relative; }
+
+header .catalog{ position:absolute; left:0; width:44px; height:40px; background:url(../image/catalog.png) no-repeat right; background-size:21px 23px;}
+header .search{ position:absolute; right:0; width:48px; height:40px; background:url(../image/search.png) no-repeat left; background-size:24px 24px;}
+header .calendar{ position:absolute; right:0; width:48px; height:40px; background:url(../image/calendar.png) no-repeat left; background-size:24px 24px;}
+header .pageicon{ position:absolute; left:0; width:48px; height:40px; background:url(../image/pagelist.png) no-repeat right; background-size:22px;}
+.paperlist { margin:0 auto; margin-top:8px; width:96%; overflow:auto;}
+.paperlist li{ float:left; width:46%; padding:8px 2% 8px 2%; }
+.paperlist li>div{display:block;border:2px solid #ccc;color:#d76336;  }
+.paperlist li a{ display:block;  height:100px; text-align:center; overflow:hidden;}
+.paperlist li a img{ margin-top:3%; width:96%; }
+.paperlist li span{ display:block; padding:8px 0 4px 3%; }
+.paperlist .se_result { font-size:1.6rem; padding-left:4%; color:#333;}
+.paperlist .se_result em{ font-style:normal; color:#d76336;}
+
+.paperpage{ width:100%;overflow:hidden;background:#f9f5f0;}
+.paperpage > div { width:2000px; display: -webkit-box; display: box; -webkit-backface-visibility:hidden;}
+.paperpage > div > div { overflow:hidden;-webkit-backface-visibility:hidden;}
+
+
+.paperpage .listname,.pagebody .listname{ padding-top:5px; text-align:left;}
+.paperpage .listname p, .pagebody .listname p{ height:40px;  font-size:2rem; padding:0 3%; line-height:40px; background:#d76336; color:#fff}
+.paperpage .listname li a, .pagebody .listname li a{ display:block; padding:10px 5%; font-size:1.7rem; line-height:1.4;border-bottom:1px solid #c0a391; color:#7a532d;}
+.pagebmlist{ position:absolute; top:40px; width:100%; background:#f9f5f0; z-index:2;}
+.pagebmlist li a{ display:block; padding-left:20%; height:50px; background:#f9f5f0; border-bottom:1px solid #c0a391; line-height:50px; color:#7a532d; font-size:1.6rem;}
+.paperpage .pageimg{ overflow:hidden;}
+
+
+.article{ position:relative; height:1000px; width:100%;overflow:hidden;}
+.article h2{ padding:12px 12px; line-height:1.2; font-size:2rem; }
+.article .subinfo{padding:0 12px 6px 12px;  border-bottom:1px solid #ccc; color:#aaa;}
+.article .content{ padding:4px 12px; text-indent:2em; font-size:1.8rem;}
+.article .content p{ padding-top:12px;}
+.article .content .imgfld{ width:90%; margin:0 auto;text-indent:0;}
+.article .content .imgfld img{max-width:100%;}
+.article .content .imgfld p{ padding:4px 0; font-size:1.4rem;}
+
+.oldpaper li a{ display:block; height:50px; border-bottom:1px solid #c0a391; line-height:50px; text-align:center; color:#7a532d; font-size:1.6rem;}
+.bottom{ text-align:center; color:#ccc; height:50px; line-height:50px;}
+
+
+.classify{ background:#f9f5f0; font: normal 1.8rem/1.5 arial, helvetica, sans-serif,"微软雅黑"; color:#333;font-weight:bold; }
+#tabTitle li{ float:left; border-bottom:1px solid #d8d6d2; width:50%; height:40px; background:#d8d6d2; line-height:40px; text-align:center;  }
+#tabTitle li.active{background:#f9f5f0; }
+#tabArea .region,#tabArea .papertype{ clear:both; padding:0 0 0 4%;}
+#tabArea  a{ float:left; margin:12px 3% 0 0; width:29%; height:39px; border:1px solid #ccc; text-align:center; font-size:1.8rem; line-height:39px; background:#fff; color:#666;}
+#tabArea  a.hover{ color:#d76336; border:1px solid #d76336;}
+#tabArea{ padding-bottom:20px;}
+
+.listbody nav {height:35px; padding-top:5px; background:#dcdcdc}
+.listbody nav span{ float:left; margin:0 0 0 3%; width:74%; height:30px; background:url(../image/search_icon.png) no-repeat 10px 3px #fff; background-size:24px 24px;}
+.listbody nav input{width:82%; margin:4px 0 0 40px; padding:0; height:24px; line-height:24px; border:0;  background:#fff; font-size:1.7rem; color:#333; }
+.listbody nav input.init{ coslor:#ccc;}
+.listbody nav a{float:left; margin:0 0 0 3%;  width:16%; height:30px;line-height:30px; background:#8f8e93; font-size:1.5rem; text-align:center; border-radius:5px; color:#fff;}
+.testdiv{ width:74%; height:50px; background:url(../image/search_icon.png) no-repeat 2px 2px #fff; background-size:24px 24px;}
+
+.blank{ height:40px;}
+
+#loadFld {position:absolute; top:0; left:0; width:100%; height:100%;background:url(../image/loading.gif) no-repeat center 240px #fff; background-size:10%; text-align:center; z-index:6; font-size:30px;}
+.prompt{ position:fixed; top:200px; left:10%; padding-top:40px; width:80%; height:60px; background-color:rgba(0,0,0,0.5); color:#fff; font-size:2rem; text-align:center; z-index:3;}
+#loadFld2 {position:relative; top:240px; width:100%; height:100%;background:url(../image/loading.gif) no-repeat top center #f9f5f0; background-size:10%; text-align:center; z-index:6; font-size:30px;}
+
+.swiper-container { width: 100%; height: 900px; color: #000; text-align: center; }
+.swiper-wrapper .swiper-slide  img{ display:block; width:100%;}
+.swiper-wrapper .swiper-slide ,.swiper-wrapper .loadslide { background:url(../image/loading.gif) no-repeat center  200px;}
+
+
+
+

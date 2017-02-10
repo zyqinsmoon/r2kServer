@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="user" namespace="/user" extends="json-default">
+    	<action name="*" class="authUserAction" method="{1}">
+       	   <result name="list">/WEB-INF/jsp/admin/user/userlist.jsp</result>
+       	   <result name="save" type="redirectAction">showAll</result>
+       	   <result name="udpate" type="redirectAction">showAll</result>
+       	   <result name="delete" type="redirectAction">showAll</result>
+       	   
+       	   <result name="checkname" type="json">
+    			<param name="root">flag</param>
+		   </result>
+       	   <result name="toupdate" type="json">
+    			<param name="root">user</param>
+		   </result>
+       	   <result name="updatepwd" type="json">
+    			<param name="root">flag</param>
+		   </result>
+		   <result name="resetpwd" type="json">
+		   		<param name="flag">flag</param>
+		   		<param name="pwd">password</param>
+		   </result>
+       </action>
+    </package>
+</struts>

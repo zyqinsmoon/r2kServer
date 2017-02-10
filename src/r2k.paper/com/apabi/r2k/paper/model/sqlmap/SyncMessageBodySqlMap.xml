@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.apabi.r2k.paper.model.SyncMessageBody">
+
+	<resultMap id="syncMessageBodyResult" type="com.apabi.r2k.paper.model.SyncMessageBody">
+		<result property="id" column="id" />
+		<result property="paperId" column="PAPER_ID" />
+		<result property="periodId" column="PERIOD_ID" />
+		<result property="filter" column="FILTER"/>
+		<result property="type" column="TYPE" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="commonColumns">
+	    <![CDATA[
+        	id ,
+        	PAPER_ID ,
+        	PERIOD_ID ,
+        	FILTER ,
+        	TYPE 
+	    ]]>
+	</sql>
+
+	<sql id="dynamicWhere">
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+				<if test="id != null">
+				AND id = #{id}
+				</if>
+				<if test="paperId != null">
+				AND PAPER_ID = #{paperId}
+				</if>
+				<if test="periodId != null">
+				AND PERIOD_ID = #{periodId}
+				</if>
+				<if test="type != null">
+				AND TYPE = #{type}
+				</if>
+		</trim>
+	</sql>
+
+	<insert id="insert" parameterType="com.apabi.r2k.paper.model.SyncMessageBody">
+	<selectKey resultType="int" keyProperty="id">
+    	SELECT LAST_INSERT_ID() 
+    </selectKey>
+    <![CDATA[
+        INSERT INTO
+        SYNC_MESSAGE_BODY (
+			ID,
+        	PAPER_ID ,
+        	PERIOD_ID ,
+        	FILTER,
+        	TYPE 
+        ) VALUES (
+			#{id},
+        	#{paperId} ,
+        	#{periodId} ,
+        	#{filter} ,
+        	#{type} 
+        )
+    ]]>
+	</insert>
+
+	<update id="update" parameterType="com.apabi.r2k.paper.model.SyncMessageBody">
+		UPDATE SYNC_MESSAGE_BODY
+		<trim prefix="SET" suffixOverrides=",">
+	        		<if test="paperId != null">
+	        			PAPER_ID = #{paperId},
+	        		</if>
+	        		<if test="periodId != null">
+	        			PERIOD_ID = #{periodId},
+	        		</if>
+	        		<if test="filter != null">
+	        			FILTER = #{filter},
+	        		</if>
+	        		<if test="type != null">
+	        			TYPE = #{type},
+	        		</if>
+		</trim>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+
+
+	<delete id="delete" parameterType="map">
+    <![CDATA[
+        delete from SYNC_MESSAGE_BODY
+    ]]>
+		<where>
+			id = #{id}
+		</where>
+	</delete>
+
+	<delete id="batchDelete" parameterType="java.util.List">
+		<![CDATA[
+        delete from SYNC_MESSAGE_BODY
+    	]]>
+    	<where>
+			id in 
+			<foreach collection="ids" item="id" index="index" open="(" separator="," close=")">
+				#{id}}
+			</foreach>
+		</where>
+	</delete>
+	
+	<select id="getById" resultMap="syncMessageBodyResult">
+		select
+		<include refid="commonColumns" />
+	    <![CDATA[
+	        from SYNC_MESSAGE_BODY 
+	        where 
+		        id = #{id} 
+	    ]]>
+	</select>
+
+	<select id="count" resultType="long">
+    <![CDATA[
+        select count(*) from SYNC_MESSAGE_BODY
+    ]]>
+    <include refid="dynamicWhere" />
+	</select>
+
+	<!-- 分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页 因为分页查询将传 #offset#,#pageSize#,#lastRows# 
+		三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现 -->
+	<select id="pageSelect" resultMap="syncMessageBodyResult">
+		select
+		<include refid="commonColumns" />
+	    <![CDATA[
+	        from SYNC_MESSAGE_BODY 
+	    ]]>
+		<include refid="dynamicWhere" />
+		<if test="sortColumns != null">
+			ORDER BY ${sortColumns}
+		</if>
+	</select>
+
+</mapper>

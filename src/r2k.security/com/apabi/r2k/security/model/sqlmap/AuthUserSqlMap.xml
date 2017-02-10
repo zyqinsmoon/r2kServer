@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="com.apabi.r2k.security.model.AuthUser">
+
+    <resultMap id="authUserResult" type="com.apabi.r2k.security.model.AuthUser">
+        <result property="id" column="ID"/>
+        <result property="userName" column="USER_NAME"/>
+        <result property="password" column="PASSWORD"/>
+        <result property="loginName" column="LOGIN_NAME"/>
+        <result property="userDesc" column="USER_DESC"/>
+        <result property="enabled" column="ENABLED"/>
+        <result property="isAdmin" column="IS_ADMIN"/>
+        <result property="authOrgId" column="AUTH_ORG_ID"/>
+        <result property="mobile" column="MOBILE"/>
+        <result property="officePhone" column="OFFICE_PHONE"/>
+        <result property="email" column="EMAIL"/>
+        <result property="crtDate" column="CRT_DATE"/>
+        <result property="lastUpdate" column="LAST_UPDATE"/>
+        <association property="authOrg" column="AUTH_ORG_ID" 
+   			select="com.apabi.r2k.security.model.AuthOrg.getById" />
+        <!--<result property="authOrg" column="AUTH_ORG_ID" select="com.apabi.r2k.security.model.AuthOrg.getById" />
+         <result property="authRoleList" column="ID" select="AuthRole.getRolesByUserId" /> -->
+        
+    </resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="commonColumns">
+	    <![CDATA[
+        	ID ,
+        	USER_NAME ,
+        	PASSWORD ,
+        	LOGIN_NAME ,
+        	USER_DESC ,
+        	ENABLED ,
+        	IS_ADMIN ,
+        	AUTH_ORG_ID ,
+        	MOBILE ,
+        	OFFICE_PHONE ,
+        	EMAIL ,
+        	CRT_DATE ,
+        	LAST_UPDATE 
+	    ]]>
+	</sql>
+
+	<sql id="dynamicWhere">
+		   <trim prefix="WHERE" prefixOverrides="AND|OR">
+	      <if test="id !=null">
+	      		AND  ID = #{id}
+	       </if>
+	      <if test="userName !=null">
+	            AND USER_NAME = #{userName}
+	       </if>
+	      <if test="password !=null">
+	            AND PASSWORD = #{password}
+	       </if>
+	      <if test="loginName !=null">
+	            AND LOGIN_NAME = #{loginName}
+	       </if>
+	      <if test="userDesc !=null">
+	            AND USER_DESC = #{userDesc}
+	       </if>
+	      <if test="enabled !=null">
+	            AND ENABLED = #{enabled}
+	       </if>
+	      <if test="isAdmin !=null">
+	            AND  IS_ADMIN = #{isAdmin}
+	       </if>
+	      <if test="authOrgId !=null">
+	            AND  AUTH_ORG_ID = #{authOrgId}
+	       </if>
+	      <if test="mobile !=null">
+	            AND  MOBILE = #{mobile}
+	       </if>
+	      <if test="officePhone !=null">
+	            AND  OFFICE_PHONE = #{officePhone}
+	       </if>
+	      <if test="email !=null">
+	            AND  EMAIL = #{email}
+	       </if>
+	      <if test="crtDate !=null">
+	            AND  CRT_DATE = #{crtDate}
+	       </if>
+	      <if test="lastUpdate !=null">
+	            AND  LAST_UPDATE = #{lastUpdate}
+	       </if>
+	      <if test="ids !=null">
+	       		AND ID in ($ids$)
+	       </if>
+	      <if test="userOrLoginName !=null">
+	       		AND (USER_NAME like '%${userOrLoginName}%' 
+				OR LOGIN_NAME like '%${userOrLoginName}%')
+	       </if>
+	    </trim>	
+	</sql>
+	
+    <insert id="insert" parameterType="com.apabi.r2k.security.model.AuthUser">
+    <![CDATA[
+        INSERT INTO
+        AUTH_USER (
+        	ID ,
+        	USER_NAME ,
+        	PASSWORD ,
+        	LOGIN_NAME ,
+        	USER_DESC ,
+        	ENABLED ,
+        	IS_ADMIN ,
+        	AUTH_ORG_ID ,
+        	MOBILE ,
+        	OFFICE_PHONE ,
+        	EMAIL ,
+        	CRT_DATE ,
+        	LAST_UPDATE 
+        ) VALUES (
+        	#{id} ,
+        	#{userName} ,
+        	#{password} ,
+        	#{loginName} ,
+        	#{userDesc} ,
+        	#{enabled} ,
+        	#{isAdmin} ,
+        	#{authOrgId} ,
+        	#{mobile} ,
+        	#{officePhone} ,
+        	#{email} ,
+        	#{crtDate} ,
+        	#{lastUpdate} 
+        )
+    ]]>
+        
+    </insert>
+	<select id='generateKey' resultType="java.lang.Long" >
+    	SELECT  SEQ_AUTH_USER.nextval AS ID FROM DUAL
+    </select>
+    <update id="updateUserState" parameterType="java.util.Map">
+    	UPDATE AUTH_USER SET ENABLED=#{enabled} WHERE ID=#{uid}
+    </update>
+    <update id="update" parameterType="com.apabi.r2k.security.model.AuthUser">
+    <![CDATA[
+        UPDATE AUTH_USER SET]]>
+        <if test="userName!=null" >
+	        USER_NAME = #{userName} ,	  
+	    </if>    
+        <if test="loginName!=null" >
+	        LOGIN_NAME = #{loginName} ,
+	    </if>
+        <if test="userDesc!=null" >
+	        USER_DESC = #{userDesc} ,
+	    </if>
+        <if test="enabled!=null" >
+	        ENABLED = #{enabled} ,
+	    </if>
+        <if test="authOrgId!=null" >
+	        AUTH_ORG_ID = #{authOrgId} ,
+	    </if>
+        <if test="mobile!=null" >
+	        MOBILE = #{mobile} ,
+	    </if>
+        <if test="officePhone!=null" >
+	        OFFICE_PHONE = #{officePhone} ,
+	    </if>
+        <if test="email!=null" >
+	        EMAIL = #{email} ,
+	    </if>
+        <if test="crtDate!=null" >
+	        CRT_DATE = #{crtDate} ,
+	    </if>
+	    <if test="password!=null" >
+	        PASSWORD = #{password},
+	    </if>
+        <if test="lastUpdate!=null" >
+	        LAST_UPDATE = #{lastUpdate} 
+	    </if>
+	        <![CDATA[
+        WHERE 
+	        ID = #{id}
+    ]]>
+    </update>
+
+
+    <delete id="delete" parameterType="map">
+    <![CDATA[
+        delete from AUTH_USER
+    ]]>
+		<include refid="dynamicWhere"/>
+    </delete>
+    
+    <select id="getById" resultMap="authUserResult">
+	    select <include refid="commonColumns"/>
+	    <![CDATA[
+	        from AUTH_USER 
+	        where 
+		        ID = #{id} 
+	    ]]>
+    </select>
+	 
+    <select id="count" resultType="long">
+    <![CDATA[
+        select count(*) from AUTH_USER
+    ]]>
+		<include refid="dynamicWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="pageSelect" resultMap="authUserResult">
+    	select 
+    		AUTH_USER.USER_NAME, AUTH_USER.LOGIN_NAME, AUTH_USER.AUTH_ORG_ID, AUTH_USER.CRT_DATE, AUTH_USER.EMAIL, AUTH_USER.ENABLED, 
+			AUTH_USER.ID, AUTH_USER.IS_ADMIN, AUTH_USER.LAST_UPDATE, AUTH_USER.MOBILE, AUTH_USER.OFFICE_PHONE, AUTH_USER.USER_DESC,
+			o.ORG_NAME, o.ORG_ID
+		FROM AUTH_USER left JOIN ORG o ON AUTH_USER.AUTH_ORG_ID = o.ORG_ID
+		<include refid="dynamicWhere"/>
+		<if test="sortColumns!=null" >
+		ORDER BY ${sortColumns}</if>
+		<if test="sortColumns==null" >
+		ORDER BY LAST_UPDATE desc
+		</if>
+    </select>
+	 <select id="filteredCount" resultType="long">
+    	<![CDATA[
+        SELECT COUNT(*)
+		FROM AUTH_USER T1
+		where T1.AUTH_ORG_ID = #{authOrgId}
+   	 ]]>
+		 
+    </select>
+	 <!-- 分页查询用户，以机构id过滤。意即一个机构下（包括其所有子机构下）的所有用户 -->
+	<select id='pageSelectOrgFiltered'  resultMap="authUserResult">
+		<![CDATA[ 
+		SELECT T1.ID,USER_NAME ,PASSWORD ,LOGIN_NAME,USER_DESC ,ENABLED ,IS_ADMIN ,AUTH_ORG_ID ,MOBILE ,OFFICE_PHONE ,EMAIL ,CRT_DATE ,LAST_UPDATE 
+		FROM AUTH_USER T1
+		where T1.AUTH_ORG_ID = #{authOrgId}
+		 ]]>		   
+	</select>
+    <select id="getByLoginName" resultMap="authUserResult" parameterType="String">
+	    select <include refid="commonColumns"/>
+	    <![CDATA[
+	        from AUTH_USER where LOGIN_NAME = #{loginName}
+	    ]]>
+    </select>
+    <select id="getUserObject" resultMap="authUserResult" >
+		SELECT * FROM AUTH_USER
+		<include refid="dynamicWhere" />
+		
+	</select>
+	<delete id="batchDelete" parameterType="list">
+		delete from AUTH_USER where ID in 
+		<foreach collection="ids" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</delete>
+</mapper>

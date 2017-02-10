@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <package name="api" namespace="/api" extends="struts-default">
+       <action name="paper" class="apiAction" method="paper">
+       </action>
+       <action name="menu" class="apiAction" method="menu">
+       </action>
+       <action name="page" class="apiAction" method="page">
+       </action>
+       <action name="period" class="apiAction" method="period">
+       </action>
+       <action name="article" class="apiAction" method="article">
+       </action>
+       <action name="publish" class="apiAction" method="publish">
+       </action>
+       <action name="put" class="apiAction" method="put">
+       </action>
+       <action name="topic" class="apiAction" method="topic">
+       </action>
+       <action name="subscribe" class="apiAction" method="subscribe">
+       </action>
+       <action name="suggest" class="apiAction" method="suggest">
+       </action>
+       <action name="orgSuggest" class="apiAction" method="orgSuggest">
+       </action>
+       <action name="ebookSign" class="apiAction" method="ebookSign">
+       </action>
+       <action name="pictureSign" class="apiAction" method="pictureSign">
+       </action>
+       <action name="place" class="apiAction" method="place">
+       </action>
+       <action name="subjectCode" class="apiAction" method="subjectCode">
+       </action>
+       <action name="msg" class="apiAction" method="msg">
+       </action>
+       <action name="slaveHeartbeat" class="apiAction" method="slaveHeartbeat">
+       </action>
+        <action name="autoShuyuanSignUp" class="apiAction" method="autoShuyuanSignUp"></action>
+       <action name="category" class="apiAction" method="category">
+       	<result name="success" type="stream">
+       		<param name="contentType">application/xml</param>
+       		<param name="inputName">xmlStream</param>
+       	</result>
+       </action>
+         <action name="getPlaceAndOrg" class="apiAction" method="getPlaceAndOrg"></action>
+       
+    </package>
+   
+</struts>

@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<project name="r2k" default="run" basedir=".">
+	<!-- - - - - - - - - - - - - - - - - - 
+          	定义全局常量                      
+         - - - - - - - - - - - - - - - - - -->
+    <tstamp />    
+	<property environment="env"/>    	 
+    <property file="build.properties" />
+	<property name="dir.src" location="src"/>
+	<property name="dir.dest" location="bin"/>
+	<property name="dir.classes" location="${dir.dest}/classes"/>
+	<property name="dir.release" location="${dir.dest}/release"/>
+	<property name="dir.src.web" location="WebRoot"/>
+	<property name="dir.configuration" location="../configuration"/>
+	<property name="version.message" value="${TSTAMP}" />
+	<property name="tomcat.home" value="${env.TOMCAT_HOME}" />
+	<property name="src.encoding" value="UTF-8" />
+	<property name="war.name" value="${ant.project.name}-${version.no}-${DSTAMP}-${TSTAMP}.war" />
+	<!-- - - - - - - - - - - - - - - - - - 
+          	定义classpath                      
+         - - - - - - - - - - - - - - - - - -->
+	<path id="lib.classpath">
+		<fileset dir="${dir.src.web}/WEB-INF/lib">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${tomcat.home}">
+			<include name="lib/*.jar"/>
+			<include name="common/lib/*.jar"/>
+		</fileset>		
+	</path>
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: init                      
+         - - - - - - - - - - - - - - - - - -->
+	<target name="init">
+		<echo message="java.home=${java.home}" />
+		<echo message="java.version=${java.version}" />
+	    <echo message="tomcat.home=${tomcat.home}"/>
+		<echo message="version.message=${version.message}" />
+		<mkdir dir="${dir.dest}"/>
+		<mkdir dir="${dir.classes}" />
+	</target>
+
+
+	<!-- ================================= 
+          target: compile              
+         ================================= -->
+	<target name="compile" depends="init" description="description">
+		<javac srcdir="${dir.src}" 
+			destdir="${dir.classes}" 
+			classpathref="lib.classpath" 
+			encoding="${src.encoding}"
+			debug="on" nowarn="yes" includeantruntime="on" >
+			</javac>
+		<property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+		<!-- 拷贝其他附属资源 -->
+		<copy todir="${dir.classes}">			
+			<fileset dir="${dir.src}/r2k.common" excludes="**/*.java"/>
+			<fileset dir="${dir.src}/r2k.admin" excludes="**/*.java"/>
+			<fileset dir="${dir.src}/r2k.menu" excludes="**/*.java"/>
+			<fileset dir="${dir.src}/r2k.api" excludes="**/*.java"/>
+			<fileset dir="${dir.src}/r2k.paper" excludes="**/*.java"/>
+			<fileset dir="${dir.src}/r2k.test" excludes="**/*.java"/>
+			<fileset dir="${dir.src}/r2k.security" excludes="**/*.java"/>
+			<fileset dir="${dir.src}/r2k.wx" excludes="**/*.java"/>
+			<fileset dir="${dir.src}/r2k.resources" excludes="**/*.java"/>
+		</copy>
+		<delete dir="${dir.src}/r2k.generator" />
+	</target>  
+	<!-- ================================= 
+          target: 打成war包 ，必须设置{war.path}变量             
+         ================================= -->
+    <target name="war" description="description">
+        <war destfile="${war.path}/${war.name}" webxml="${dir.src.web}/WEB-INF/web.xml" encoding="utf-8">
+        	<classes dir="${dir.classes}" />
+        	<fileset dir="${dir.src.web}" includes="**/*">
+				<exclude name="WEB-INF/classes/**/*.*"/>
+				<exclude name="WEB-INF/lib/rt.jar" />
+			</fileset>
+        </war>        
+    </target>
+       
+	<!-- ================================= 
+          target: 拷贝配置文件 ，需要设置${conf.src}变量             
+         ================================= -->
+	    <target name="configuration.copy" description="拷贝配置文件，依赖conf.src">
+	    	 <echo message="拷贝配置文件,conf.src=${conf.src}" />
+			    <!-- 拷贝配置文件 -->
+				<copy todir="${dir.classes}" overwrite="yes" preservelastmodified="yes">
+					<fileset dir="${conf.src}/classes" />
+				</copy>
+				<copy todir="${dir.src.web}/WEB-INF" overwrite="yes"  preservelastmodified="yes">
+				   <fileset dir="${conf.src}">
+					    <exclude name="classes/**/*.*" />
+				   </fileset>
+	    	</copy>
+			
+	    </target>
+    
+	<!-- ================================= 
+          target: 默认打包任务              
+         ================================= -->
+    <target name="package" depends="compile" description="description">
+        <antcall target="war">
+            <param name="war.path" value="${dir.release}" />
+        </antcall>
+    </target>
+        
+    <!-- ================================= 
+          target: nis-svr机器打包任务              
+         ================================= -->
+	<target name="package.nis-svr" depends="package" description="本地测试换将">
+	    <echo message="dir.configuration=${dir.configuration}" />
+	   <!-- 拷贝配置文件 --> 
+	    <antcall target="configuration.copy">
+	        <param name="conf.src" value="${dir.configuration}/nis-svr/r2kServer" />
+	    </antcall>
+	    <!-- 打包 -->
+        <antcall target="war">
+            <param name="war.path" value="${dir.release}/nis-svr" />
+        </antcall>
+	</target>
+    
+   <!-- ================================= 
+         target: rtest.apabi.com机器打包任务              
+        ================================= -->
+	<target name="package.rtest" depends="package" description="线上测试式环境服务包">
+	    <echo message="dir.configuration=${dir.configuration}" />
+	   <!-- 拷贝配置文件 --> 
+	    <antcall target="configuration.copy">
+	        <param name="conf.src" value="${dir.configuration}/rtest.apabi.com/r2kServer" />
+	    </antcall>
+	    <!-- 打包 -->
+       <antcall target="war">
+           <param name="war.path" value="${dir.release}/rtest" />
+       </antcall>
+	</target>
+    
+   <!-- ================================= 
+         target: r.apabi.com机器打包任务              
+        ================================= -->
+	<target name="package.r" depends="package" description="正式环境服务包">
+	    <echo message="dir.configuration=${dir.configuration}" />
+	   <!-- 拷贝配置文件 --> 
+	    <antcall target="configuration.copy">
+	        <param name="conf.src" value="${dir.configuration}/r.apabi.com/r2kServer" />
+	    </antcall>
+	    <!-- 打包 -->
+       <antcall target="war">
+           <param name="war.path" value="${dir.release}/r" />
+       </antcall>
+	</target>
+    
+	<!-- ================================= 
+          target: run              
+         ================================= -->
+	<target name="run" depends="clean, package" description="description">
+
+	</target>
+	
+	<!-- ================================= 
+          target: 发布全部              
+         ================================= -->
+	<target name="publish-all" description="description">
+		<antcall target="clean" />
+		<antcall target="package" />
+		<antcall target="run" />
+		<antcall target="package.nis-svr" />
+		<antcall target="package.r" />
+		<antcall target="package.rtest" />
+	</target>	
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: clean                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="clean">
+        <delete dir="${dir.dest}" />
+        <delete file="${war.name}" />
+    </target>
+</project>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="com.apabi.r2k.security.model.AuthRes">
+
+    <resultMap id="authResResult" type="com.apabi.r2k.security.model.AuthRes">
+        <result property="id" column="ID"/>
+        <result property="resName" column="RES_NAME"/>
+        <result property="resCode" column="RES_CODE"/>
+        <result property="resUrl" column="RES_URL"/>
+        <result property="entityId" column="ENTITY_ID"/>
+        <result property="parentId" column="PARENT_ID"/>
+        <result property="viewOrder" column="VIEW_ORDER"/>
+        <result property="type" column="TYPE"/>
+        <result property="crtDate" column="CRT_DATE"/>
+        <result property="lastUpdate" column="LAST_UPDATE"/>
+        <result property="resDesc" column="RES_DESC"/>
+      
+        
+    </resultMap>
+    
+    <resultMap id="authResRoleResult" type="com.apabi.r2k.security.model.AuthRes">
+        <result property="id" column="ID"/>
+        <result property="resUrl" column="RES_URL"/>
+        <result property="roleCode" column="ROLE_CODE"/>
+    </resultMap>
+    
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="commonColumns">
+	    <![CDATA[
+        	ID ,
+        	RES_NAME ,
+        	RES_CODE ,
+        	RES_URL ,
+        	ENTITY_ID ,
+        	PARENT_ID,
+        	VIEW_ORDER ,
+        	TYPE,
+        	CRT_DATE ,
+        	LAST_UPDATE ,
+        	RES_DESC 
+	    ]]>
+	</sql>
+
+	<sql id="dynamicWhere">
+		   <trim prefix="WHERE" prefixOverrides="AND|OR">
+	      <if test="id !=null">
+	             ID = #{id}
+	       </if>
+	      <if test="resName !=null">
+	             RES_NAME = #{resName}
+	       </if>
+	      <if test="resCode !=null">
+	             RES_CODE = #{resCode}
+	       </if>
+	      <if test="resUrl !=null">
+	             RES_URL = #{resUrl}
+	       </if>
+	      <if test="entityId !=null">
+	             ENTITY_ID = #{entityId}
+	       </if>
+	      <if test="viewOrder !=null">
+	             VIEW_ORDER = #{viewOrder}
+	       </if>
+	      <if test="crtDate !=null">
+	             CRT_DATE = #{crtDate}
+	       </if>
+	      <if test="type !=null">
+	             TYPE = #{type}
+	       </if>
+	      <if test="lastUpdate !=null">
+	             LAST_UPDATE = #{lastUpdate}
+	       </if>
+	      <if test="resDesc !=null">
+	             RES_DESC = #{resDesc}
+	       </if>
+	      <if test="ids !=null">
+	       		ID in (#{ids})
+	       </if>
+	   </trim>
+	</sql>
+	
+    <insert id="insert" parameterType="com.apabi.r2k.security.model.AuthRes">
+    <![CDATA[
+        INSERT INTO
+        AUTH_RES (
+        	ID ,
+        	RES_NAME ,
+        	RES_CODE ,
+        	RES_URL ,
+        	ENTITY_ID ,
+        	PARENT_ID,
+        	TYPE,
+        	VIEW_ORDER ,
+        	CRT_DATE ,
+        	LAST_UPDATE ,
+        	RES_DESC 
+        ) VALUES (
+        	#{id} ,
+        	#{resName} ,
+        	#{resCode} ,
+        	#{resUrl} ,
+        	#{entityId},
+        	#{parentId},
+        	#{type},
+        	#{viewOrder} ,
+        	#{crtDate} ,
+        	#{lastUpdate} ,
+        	#{resDesc} 
+        )
+    ]]>
+        
+    </insert>
+	<select id="generateKey" resultType="long"  >
+            SELECT SEQ_AUTH_RES.nextval AS ID FROM DUAL
+      </select>
+    <update id="update" parameterType="com.apabi.r2k.security.model.AuthRes">
+    <![CDATA[
+        UPDATE AUTH_RES SET
+	        RES_NAME = #{resName} ,
+	        RES_CODE = #{resCode} ,
+	        RES_URL = #{resUrl} ,
+	        ENTITY_ID = #{entityId} ,
+	        PARENT_ID = #{parentId},
+	        TYPE = #{type},
+	        VIEW_ORDER = #{viewOrder} ,
+	        CRT_DATE = #{crtDate} ,
+	        LAST_UPDATE = #{lastUpdate} ,
+	        RES_DESC = #{resDesc} 
+        WHERE 
+	        ID = #{id} 
+    ]]>
+    </update>
+
+
+    <delete id="delete" parameterType="map">
+    <![CDATA[
+        delete from AUTH_RES
+    ]]>
+		<include refid="dynamicWhere"/>
+    </delete>
+    
+    <select id="getById" resultMap="authResResult">
+	    select <include refid="commonColumns"/>
+	    <![CDATA[
+	        from AUTH_RES 
+	        where 
+		        ID = #{id} 
+	    ]]>
+    </select>
+	 
+    <select id="count" resultType="long">
+    <![CDATA[
+        select count(*) from AUTH_RES
+    ]]>
+		<include refid="dynamicWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="pageSelect" resultMap="authResResult">
+    	select <include refid="commonColumns"/>
+	    <![CDATA[
+	        from AUTH_RES 
+	    ]]>
+		<include refid="dynamicWhere"/>
+		<if test="sortColumns!=null">
+		ORDER BY #{sortColumns}</if>
+    </select>
+	<select id="authResRole" resultMap="authResRoleResult">
+    	SELECT T1.ID ,T1.RES_URL,T3.ROLE_CODE FROM AUTH_RES T1,AUTH_RES_ROLE T2 ,AUTH_ROLE T3 WHERE T1.ID = T2.RES_ID AND T2.ROLE_ID = T3.ID
+    </select>
+   
+   <select id="getAuthResByRoleIds" resultMap="authResResult">
+   	SELECT *
+  	FROM auth_res t1,
+       (SELECT   t2.res_id
+            FROM auth_res_role t2
+           WHERE t2.role_id IN ($roleIds$)
+        GROUP BY t2.res_id) t3
+ 	WHERE t3.res_id = t1.ID   
+   </select>
+    <select id="getAuthResByRoleId" resultMap="authResResult" parameterType="java.lang.Long">
+   	SELECT *
+  	FROM auth_res t1,
+       (SELECT   t2.res_id
+            FROM auth_res_role t2
+           WHERE t2.role_id = #ID#
+        GROUP BY t2.res_id) t3
+ 	WHERE t3.res_id = t1.ID   
+   </select>
+	
+</mapper>

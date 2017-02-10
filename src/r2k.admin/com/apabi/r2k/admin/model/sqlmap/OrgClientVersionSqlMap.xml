@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.apabi.r2k.admin.model.OrgClientVersion">
+
+	<resultMap id="orgClientVersionResult" type="com.apabi.r2k.admin.model.OrgClientVersion">
+		<result property="id" column="ID" />
+		<result property="version" column="VERSION" />
+		<result property="versionCode" column="VERSION_CODE" />
+		<result property="lastDate" column="LAST_DATE" />
+		<result property="devType" column="DEV_TYPE"/>
+		<result property="orgId" column="ORG_ID"/>
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="commonColumns">
+	    <![CDATA[
+        	ID ,
+        	VERSION ,
+        	VERSION_CODE ,
+        	ORG_ID ,
+        	LAST_DATE ,
+        	DEV_TYPE
+	    ]]>
+	</sql>
+
+	<sql id="dynamicWhere">
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+				<if test="id != null">
+				AND ID = #{id}
+				</if>
+				<if test="version != null">
+				AND VSRSION = #{version}
+				</if>
+				<if test="versionCode != null">
+				AND VERSION_CODE = #{versionCode}
+				</if>
+				<if test="orgId != null">
+				AND ORG_ID = #{orgId}
+				</if>
+				<if test="lastDate != null">
+				AND LAST_DATE = #{lastDate}
+				</if>
+				<if test="devType != null">
+				AND DEV_TYPE = #{devType}
+				</if>
+				<if test="deviceTypeList != null">
+				AND 
+				<foreach collection="deviceTypeList" item="dType" index="index" open="(" separator="or" close=")">
+					DEV_TYPE like '%${dType}%'
+				</foreach>
+				</if>
+		</trim>
+	</sql>
+
+	<insert id="insert" parameterType="com.apabi.r2k.admin.model.OrgClientVersion">
+    <![CDATA[
+        INSERT INTO
+        ORG_CLIENT_VERSION (
+        	ID ,
+        	VERSION ,
+        	VERSION_CODE,
+        	ORG_ID ,
+        	LAST_DATE ,
+        	DEV_TYPE
+        ) VALUES (
+        	#{id} ,
+        	#{version} ,
+        	#{versionCode} ,
+        	#{orgId} ,
+        	#{lastDate} ,
+        	#{devType}
+        )
+    ]]>
+	</insert>
+
+	<update id="update" parameterType="com.apabi.r2k.admin.model.OrgClientVersion">
+		UPDATE ORG_CLIENT_VERSION
+		<trim prefix="SET" suffixOverrides=",">
+       		<if test="version != null">
+       			VERSION = #{version},
+       		</if>
+       		<if test="versionCode != null">
+       			VERSION_CODE = #{versionCode},
+       		</if>
+       		<if test="lastDate != null">
+       			LAST_DATE = #{lastDate},
+       		</if>
+		</trim>
+		<where>
+			ID = #{id}
+		</where>
+	</update>
+	
+	<select id="getById" resultMap="orgClientVersionResult">
+		select
+		<include refid="commonColumns" />
+	    <![CDATA[
+	        from ORG_CLIENT_VERSION 
+	        where 
+		        ID = #{id} 
+	    ]]>
+	</select>
+
+	<select id="count" resultType="int">
+    <![CDATA[
+        select count(*) from ORG_CLIENT_VERSION
+    ]]>
+    <include refid="dynamicWhere" />
+	</select>
+
+	<!-- 分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页 因为分页查询将传 #offset#,#pageSize#,#lastRows# 
+		三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现 -->
+	<select id="pageSelect" resultMap="orgClientVersionResult">
+		select
+		<include refid="commonColumns" />
+	    <![CDATA[
+	        from ORG_CLIENT_VERSION 
+	    ]]>
+		<include refid="dynamicWhere" />
+		<if test="sortColumns != null">
+			ORDER BY ${sortColumns}
+		</if>
+	</select>
+	
+	<select id="downVersionCount" resultType="int">
+        select count(*) from ORG_CLIENT_VERSION o where 
+			<foreach collection="deviceTypeList" item="dType" index="index" open="(" separator="or" close=")">
+				o.dev_type like '%${dType}%'
+			</foreach>
+			and o.VERSION_CODE &lt; #{versionCode}
+	</select>
+	
+	<select id="downVersionPage" resultMap="orgClientVersionResult">
+		select * from ORG_CLIENT_VERSION o where 
+			<foreach collection="deviceTypeList" item="dType" index="index" open="(" separator="or" close=")">
+				o.dev_type like '%${dType}%'
+			</foreach>
+			and o.VERSION_CODE &lt; #{versionCode}
+	</select>
+	
+	<select id="upVersionCount" resultType="int">
+        select count(*) from ORG_CLIENT_VERSION o where 
+        	<foreach collection="deviceTypeList" item="dType" index="index" open="(" separator="or" close=")">
+				o.dev_type like '%${dType}%'
+			</foreach>
+			and o.VERSION_CODE &gt; #{versionCode}
+	</select>
+	
+	<select id="upVersionPage" resultMap="orgClientVersionResult">
+		select * from ORG_CLIENT_VERSION o where 
+			<foreach collection="deviceTypeList" item="dType" index="index" open="(" separator="or" close=")">
+				o.dev_type like '%${dType}%'
+			</foreach>
+			and o.VERSION_CODE &gt; #{versionCode}
+	</select>
+	
+	<select id="get" resultMap="orgClientVersionResult">
+		select
+		<include refid="commonColumns" />
+	        from ORG_CLIENT_VERSION 
+		<include refid="dynamicWhere" />
+	</select>
+	
+	<delete id="delete">
+		delete from ORG_CLIENT_VERSION where 
+			<foreach collection="deviceTypeList" item="dType" index="index" open="(" separator="or" close=")">
+				DEV_TYPE like '%${dType}%'
+			</foreach>
+		and VERSION=#{version}
+	</delete>
+
+</mapper>

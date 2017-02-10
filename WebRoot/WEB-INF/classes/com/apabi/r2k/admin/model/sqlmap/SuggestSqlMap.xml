@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.apabi.r2k.admin.model.Suggest">
+
+	<resultMap id="suggestResult" type="com.apabi.r2k.admin.model.Suggest">
+		<result property="id" column="ID" />
+		<result property="status" column="STATUS" />
+		<result property="type" column="TYPE" />
+		<result property="userId" column="USER_ID" />
+		<result property="orgId" column="ORG_ID" />
+		<result property="content" column="CONTENT" />
+		<result property="crtDate" column="CRT_DATE" />
+		<result property="lastUpdate" column="LAST_UPDATE" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="commonColumns">
+	    <![CDATA[
+        	ID ,
+        	STATUS ,
+        	TYPE ,
+        	USER_ID ,
+        	ORG_ID ,
+        	CONTENT ,
+        	CRT_DATE ,
+        	LAST_UPDATE 
+	    ]]>
+	</sql>
+
+	<sql id="dynamicWhere">
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+				<if test="id != null">
+				AND ID = #{id}
+				</if>
+				<if test="status != null">
+				AND STATUS = #{status}
+				</if>
+				<if test="type != null">
+				AND TYPE = #{type}
+				</if>
+				<if test="userId != null">
+				AND USER_ID = #{userId}
+				</if>
+				<if test="orgId != null">
+				AND ORG_ID = #{orgId}
+				</if>
+				<if test="content != null">
+				AND CONTENT = #{content}
+				</if>
+				<if test="crtDate != null">
+				AND CRT_DATE = #{crtDate}
+				</if>
+				<if test="lastUpdate != null">
+				AND LAST_UPDATE = #{lastUpdate}
+				</if>
+		</trim>
+	</sql>
+
+	<insert id="insert" parameterType="com.apabi.r2k.admin.model.Suggest">
+    <![CDATA[
+        INSERT INTO
+        ORG_SUGGEST (
+        	ID ,
+        	STATUS ,
+        	TYPE ,
+        	USER_ID ,
+        	ORG_ID ,
+        	CONTENT ,
+        	CRT_DATE ,
+        	LAST_UPDATE 
+        ) VALUES (
+        	#{id} ,
+        	#{status} ,
+        	#{type} ,
+        	#{userId} ,
+        	#{orgId} ,
+        	#{content} ,
+        	#{crtDate} ,
+        	#{lastUpdate} 
+        )
+    ]]>
+	</insert>
+
+	<update id="update" parameterType="com.apabi.r2k.admin.model.Suggest">
+		UPDATE ORG_SUGGEST
+		<trim prefix="SET" suffixOverrides=",">
+	        		<if test="status != null">
+	        			STATUS = #{status},
+	        		</if>
+	        		<if test="type != null">
+	        			TYPE = #{type},
+	        		</if>
+	        		<if test="userId != null">
+	        			USER_ID = #{userId},
+	        		</if>
+	        		<if test="orgId != null">
+	        			ORG_ID = #{orgId},
+	        		</if>
+	        		<if test="content != null">
+	        			CONTENT = #{content},
+	        		</if>
+	        		<if test="crtDate != null">
+	        			CRT_DATE = #{crtDate},
+	        		</if>
+	        		<if test="lastUpdate != null">
+	        			LAST_UPDATE = #{lastUpdate},
+	        		</if>
+		</trim>
+		<where>
+			ID = #{ID}
+		</where>
+	</update>
+
+
+	<delete id="delete" parameterType="map">
+    <![CDATA[
+        delete from ORG_SUGGEST
+    ]]>
+		<where>
+			ID = #{ID}
+		</where>
+	</delete>
+
+	<delete id="batchDelete" parameterType="java.util.List">
+		<![CDATA[
+        delete from ORG_SUGGEST
+    	]]>
+    	<where>
+			ID in 
+			<foreach collection="ids" item="id" index="index" open="(" separator="," close=")">
+				#{id}}
+			</foreach>
+		</where>
+	</delete>
+	
+	<select id="getById" resultMap="suggestResult">
+		select
+		<include refid="commonColumns" />
+	    <![CDATA[
+	        from ORG_SUGGEST 
+	        where 
+		        ID = #{id} 
+	    ]]>
+	</select>
+
+	<select id="count" resultType="long">
+    <![CDATA[
+        select count(*) from ORG_SUGGEST
+    ]]>
+    <include refid="dynamicWhere" />
+	</select>
+
+	<!-- 分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页 因为分页查询将传 #offset#,#pageSize#,#lastRows# 
+		三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现 -->
+	<select id="pageSelect" resultMap="suggestResult">
+		select
+		<include refid="commonColumns" />
+	    <![CDATA[
+	        from ORG_SUGGEST 
+	    ]]>
+		<include refid="dynamicWhere" />
+		<if test="sortColumns != null">
+			ORDER BY ${sortColumns}
+		</if>
+	</select>
+
+</mapper>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.apabi.r2k.admin.model.OrgPaperOrder">
+	<resultMap type="com.apabi.r2k.admin.model.OrgPaperOrder" id="orgPaperOrderResult">
+		<result property="orderId" column="ORDER_ID"/>
+		<result property="crtDate" column="CRT_DATE"/>
+		<result property="operator" column="OPERATOR"/>
+		<result property="startDate" column="START_DATE"/>
+		<result property="endDate" column="END_DATE"/>
+		<result property="orgId" column="ORG_ID"/>
+		<result property="status" column="STATUS"/>
+	</resultMap>
+	<sql id="commonColumns">
+	    <![CDATA[
+        	ORDER_ID ,
+        	CRT_DATE ,
+        	OPERATOR ,
+        	START_DATE ,
+        	END_DATE ,
+        	ORG_ID ,
+        	STATUS 
+	    ]]>
+	</sql>
+
+	<sql id="dynamicWhere">
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+				<if test="orderId != null">
+				AND ORDER_ID = #{orderId}
+				</if>
+				<if test="crtDate != null">
+				AND CRT_DATE = #{crtDate}
+				</if>
+				<if test="operator != null">
+				AND OPERATOR = #{operator}
+				</if>
+				<if test="startDate != null">
+				AND START_DATE = #{startDate}
+				</if>
+				<if test="endDate != null">
+				AND END_DATE = #{endDate}
+				</if>
+				<if test="orgId != null">
+				AND ORG_ID = #{orgId}
+				</if>
+				<if test="status != null">
+				AND STATUS = #{status}
+				</if>
+		</trim>
+	</sql>
+	
+	<insert id="insert">
+	<selectKey resultType="int" keyProperty="orderId">
+    	SELECT LAST_INSERT_ID() 
+    </selectKey>
+		INSERT INTO ORG_PAPER_ORDER(ORDER_ID, 	CRT_DATE, 	OPERATOR, 	   START_DATE,      END_DATE, 		ORG_ID,		STATUS)
+		VALUES                     (#{orderId},	#{crtDate},	#{operator},   #{startDate},	#{endDate},	    #{orgId},	#{status})  
+	</insert>
+	
+	<update id="update"  >
+		update ORG_PAPER_ORDER set STATUS=#{status} where ORDER_ID=#{orderId}
+	</update>
+	
+	<update id="updateStatus">
+		update ORG_PAPER_ORDER set STATUS=#{status} where ORDER_ID=#{orderId}
+	</update>
+	<update id="updateStatusByOrgId">
+		update ORG_PAPER_ORDER set STATUS=#{status} where ORG_ID=#{orgId}
+	</update>
+	<select id="getOrderByOrderId" resultMap="orgPaperOrderResult" parameterType="int">
+		SELECT * FROM ORG_PAPER_ORDER where ORDER_ID=#{orderId}
+	</select>
+	
+	<select id="getOrderByOrgIdAndCrtDate" resultMap="orgPaperOrderResult" parameterType="java.lang.String">
+		SELECT * FROM ORG_PAPER_ORDER where ORG_ID=#{orgId} and CRT_DATE=#{crtDate}
+	</select>
+	
+	<select id="getAllOrder" resultMap="orgPaperOrderResult">
+	   SELECT * FROM ORG_PAPER_ORDER
+	</select>
+
+	<select id="getOrgPaperOrderByStatus" resultMap="orgPaperOrderResult" parameterType="java.lang.String">
+	   SELECT * FROM ORG_PAPER_ORDER where ORG_ID=#{orgId} and STATUS=#{status}
+	</select>
+	<select id="count" resultType="long">
+    <![CDATA[
+        select count(*) from ORG_PAPER_ORDER
+    ]]>
+    <include refid="dynamicWhere" />
+	</select>
+		<!-- 分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页 因为分页查询将传 #offset#,#pageSize#,#lastRows# 
+		三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现 -->
+	<select id="pageSelect" resultMap="orgPaperOrderResult">
+		select
+		<include refid="commonColumns" />
+	    <![CDATA[
+	        from ORG_PAPER_ORDER
+	    ]]>
+		<include refid="dynamicWhere" />
+		<if test="sortColumns != null">
+			ORDER BY ${sortColumns}
+		</if>
+	</select>
+	<select id="getAllAuthOrder" resultMap="orgPaperOrderResult" parameterType="java.lang.String">
+	   SELECT * FROM ORG_PAPER_ORDER where STATUS=#{status}
+	   <if test="endDate != null">
+	   		and END_DATE &lt; '${endDate}'
+	   </if>
+	   <if test="startDate != null">
+	   		and START_DATE &lt;= '${startDate}'
+	   </if>
+	</select>
+</mapper>

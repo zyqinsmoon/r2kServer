@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.apabi.r2k.admin.model.TopicAuth">
+	<resultMap type="com.apabi.r2k.admin.model.TopicAuth" id="topicAuthResult">
+		<result property="id" column="ID"/>
+		<result property="orgId" column="ORG_ID"/>
+		<result property="crtDate" column="CRT_DATE"/>
+		<result property="lastDate" column="LAST_DATE"/>
+		<result property="topicId" column="TOPIC_ID"/>
+		<result property="startDate" column="START_DATE"/>
+		<result property="endDate" column="END_DATE"/>
+		<result property="topicType" column="TOPIC_TYPE"/>
+		<result property="status" column="STATUS"/>
+		
+		<association property="recommend" javaType="com.apabi.r2k.admin.model.Recommend">  
+           <result property="id" column="ID"/>
+			<result property="orgId" column="ORG_ID"/>
+			<result property="crtDate" column="CRT_DATE"/>
+			<result property="lastDate" column="LAST_DATE"/>
+			<result property="type" column="TYPE"/>
+			<result property="sort" column="SORT"/>
+			<result property="resId" column="RES_ID"/>
+        </association>
+	</resultMap>
+	
+	<insert id="insert">
+		INSERT INTO ORG_AUTH_TOPIC(ORG_ID, 	TOPIC_ID, 	CRT_DATE, 		LAST_DATE, 		TYPE, 		START_DATE, 	END_DATE,	TOPIC_TYPE,		STATUS)
+		VALUES(					 #{orgId},	#{topicId},	#{crtDate},		#{lastDate},	#{type},	#{startDate},	#{endDate},	#{topicType},	#{status})
+	</insert>
+	
+	<insert id="insertBatch" useGeneratedKeys="true" parameterType="java.util.List">
+		INSERT INTO ORG_AUTH_TOPIC(ORG_ID, 	TOPIC_ID, 	CRT_DATE, 		LAST_DATE, 		TYPE, 		START_DATE, 	END_DATE,	TOPIC_TYPE,		STATUS)
+		VALUES
+			<foreach collection="list" item="item" index="index" separator="," >  
+		        (#{item.orgId},	#{item.topicId}, #{item.crtDate}, #{item.lastDate},	#{item.type}, #{item.startDate}, #{item.endDate}, #{item.topicType}, #{item.status})  
+		    </foreach>
+	</insert>
+
+	<update id="updateByTopicAuthId" parameterType="com.apabi.r2k.admin.model.TopicAuth">
+		update ORG_AUTH_TOPIC 
+		<set>
+			<if test="type != null">
+				TYPE=#{type},
+			</if>
+			<if test="lastDate != null">
+				LAST_DATE=#{lastDate},
+			</if>
+			<if test="startDate != null">
+				START_DATE=#{startDate},
+			</if>
+			<if test="endDate != null">
+				END_DATE=#{endDate},
+			</if>
+			<if test="status != null">
+				STATUS=#{status}
+			</if>
+		</set>
+		where TOPIC_ID=#{topicId} and ORG_ID=#{orgId}
+	</update>
+	
+	<delete id="deleteByTopicAuthId" parameterType="java.lang.String" >
+		delete from ORG_AUTH_TOPIC where TOPIC_ID=#{topicId}
+	</delete>
+	
+	<select id="getTopicAuthByTopicId" resultMap="topicAuthResult">
+		SELECT ot.*, rec.sort FROM ORG_AUTH_TOPIC ot LEFT JOIN ORG_RECOMMEND rec ON ot.ORG_ID = rec.ORG_ID AND ot.TOPIC_ID = rec.RES_ID 
+		where ot.TOPIC_ID=#{topicId} and ot.ORG_ID=#{orgId}
+	</select>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="commonColumns">
+	    <![CDATA[
+        	ot.ID, ot.ORG_ID, ot.TOPIC_ID, ot.CRT_DATE, ot.LAST_DATE, ot.TYPE, ot.START_DATE, ot.END_DATE, rec.SORT
+	    ]]>
+	</sql>
+
+	<sql id="dynamicWhere">
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="orgId != null">
+			AND ot.ORG_ID = #{orgId}
+			</if>
+			<if test="crtDate != null">
+			AND ot.CRT_DATE = #{crtDate}
+			</if>
+			<if test="topicId != null">
+			AND ot.TOPIC_ID = #{topicId}
+			</if>
+			<if test="type != null">
+			AND ot.TYPE = #{type}
+			</if>
+			<if test="status != null">
+			AND	ot.STATUS=#{status}
+			</if>
+		</trim>
+	</sql>
+	
+	<select id="count" resultType="long">
+    <![CDATA[
+        select count(*) from ORG_AUTH_TOPIC ot
+    ]]>
+    <include refid="dynamicWhere" />
+	</select>
+
+	<!-- 分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页 因为分页查询将传 #offset#,#pageSize#,#lastRows# 
+		三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现 	-->
+	<select id="pageSelect" resultMap="topicAuthResult">
+		select
+		<include refid="commonColumns" />
+	    <![CDATA[
+	        from ORG_AUTH_TOPIC ot LEFT JOIN ORG_RECOMMEND rec ON ot.ORG_ID = rec.ORG_ID AND ot.TOPIC_ID = rec.RES_ID 
+	    ]]>
+		<include refid="dynamicWhere" />
+		<if test="sortColumns != null and sortColumns != ''">
+			ORDER BY ot.${sortColumns}
+		</if>
+		<if test="sortColumns == null or sortColumns == ''">
+			ORDER BY CASE WHEN rec.SORT IS NULL THEN 99999 END,CASE WHEN rec.SORT = 0 THEN 99999 END, rec.SORT ASC, ot.LAST_DATE DESC, ot.ID ASC
+		</if>
+	</select>
+	<select id="recommendTopicList" resultMap="topicAuthResult" >
+        select ot.*, rec.SORT from ORG_AUTH_TOPIC ot LEFT JOIN ORG_RECOMMEND rec ON ot.ORG_ID = rec.ORG_ID AND ot.TOPIC_ID = rec.RES_ID
+        where ot.TYPE = ${type} and ot.ORG_ID = #{orgId}
+	</select>
+	
+	<delete id="deleteTopicAuthByOrgId" parameterType="java.lang.String" >
+		delete from ORG_AUTH_TOPIC where ORG_ID=#{orgId}
+	</delete>
+	<select id="queryAllTopicAuthByOrgId" resultMap="topicAuthResult">
+		select
+		ot.ID, ot.ORG_ID, ot.TOPIC_ID, ot.CRT_DATE, ot.LAST_DATE, ot.TYPE, ot.START_DATE, ot.END_DATE
+		from ORG_AUTH_TOPIC ot
+		where ot.ORG_ID = #{orgId}
+		<if test="topicType != null">
+			and ot.TOPIC_TYPE=#{topicType}
+		</if>
+	</select>
+	<delete id="deleteTopicAuthByTopicIds">
+		delete from ORG_AUTH_TOPIC where TOPIC_ID in
+		<foreach collection="topicIds" index="inx" item="tid" open="(" close=")" separator=",">
+			#{tid}
+		</foreach>
+	</delete>
+	
+	<select id="queryAllExpireTopicAuth" resultMap="topicAuthResult">
+		select
+		ot.ID, ot.ORG_ID, ot.TOPIC_ID, ot.CRT_DATE, ot.LAST_DATE, ot.TYPE, ot.START_DATE, ot.END_DATE, ot.TOPIC_TYPE, ot.STATUS
+		from ORG_AUTH_TOPIC ot
+		where ot.STATUS = 2 and ot.END_DATE &lt; '${endDate}' 
+	</select>
+	<select id="queryAllUnauthTopicAuth" resultMap="topicAuthResult">
+		select
+		ot.ID, ot.ORG_ID, ot.TOPIC_ID, ot.CRT_DATE, ot.LAST_DATE, ot.TYPE, ot.START_DATE, ot.END_DATE
+		from ORG_AUTH_TOPIC ot
+		where ot.STATUS = 1 and ot.START_DATE &lt;= '${startDate}'
+	</select>
+</mapper>

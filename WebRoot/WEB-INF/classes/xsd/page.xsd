@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--被XMLSpy vW3C Schema产生的2011 rel. 2 sp1 (http://www.altova.com)-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="UpdateTime">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="Region" type="xs:string"/>
+	<xs:element name="R2k">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Page"/>
+			</xs:sequence>
+			<xs:attribute name="updateTime" use="required" type="xs:dateTime"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PublishedDate">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="Period">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PublishedDate"/>
+				<xs:element ref="UpdateTime"/>
+				<xs:element ref="Icon"/>
+				<xs:element ref="Link"/>
+			</xs:sequence>
+			<xs:attribute name="id" use="required" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PaperName">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="Paper">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PaperName"/>
+				<xs:element ref="Icon"/>
+				<xs:element ref="Desc"/>
+				<xs:element ref="Link"/>
+			</xs:sequence>
+			<xs:attribute name="id" use="required" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PageNumber" type="xs:string"/>
+	<xs:element name="PageName" type="xs:string"/>
+	<xs:element name="Page">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MetaInfo"/>
+				<xs:element ref="UpdateTime"/>
+				<xs:element ref="PageNumber"/>
+				<xs:element ref="PageName"/>
+				<xs:element ref="CebxFile"/>
+				<xs:element ref="BriefImage"/>
+				<xs:element ref="Icon"/>
+				<xs:element ref="Articles"/>
+			</xs:sequence>
+			<xs:attribute name="id" use="required" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MetaInfo">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Paper"/>
+				<xs:element ref="Period"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Link" type="xs:anyURI"/>
+	<xs:element name="Icon" type="xs:anyURI"/>
+	<xs:element name="HeadLine" type="xs:string"/>
+	<xs:element name="Desc">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="CebxFile" type="xs:anyURI"/>
+	<xs:element name="BriefImage" type="xs:anyURI"/>
+	<xs:element name="Articles">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Article" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Article">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="HeadLine"/>
+				<xs:element ref="Region"/>
+				<xs:element ref="Link"/>
+			</xs:sequence>
+			<xs:attribute name="id" use="required" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

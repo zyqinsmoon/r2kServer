@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="menu" namespace="/menu" extends="json-default">
+		<action name="*" class="com.apabi.r2k.menu.action.MenuAction" method="{1}">
+			<result name="org">/WEB-INF/jsp/menu/org.jsp</result>
+			<result name="device">/WEB-INF/jsp/menu/device.jsp</result>
+			<result name="save">/WEB-INF/jsp/menu/save.jsp</result>
+			<result name="update">/WEB-INF/jsp/menu/update.jsp</result>
+			<result name="orgPage" type="redirectAction">
+				<param name="actionName">${actionName}</param>
+			</result>
+			<result name="devicePage" type="redirectAction">
+				<param name="actionName">device</param>  
+        		<param name="deviceId">${deviceId}</param>
+        		<param name="devType">${devType}</param>
+        		<param name="deviceName">${deviceName}</param>
+			</result>
+			<result name="call">/WEB-INF/jsp/menu/call.jsp</result>
+			<result name="publish" type="json">
+				<param name="root">flag</param>
+			</result>
+			<result name="nav">/WEB-INF/jsp/menu/updatenav.jsp</result>
+			<result name="sort" type="json">
+				<param name="root">flag</param>
+			</result>
+			<result name="homePage" type="json">
+				<param name="root">menu</param>
+			</result>
+		</action>
+	</package>
+</struts>

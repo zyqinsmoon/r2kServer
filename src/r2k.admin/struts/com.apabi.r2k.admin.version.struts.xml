@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="version" namespace="/ver" extends="json-default">
+    	<action name="*" class="clientVersionAction" method="{1}">
+    		<result name="index">/WEB-INF/jsp/admin/version/index.jsp</result>
+    		<result name="save">/WEB-INF/jsp/admin/version/save.jsp</result>
+    		<result name="update">/WEB-INF/jsp/admin/version/update.jsp</result>
+    		<result name="indexPage" type="redirectAction">
+				<param name="actionName">index</param>
+			</result>
+			<result name="rise">/WEB-INF/jsp/admin/version/rise.jsp</result>
+			<result name="rollback">/WEB-INF/jsp/admin/version/rollback.jsp</result>
+			<result name="device">/WEB-INF/jsp/admin/version/device.jsp</result>
+			<result name="version" type="json">
+				<param name="root">flag</param>
+			</result>
+       </action>
+    </package>
+</struts>

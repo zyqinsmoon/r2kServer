@@ -1,0 +1,17 @@
+#content-page {
+    padding-left: 20px;
+}
+
+#content-page .field{
+	margin-bottom: 10px;
+}
+
+#content-page label {
+    margin-left: 0px;
+    width: 8%;
+	float:left;
+}
+
+#content-page .field-input{
+	width: 70%;
+}

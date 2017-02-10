@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<!DOCTYPE urlrewrite
+    PUBLIC "-//tuckey.org//DTD UrlRewrite 4.0//EN"
+    "http://www.tuckey.org/res/dtds/urlrewrite4.0.dtd">
+
+<urlrewrite>  
+    <rule>  
+        <from >^/api/menu$</from>
+        <to>/api/menu.do</to>
+    </rule>
+    <rule>
+        <from>^/api/paper$</from>
+        <to>/api/paper.do</to>
+    </rule>
+    
+     <rule>  
+        <from>^/api/paper/(.*)$</from>
+        <to>/api/paper.do?paperid=$1</to>
+    </rule>
+   
+   <rule>  
+        <from>^/api/period/(.*)$</from>
+        <to>/api/period.do?periodid=$1</to>
+    </rule>
+   
+    <rule>  
+        <from>^/api/page/(.*)$</from>
+        <to>/api/page.do?pageid=$1</to>
+    </rule>
+    
+    <rule>  
+        <from>^/api/article/(.*)$</from>
+        <to>/api/article.do?articleid=$1</to>
+        
+        
+        
+    </rule>
+    
+    <rule>  
+        <from>^/api/publish</from>
+        <to>/api/publish.do</to>
+    </rule>
+    
+    <rule>  
+        <from>^/api/put/(.*)$</from>
+        <to>/api/put.do?putType=$1</to>
+    </rule>
+    <rule>
+        <from>^/api/topics$</from>
+        <to>/api/topic.do</to>
+    </rule>
+    <rule>  
+        <from>^/api/topics/(.*)$</from>
+        <to>/api/topic.do?topicid=$1</to>
+    </rule>
+    <rule>  
+        <from>^/api/topic/(.*)/(.*)$</from>
+        <to>/api/topic.do?topicid=$1&amp;articleid=$2</to>
+    </rule>
+    <rule>
+    	<from>^/api/subscribe/paper</from>
+    	<to>/api/subscribe.do</to>
+    </rule>
+    <rule>
+    	<from>^/api/suggest</from>
+    	<to>/api/suggest.do</to>
+    </rule>
+    <rule>
+    	<from>^/api/org/suggest</from>
+    	<to>/api/orgSuggest.do</to>
+    </rule>
+    
+    <rule>
+    	<from>^/weixin/(.*)$</from>
+    	<to>/wx/paper/paperlist.jsp?orgid=$1</to>
+    </rule>
+    <rule>
+    	<from>^/api/ebookSign</from>
+    	<to>/api/ebookSign.do</to>
+    </rule>
+    <rule>
+    	<from>^/api/pictureSign</from>
+    	<to>/api/pictureSign.do</to>
+    </rule>
+     <rule>
+    	<from>^/api/place/library</from>
+    	<to >/api/getPlaceAndOrg.do</to>
+     </rule>
+    <rule>
+    	<from>^/api/place</from>
+    	<to>/api/place.do</to>
+    </rule>
+    <rule>
+    	<from>^/api/subjectCode</from>
+    	<to>/api/subjectCode.do</to>
+    </rule>
+    <rule>
+    	<from>^/api/msg</from>
+    	<to>/api/msg.do</to>
+    </rule>
+    <rule>
+    	<from>^/api/slaveHeartbeat</from>
+    	<to>/api/slaveHeartbeat.do</to>
+    </rule>
+    <rule>
+    	<from>^/api/picture/category</from>
+    	<to>/api/category.do</to>
+    </rule>
+   
+    <rule>
+    	<from>^/wx/b/ca-p/(.*)/(.*)$</from>
+    	<to>/wx/getCatApabi.do?orgid=$1&amp;parent=$2</to>
+    </rule>
+     <rule>
+    	<from>^/wx/b/ca-p/(.*)$</from>
+    	<to>/wx/getCatApabi.do?orgid=$1</to>
+    </rule>
+    <rule>
+    	<from>^/wx/b/ca-x/(.*)/(.*)$</from>
+    	<to>/wx/getCatApabiXml.do?orgid=$1&amp;parent=$2</to>
+    </rule>
+     <rule>
+    	<from>^/wx/b/ca-x/(.*)$</from>
+    	<to>/wx/getCatApabiXml.do?orgid=$1</to>
+    </rule>
+     <rule>
+     <!-- orgid/code=102/page=2/pagesize=20//digitresgroupid=12 -->
+    	<from>^/wx/b/cs-p/(.*)/(.*)/(.*)/(.*)$</from>
+    	<to>/wx/getCategorySearch.do?orgid=$1&amp;code=$2&amp;page=$3&amp;pagesize=$4</to>
+    </rule>
+     <rule>
+    	<from>^/wx/b/cs-x/(.*)/(.*)/(.*)/(.*)$</from>
+    	<to>/wx/getCategorySearchXml.do?orgid=$1&amp;code=$2&amp;page=$3&amp;pagesize=$4</to>
+    </rule>
+     <rule>
+    	<from>^/wx/getCommendlist.do$</from>
+    	<to type="redirect">/wx/b/cl/swhy</to>
+    </rule>
+     <rule>
+    	<from>^/wx/b/cl/(.*)$</from>
+    	<to>/wx/getCommendlist.do?orgid=$1</to>
+     </rule>
+      <rule>
+    	<from>^/wx/b/bd/(.*)/(.*)$</from>
+    	<to >/wx/getBookDetail.do?orgid=$1&amp;metaid=$2</to>
+     </rule>
+   	 <rule>
+    	<from>^/api/login</from>
+    	<to>/api/login.do</to>
+    </rule>
+   <rule>
+    	<from>^/api/sy/signup</from>
+    	<to >/api/autoShuyuanSignUp.do</to>
+     </rule>
+     <rule>
+    	<from>^/wx/b/ms-x/(.*)/(.*)/(.*)/(.*)$</from>
+    	<to >/wx/getMetadatasearchXml.do?orgid=$1&amp;key=$2&amp;page=$3&amp;pagesize=$4</to>
+     </rule>
+       <rule>
+    	<from>^/wx/b/ms-p/(.*)/(.*)/(.*)/(.*)$</from>
+    	<to>/wx/getMetadatasearch.do?orgid=$1&amp;key=$2&amp;page=$3&amp;pagesize=$4</to>
+     </rule>
+</urlrewrite> 

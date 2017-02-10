@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
+    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd  
+    http://www.springframework.org/schema/context   
+    http://www.springframework.org/schema/context/spring-context-3.2.xsd  
+    http://www.springframework.org/schema/aop  
+    http://www.springframework.org/schema/aop/spring-aop-3.2.xsd  
+    http://www.springframework.org/schema/tx  
+    http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+	<!-- 加载模板 -->
+	<bean id="emailFreeMarker" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">  
+      <property name="templateLoaderPath" value="classpath:"/><!--指定模板文件目录-->   
+      <property name="freemarkerSettings"><!-- 设置FreeMarker环境属性-->   
+          <props>  
+              <prop key="template_update_delay">0</prop><!--刷新模板的周期，单位为秒-->   
+              <prop key="default_encoding">UTF-8</prop><!--模板的编码格式 -->  
+              <prop key="locale">zh_CN</prop><!-- 本地化设置-->  
+          </props>  
+      </property>  
+    </bean>
+    
+	<!-- 加载Properties文件 -->  
+	<context:property-placeholder location="classpath:properties/config.properties" ignore-unresolvable="true" />
+    
+	<bean id="mailSenderConfig" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<!-- smtp服务器 -->
+		<property name="host" value="${host}" />
+		<property name="port" value="${port}" />
+		<property name="username" value="${mail.username}" />
+		<property name="password" value="${mail.password}" />
+		<property name="javaMailProperties">
+	    	<props>
+		      	<prop key="mail.smtp.auth" >${mail.smtp.auth}</prop>
+		      	<prop key="mail.smtp.timeout">${mail.smtp.timeout}</prop>
+	            <prop key="mail.smtp.starttls.enable">${mail.smtp.starttls.enable}</prop>
+	            <prop key="mail.smtp.socketFactory.class">${mail.smtp.socketFactory.class} </prop>
+	            <prop key="mail.smtp.socketFactory.fallback">${mail.smtp.socketFactory.fallback}</prop> 
+	    	</props>
+		</property>
+	</bean>
+
+</beans>

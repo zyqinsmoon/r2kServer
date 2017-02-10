@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<project name="r2k" default="run" basedir=".">
+	<!-- - - - - - - - - - - - - - - - - - 
+          	定义全局常量                      
+         - - - - - - - - - - - - - - - - - -->
+    <tstamp />    
+	<property environment="env"/>    	 
+    <property file="build.properties" />
+	<property name="dir.src" location="src"/>
+	<property name="dir.dest" location="bin"/>
+	<property name="dir.client.src" location="${dir.dest}/src"/>
+	<property name="dir.classes" location="${dir.dest}/classes"/>
+	<property name="dir.release" location="${dir.dest}/release"/>
+	<property name="dir.src.web" location="WebRoot"/>
+	<property name="dir.configuration" location="../configuration"/>
+	<property name="version.message" value="${TSTAMP}" />
+	<property name="tomcat.home" value="G:\apache-tomcat-7.0.16" />
+	<property name="src.encoding" value="UTF-8" />
+	<property name="jar.name" value="${ant.project.name}-${version.no}-${DSTAMP}-${TSTAMP}.jar" />
+	<!-- - - - - - - - - - - - - - - - - - 
+          	定义classpath                      
+         - - - - - - - - - - - - - - - - - -->
+	<path id="lib.classpath">
+		<fileset dir="${dir.src.web}/WEB-INF/lib">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${tomcat.home}">
+			<include name="lib/*.jar"/>
+			<include name="common/lib/*.jar"/>
+		</fileset>		
+	</path>
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: init                      
+         - - - - - - - - - - - - - - - - - -->
+	<target name="init">
+		<echo message="java.home=${java.home}" />
+		<echo message="java.version=${java.version}" />
+	    <echo message="tomcat.home=${tomcat.home}"/>
+		<echo message="version.message=${version.message}" />
+		<mkdir dir="${dir.dest}"/>
+		<mkdir dir="${dir.classes}" />
+		<mkdir dir="${dir.release}" />
+		<mkdir dir="${dir.client.src}"/>
+	</target>
+
+	<!-- ================================= 
+          target: compile              
+         ================================= -->
+	<target name="compile" depends="init" description="description">
+		<copy todir="${dir.client.src}">			
+			<fileset dir="${dir.src}/r2k.common">
+				<include name="**/utils/*.java"/>
+				<include name="**/template/*.java"/>
+				<include name="**/security/springsecurity/des/*.java"/>
+			</fileset>
+			
+			<fileset dir="${dir.src}/r2k.api">
+				<exclude name="**/com/apabi/r2k/api/service/impl/**"/>
+			</fileset>
+			<fileset dir="${dir.src}/r2k.msg">
+				<exclude name="**/com/apabi/r2k/msg/service/impl/server/**"/>
+			</fileset>
+			
+			<fileset dir="${dir.src}/r2k.security">
+				<include name="**/com/apabi/r2k/security/model/**.java"/>
+			</fileset>
+			
+			<fileset dir="${dir.src}/r2k.admin">
+				<include name="**/com/apabi/r2k/admin/model/PrjEnum.java"/>
+			</fileset>
+		</copy>
+		<!--<delete dir="${dir.client.src}/com/apabi/r2k/common/base"/>
+		<delete dir="${dir.client.src}/com/apabi/r2k/common/email"/>
+		<delete dir="${dir.client.src}/com/apabi/r2k/common/result"/>
+		<delete dir="${dir.client.src}/com/apabi/r2k/common/security"/>
+		<delete dir="${dir.client.src}/com/apabi/r2k/common/service"/>
+		<delete dir="${dir.client.src}/com/apabi/r2k/api/service/impl"/>
+		<delete dir="${dir.client.src}/com/apabi/r2k/msg/service/impl/server"/>-->
+		
+		<javac srcdir="${dir.client.src}" 
+			destdir="${dir.classes}" 
+			classpathref="lib.classpath" 
+			encoding="${src.encoding}"
+			debug="on" nowarn="yes" includeantruntime="on" >
+			</javac>
+		<!-- 拷贝其他附属资源-->
+		<copy todir="${dir.classes}">	
+		<fileset dir="${dir.src}/r2k.resources">
+				<include name="tpl/**"/>
+		</fileset>
+		</copy>
+	</target>  
+	<!-- ================================= 
+          target: 打成war包 ，必须设置{war.path}变量             
+         ================================= -->
+    <target name="jar" description="description">
+        <jar destfile="${jar.path}/${jar.name}" encoding="utf-8">
+        	<fileset dir="${dir.classes}" includes="**/*">
+        	</fileset>
+        	         
+
+        </jar>        
+    	<!-- <pathconvert property="${dir.classes}" pathsep=" ">
+    	             <mapper>
+    	                 <chainedmapper>
+    	                     <flattenmapper />
+    	                     <globmapper from="*" to="lib/*" />
+    	                 </chainedmapper>
+    	             </mapper>
+    	             <path refid="lib.classpath" />
+    	         </pathconvert>  -->
+    </target>
+     
+	
+    
+	<!-- ================================= 
+          target: 默认打包任务              
+         ================================= -->
+    <target name="package" depends="compile" description="description">
+        <antcall target="jar">
+            <param name="jar.path" value="${dir.release}" />
+        </antcall>
+    </target>
+        
+ 
+	<!-- ================================= 
+          target: run              
+         ================================= -->
+	<target name="run" depends="clean, package" description="description"/>
+	
+	<!-- ================================= 
+          target: 发布全部              
+         ================================= -->
+	<target name="publish-all" description="description">
+		<antcall target="clean" />
+		<antcall target="package" />
+		<antcall target="run" />
+		
+	</target>	
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: clean                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="clean">
+        <delete dir="${dir.dest}" />
+        <delete file="${jar.name}" />
+    </target>
+</project> 

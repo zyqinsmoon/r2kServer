@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="com.apabi.r2k.security.model.AuthOrg">
+    <resultMap id="authOrgResult" type="com.apabi.r2k.security.model.AuthOrg">
+        <result property="id" column="ID"/>
+        <result property="orgName" column="ORG_NAME"/>
+        <result property="orgDesc" column="ORG_DESC"/>
+        <result property="parentId" column="PARENT_ID"/>
+        <result property="orgId" column="ORG_ID"/>
+        <result property="crtDate" column="CRT_DATE"/>
+        <result property="lastUpdate" column="LAST_UPDATE"/>
+        <result property="mobile" column="MOBILE"/>
+        <result property="officePhone" column="OFFICE_PHONE"/>
+        <result property="orgType" column="ORG_TYPE"/>
+        <result property="email" column="EMAIL"/>
+        <result property="orgRoleId" column="ORG_ROLE_ID" />
+		<result property="makerId" column="MAKER_ID"/>
+		<result property="deviceNum" column="DEVICE_NUM"/>
+		<result property="paper" column="PAPER"/>
+		<result property="ebook" column="EBOOK"/>
+		<result property="topic" column="TOPIC"/>
+		<result property="publish" column="PUBLISH"/>
+		<result property="isAdmin" column="IS_ADMIN"/>
+		<result property="picture" column="PICTURE"/>
+		<result property="areaCode" column="AREA_CODE"/>
+		<collection property="authRoleList" javaType="java.util.List" resultMap="orgRoleList"></collection>
+    </resultMap>
+    
+    <resultMap type="com.apabi.r2k.security.model.AuthRole" id="orgRoleList" >
+    	<result property="id" column="ID"/>
+        <result property="roleName" column="ROLE_NAME"/>
+        <result property="roleCode" column="ROLE_CODE"/>
+         <result property="roleDesc" column="ROLE_DESC"/>
+        <result property="crtDate" column="CRT_DATE"/>
+        <result property="lastUpdate" column="LAST_UPDATE"/>
+        <result property="enabled" column="ENABLED"/>
+        <result property="deviceType" column="DEVICE_TYPE"/>
+        <result property="type" column="TYPE"/>
+        <result property="interfaceUrl" column="INTERFACE_URL"/>
+        <result property="menuType" column="MENU_TYPE"/>
+    </resultMap>
+    
+	<!-- 用于select查询公用抽取的列 -->
+		<!-- 用于select查询公用抽取的列 -->
+	<sql id="commonColumns">    
+	    <![CDATA[
+        	ID ,
+        	ORG_NAME ,
+        	ORG_DESC ,
+        	PARENT_ID ,
+        	ORG_ID ,
+        	CRT_DATE ,
+        	LAST_UPDATE ,
+        	MOBILE ,
+        	OFFICE_PHONE ,
+        	ORG_TYPE ,
+        	EMAIL ,
+        	ORG_ROLE_ID,
+        	PAPER ,
+        	MAKER_ID ,
+        	EBOOK ,
+        	TOPIC ,
+        	PUBLISH,
+        	DEVICE_NUM,
+        	PICTURE ,
+        	AREA_CODE
+	    ]]>
+	</sql>
+
+	<insert id="insert">
+		INSERT INTO ORG(ORG_ID, 	ORG_NAME, 	CRT_DATE, 		PAPER, 		EBOOK, 		TOPIC,		MAKER_ID, 	DEVICE_NUM, 	PUBLISH, IS_ADMIN, PICTURE, AREA_CODE)
+		VALUES(			#{orgId},	#{orgName},	#{createDate},	#{paper},	#{ebook},	#{topic},	#{makerId},	#{deviceNum},	#{publish}, #{isAdmin}, #{picture}, #{areaCode})
+	</insert>
+	
+	<update id="updateByOrgId" parameterType="com.apabi.r2k.security.model.AuthOrg">
+		update ORG 
+		<set>
+			<if test="orgName != null">
+				ORG_NAME=#{orgName},
+			</if>
+			<if test="paper != null">
+				PAPER=#{paper},
+			</if>
+			<if test="ebook != null">
+				EBOOK=#{ebook},
+			</if>
+			<if test="topic != null">
+				TOPIC=#{topic},
+			</if>
+			<if test="publish != null">
+				PUBLISH=#{publish},
+			</if>
+			<if test="picture != null">
+				PICTURE=#{picture},
+			</if>
+			<if test="makerId != null">
+				MAKER_ID=#{makerId},
+			</if>
+			<if test="deviceNum != null">
+				DEVICE_NUM=#{deviceNum},
+			</if>
+			<if test="isAdmin != null">
+				IS_ADMIN=#{isAdmin},
+			</if>
+			<if test="areaCode != null">
+				AREA_CODE=#{areaCode}
+			</if>
+		</set>
+		where ORG_ID=#{orgId}
+	</update>
+	
+	<delete id="deleteByOrgId" parameterType="java.lang.String" >
+		delete from ORG where ORG_ID=#{orgId}
+	</delete>
+	
+	<select id="getOrgById" resultMap="authOrgResult" parameterType="java.lang.String">
+		SELECT * FROM ORG where ORG_ID=#{orgId}
+	</select>
+
+	<select id="getOrgByName" resultMap="authOrgResult" parameterType="java.lang.String">
+		SELECT * FROM ORG where ORG_NAME=#{orgName}
+	</select>
+	
+	<select id="fuzzySearchOrg" resultMap="authOrgResult" parameterType="java.lang.String">
+	    
+		SELECT * FROM ORG_ID_NAME where ID_NAME LIKE '%${name_startsWith}%'
+	</select>
+
+	<sql id="dynamicWhere">
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+				<if test="orgId != null">
+				AND ORG_ID like '%${orgId}%' 
+				</if>
+				<if test="orgName != null">
+				AND ORG_NAME like '%${orgName}%'
+				</if>
+				<if test="crtDate != null">
+				AND CRT_DATE = #{crtDate}
+				</if>
+				<if test="paper != null">
+				AND PAPER = #{paper}
+				</if>
+				<if test="id != null">
+				AND ID = #{id}
+				</if>
+				<if test="ebook != null">
+				AND EBOOK = #{ebook}
+				</if>
+				<if test="topic != null">
+				AND TOPIC = #{topic}
+				</if>
+				<if test="publish != null">
+				AND PUBLISH = #{publish}
+				</if>
+				<if test="picture != null">
+				AND PICTURE = #{picture}
+				</if>
+				<if test="makerId != null">
+				AND MAKER_ID = #{makerId}
+				</if>
+				<if test="deviceNum != null">
+				AND DEVICE_NUM = #{deviceNum}
+				</if>
+				<if test="isAdmin != null">
+				AND IS_ADMIN = #{isAdmin}
+				</if>
+				<if test="queryIdOrName != null">
+				AND (ORG_ID like '%${queryIdOrName}%' 
+				OR ORG_NAME like '%${queryIdOrName}%')
+				</if>
+				<if test="areaCode != null">
+				AND AREA_CODE = #{areaCode}
+				</if>
+		</trim>
+	</sql>
+	
+	<sql id="pageSelectWhere">
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="orgId != null">
+			AND ORG_ID like '%${orgId}%' 
+			</if>
+			<if test="orgName != null">
+			AND ORG_NAME like '%${orgName}%'
+			</if>
+			<if test="queryIdOrName != null">
+			AND (o.ORG_ID like '%${queryIdOrName}%' 
+			OR o.ORG_NAME like '%${queryIdOrName}%')
+			</if>
+		</trim>
+	</sql>
+	
+	<select id="count" resultType="long">
+    <![CDATA[
+        select count(*) from ORG
+    ]]>
+    <include refid="dynamicWhere" />
+	</select>
+
+	<!-- 分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页 因为分页查询将传 #offset#,#pageSize#,#lastRows# 
+		三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现 -->
+	<select id="pageSelect" resultMap="authOrgResult">
+		select o.* from ORG o
+		<include refid="pageSelectWhere" />
+		<if test="sortColumns != null">
+			ORDER BY o.${sortColumns}
+		</if>
+		<if test="sortColumns == null">
+			ORDER BY o.ID desc
+		</if>
+	</select>
+	<select id="allOrgList" resultMap="authOrgResult" >
+		select o.*
+		from ORG o,AUTH_ORG_ROLE ro,AUTH_ROLE r
+	    where ro.ORG_ID = o.ORG_ID and r.ID = ro.ROLE_ID
+	    and r.MENU_TYPE = '3'
+	</select>
+	
+	<select id="getById" resultMap="authOrgResult">
+	    select <include refid="commonColumns"/>
+	    <![CDATA[
+	        from ORG 
+	        where 
+		        ID = #{id} 
+	    ]]>
+    </select>
+</mapper>

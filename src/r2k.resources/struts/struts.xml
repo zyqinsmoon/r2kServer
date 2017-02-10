@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	<!-- 设置允许使用静态方法 -->
+	<constant name="struts.ognl.allowStaticMethodAccess" value="true" />
+	<!-- 最大限度为100M -->
+	<constant name="struts.multipart.maxSize" value="1048678400" />
+	<!-- 将struts2交给spring管理 -->
+	<constant name="struts.objectFactory" value="spring" />
+	<constant name="struts.action.extension" value="do" />
+	<constant name="struts.devMode" value="false" />
+	<constant name="struts.custom.i18n.resources" value="i18n.messages"/>
+    <constant name="struts.i18n.encoding" value="UTF-8" />
+	
+	<!--  其余package继承自此package  -->
+    <package name="myStruts-default" extends="json-default">
+    
+    	<result-types>
+			<result-type name="xml" class="com.apabi.r2k.common.result.XMLResult" />
+		</result-types>
+		
+		<interceptors>
+			<interceptor-stack name="myDefaultStack">
+				<interceptor-ref name="defaultStack"/>
+				<interceptor-ref name="exception">
+	                <param name="logEnabled">true</param>
+	                <param name="logLevel">error</param>         
+	            </interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		
+		<default-interceptor-ref name="myDefaultStack"></default-interceptor-ref>
+		
+		<!-- 定义全局result及页面对应异常 --> 
+		<global-results>
+			<result name="mainPage">/index.jsp</result>
+			<result name="loginPage">/admin/login.jsp</result>
+			<result name="error">/commons/error.jsp</result>
+			<result name="apiError">/commons/api_xml_error.jsp</result>
+			<result name="businessError">/commons/business_html_error.jsp</result>
+		</global-results>
+		
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+			<exception-mapping result="apiError" exception="com.apabi.r2k.api.exception.ApiException"></exception-mapping>
+			<exception-mapping result="businessError" exception="com.apabi.r2k.common.exception.BusinessException"></exception-mapping>
+		</global-exception-mappings>
+		
+		
+	</package>
+	<!-- Add packages here -->
+	<include file="struts/com.apabi.r2k.*.struts.xml"></include>
+</struts>

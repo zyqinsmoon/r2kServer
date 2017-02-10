@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="com.apabi.r2k.security.model.AuthUserRole">
+    <resultMap id="authUserRoleResult" type="com.apabi.r2k.security.model.AuthUserRole">
+        <result property="id" column="ID"/>
+        <result property="roleId" column="ROLE_ID"/>
+        <result property="userId" column="USER_ID"/>
+        <result property="crtDate" column="CRT_DATE"/>
+    </resultMap>
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="commonColumns">
+	    <![CDATA[
+        	ID ,
+        	ROLE_ID ,
+        	USER_ID ,
+        	CRT_DATE 
+	    ]]>
+	</sql>
+
+	<sql id="dynamicWhere">
+		   <trim prefix="WHERE" prefixOverrides="AND|OR">
+	      <if test="id !=null">
+	             ID = #{id}
+	       </if>
+	      <if test="roleId !=null">
+	             ROLE_ID = #{roleId}
+	       </if>
+	      <if test="userId !=null">
+	             USER_ID = #{userId}
+	       </if>
+	      <if test="crtDate !=null">
+	             CRT_DATE = #{crtDate}
+	       </if>
+	      <if test="ids !=null">
+	       		ID in (#{ids})
+	       </if>
+	   </trim>
+	</sql>
+	
+    <insert id="insert" parameterType="com.apabi.r2k.security.model.AuthUserRole">
+    <![CDATA[
+        INSERT INTO
+        AUTH_USER_ROLE (
+        	ID ,
+        	ROLE_ID ,
+        	USER_ID ,
+        	CRT_DATE 
+        ) VALUES (
+        	#{id} ,
+        	#{roleId} ,
+        	#{userId} ,
+        	#{crtDate} 
+        )
+    ]]>
+        <selectKey resultType="long" keyProperty="id" >
+            SELECT  SEQ_AUTH_USER_ROLE.nextval AS ID FROM DUAL
+        </selectKey>
+    </insert>
+
+    <update id="update" parameterType="com.apabi.r2k.security.model.AuthUserRole">
+    <![CDATA[
+        UPDATE AUTH_USER_ROLE SET
+	        ROLE_ID = #{roleId} ,
+	        USER_ID = #{userId} ,
+	        CRT_DATE = #{crtDate} 
+        WHERE 
+	        ID = #{id} 
+    ]]>
+    </update>
+
+
+    <delete id="delete" parameterType="map">
+    <![CDATA[
+        delete from AUTH_USER_ROLE
+    ]]>
+		<include refid="dynamicWhere"/>
+    </delete>
+    
+    <select id="getById" resultMap="authUserRoleResult">
+	    select <include refid="commonColumns"/>
+	    <![CDATA[
+	        from AUTH_USER_ROLE 
+	        where 
+		        ID = #{id} 
+	    ]]>
+    </select>
+	 
+    <select id="count" resultType="long">
+    <![CDATA[
+        select count(*) from AUTH_USER_ROLE
+    ]]>
+		<include refid="dynamicWhere"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    
+    <select id="pageSelect" resultMap="authUserRoleResult">
+    	select <include refid="commonColumns"/>
+	    <![CDATA[
+	        from AUTH_USER_ROLE 
+	    ]]>
+		<include refid="dynamicWhere"/>
+		
+    </select>
+
+	
+</mapper>

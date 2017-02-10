@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.apabi.r2k.admin.model.Recommend">
+	<resultMap type="com.apabi.r2k.admin.model.Recommend" id="recommendResult">
+		<result property="id" column="ID"/>
+		<result property="orgId" column="ORG_ID"/>
+		<result property="crtDate" column="CRT_DATE"/>
+		<result property="lastDate" column="LAST_DATE"/>
+		<result property="type" column="TYPE"/>
+		<result property="sort" column="SORT"/>
+		<result property="resId" column="RES_ID"/>
+	</resultMap>
+	
+	
+	<insert id="insert">
+		INSERT INTO ORG_RECOMMEND(ORG_ID, 	RES_ID, 	CRT_DATE, 	LAST_DATE, 		TYPE, 		SORT)
+		VALUES(					 #{orgId},	#{resId},	#{crtDate},	#{lastDate},	#{type},	#{sort})
+	</insert>
+	
+	<insert id="insertBatch" useGeneratedKeys="true" parameterType="java.util.List">
+		INSERT INTO ORG_RECOMMEND(ORG_ID, 	RES_ID, 	CRT_DATE, 	LAST_DATE, 		TYPE, 		SORT)
+		VALUES
+			<foreach collection="list" item="item" index="index" separator="," >  
+		        (#{item.orgId},	#{item.resId}, #{item.crtDate}, #{item.lastDate}, #{item.type}, #{item.sort})  
+		    </foreach>
+	</insert>
+
+	<update id="updateByRecommendId" parameterType="com.apabi.r2k.admin.model.Recommend">
+		update ORG_RECOMMEND 
+		<set>
+			<if test="resId != null">
+				RES_ID=#{resId},
+			</if>
+			<if test="lastDate != null">
+				LAST_DATE=#{lastDate},
+			</if>
+			<if test="type != null">
+				TYPE=#{type},
+			</if>
+			<if test="sort != null">
+				SORT=#{sort}
+			</if>
+		</set>
+		where RES_ID=#{resId} AND ORG_ID=#{orgId}
+	</update>
+	
+	<delete id="deleteByRecommendId" >
+		delete from ORG_RECOMMEND where RES_ID=#{resId} AND ORG_ID=#{orgId}
+	</delete>
+	
+	<select id="getRecommend" resultMap="recommendResult">
+		SELECT * FROM ORG_RECOMMEND where RES_ID=#{resId} AND ORG_ID=#{orgId}
+	</select>
+	
+	<select id="getRecommendList" resultMap="recommendResult">
+		SELECT * FROM ORG_RECOMMEND 
+	</select>
+	<delete id="deleteByOrgId" >
+		delete from ORG_RECOMMEND where ORG_ID=#{orgId} and TYPE=#{type}
+	</delete>
+</mapper>

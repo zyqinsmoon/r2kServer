@@ -1,0 +1,63 @@
+@charset "utf-8";
+.menu ul li {
+	display:block;
+	background: url(../images/zakladka.png) top left no-repeat;
+	list-style:none;
+	overflow:visible;
+	min-width:120px;
+	max-width:260px;
+	margin-bottom:2px;
+}
+.menu ul li a {
+	display:block;
+	height:28px; /*width:85%;*/
+	margin-top:0px;
+	padding-top:6px;
+	padding-left:35px;
+	font-size:14px;
+	font-weight:bold;
+	color:#333;
+	outline:none;
+}
+
+.dynatree-folder.dynatree-exp-e {
+	background:url(../images/on.png) top right no-repeat;
+}
+.dynatree-folder.dynatree-exp-c {
+	background:url(../images/off.png) top right no-repeat;
+}
+.dynatree-folder.dynatree-exp-el {
+	background:url(../images/on.png) top right no-repeat;
+}
+.dynatree-folder.dynatree-exp-cl {
+	background:url(../images/off.png) top right no-repeat;
+}
+.menu ul li ul {
+	/*display:none; */
+	margin-top:-4px;
+	margin-bottom:10px;   
+}
+.menu ul li ul li ul {
+	margin-bottom:5px;
+}
+.menu ul li ul li {
+	display:block;
+	background:none;
+	font-size:12px;
+	list-style:none;
+	color:#8f9d4c;
+	margin-bottom:0px;
+	margin-top:0px;
+	padding-top:0px;
+	padding-bottom:0px;
+	padding-left:1px;
+	margin-left:35px;
+}
+.menu ul li ul li a {
+	/*background:none;*/
+	font-size:14px;
+	height:15px;
+	font-weight:100;
+	color:#666;
+	padding-left:0px; 
+}

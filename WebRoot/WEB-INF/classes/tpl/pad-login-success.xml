@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<R2k>
+	<Orgid>${orgId}</Orgid>
+	<Orgname>${orgname}</Orgname>
+	<Uid>${userId}</Uid>
+	<Token>${token}</Token>
+	<Jsessionid>${jsessionId}</Jsessionid>
+	<Menuurl>${menuurl}</Menuurl>
+	<Ebookurl>
+		<Baseurl>${baseurl}</Baseurl>
+	</Ebookurl>
+</R2k>
+
+	
